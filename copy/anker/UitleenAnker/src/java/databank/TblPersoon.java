@@ -6,22 +6,16 @@
 package databank;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "TblPersoon.findAll", query = "SELECT t FROM TblPersoon t"),
     @NamedQuery(name = "TblPersoon.findById", query = "SELECT t FROM TblPersoon t WHERE t.id = :id"),
+    @NamedQuery(name = "TblPersoon.findByGebruikersnaam", query = "SELECT t FROM TblPersoon t WHERE t.gebruikersnaam = :gebruikersnaam"),
     @NamedQuery(name = "TblPersoon.findByNaam", query = "SELECT t FROM TblPersoon t WHERE t.naam = :naam"),
     @NamedQuery(name = "TblPersoon.findByVoornaam", query = "SELECT t FROM TblPersoon t WHERE t.voornaam = :voornaam"),
     @NamedQuery(name = "TblPersoon.findByAdres", query = "SELECT t FROM TblPersoon t WHERE t.adres = :adres"),
@@ -47,6 +42,9 @@ public class TblPersoon implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "Gebruikersnaam")
+    private String gebruikersnaam;
     @Column(name = "naam")
     private String naam;
     @Column(name = "voornaam")
@@ -55,15 +53,10 @@ public class TblPersoon implements Serializable {
     private String adres;
     @Column(name = "telefoon")
     private String telefoon;
-    @Column(name = "e-mail")
+    @Column(name = "eMail")
     private String eMail;
     @Column(name = "wachtwoord")
     private String wachtwoord;
-    @JoinColumn(name = "soort", referencedColumnName = "soort")
-    @ManyToOne
-    private TblSoort soort;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "naam")
-    private Collection<TblUitleen> tblUitleenCollection;
 
     public TblPersoon() {
     }
@@ -72,12 +65,25 @@ public class TblPersoon implements Serializable {
         this.id = id;
     }
 
+    public TblPersoon(Integer id, String gebruikersnaam) {
+        this.id = id;
+        this.gebruikersnaam = gebruikersnaam;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getGebruikersnaam() {
+        return gebruikersnaam;
+    }
+
+    public void setGebruikersnaam(String gebruikersnaam) {
+        this.gebruikersnaam = gebruikersnaam;
     }
 
     public String getNaam() {
@@ -126,23 +132,6 @@ public class TblPersoon implements Serializable {
 
     public void setWachtwoord(String wachtwoord) {
         this.wachtwoord = wachtwoord;
-    }
-
-    public TblSoort getSoort() {
-        return soort;
-    }
-
-    public void setSoort(TblSoort soort) {
-        this.soort = soort;
-    }
-
-    @XmlTransient
-    public Collection<TblUitleen> getTblUitleenCollection() {
-        return tblUitleenCollection;
-    }
-
-    public void setTblUitleenCollection(Collection<TblUitleen> tblUitleenCollection) {
-        this.tblUitleenCollection = tblUitleenCollection;
     }
 
     @Override

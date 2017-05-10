@@ -35,9 +35,9 @@ public class TblSoort implements Serializable {
     @Basic(optional = false)
     @Column(name = "soort")
     private String soort;
-    @OneToMany(mappedBy = "soort")
+  /*  @OneToMany(mappedBy = "soort")
     private Collection<TblPersoon> tblPersoonCollection;
-
+*/
     public TblSoort() {
     }
 
@@ -52,7 +52,7 @@ public class TblSoort implements Serializable {
     public void setSoort(String soort) {
         this.soort = soort;
     }
-
+/*
     @XmlTransient
     public Collection<TblPersoon> getTblPersoonCollection() {
         return tblPersoonCollection;
@@ -61,7 +61,7 @@ public class TblSoort implements Serializable {
     public void setTblPersoonCollection(Collection<TblPersoon> tblPersoonCollection) {
         this.tblPersoonCollection = tblPersoonCollection;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;
