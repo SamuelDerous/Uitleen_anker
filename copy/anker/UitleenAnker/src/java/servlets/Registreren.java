@@ -6,27 +6,22 @@
 package servlets;
 
 import databank.TblPersoon;
+import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 
 /**
  *
  * @author zenodotus
  */
-public class Inloggen extends HttpServlet {
+public class Registreren extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,28 +36,34 @@ public class Inloggen extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            Configuration configuration = new Configuration();
-            configuration.configure();
-            ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
-            configuration.getProperties()).build();
-            SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
-            Session session = factory.openSession();
             String gebruikersnaam = request.getParameter("txtGebruikersnaam");
             String wachtwoord = request.getParameter("txtWachtwoord");
-            Query zoeken = session.createQuery("from TblPersoon where wachtwoord = :wachtwoord");
-            zoeken.setParameter("wachtwoord", wachtwoord);
-            List<TblPersoon> personen = zoeken.list();
-            HttpSession sessie = request.getSession();
-            if(!personen.isEmpty()) {
-                 sessie.setAttribute("gebruikersnaam", gebruikersnaam);
-                
-            } else {
-                sessie.setAttribute("gebruikersnaam", "");
-            }
-            RequestDispatcher view = request.getRequestDispatcher("inloggen.jsp");
+            String bevestig = request.getParameter("txtBevestig");
+            String naam = request.getParameter("txtNaam");
+            String voornaam = request.getParameter("txtVoornaam");
+            String adres = request.getParameter("txtAdres");
+            String telefoon = request.getParameter("txtTelefoon");
+            String email = request.getParameter("txtEmail");
+            TblPersoon persoon = new TblPersoon();
+            persoon.setGebruikersnaam(gebruikersnaam);
+            persoon.setWachtwoord(wachtwoord);
+            persoon.setNaam(naam);
+            persoon.setVoornaam(voornaam);
+            persoon.setAdres(adres);
+            persoon.setTelefoon(telefoon);
+            persoon.setEMail(email);
+            SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+            Session session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.save(persoon);
+            session.getTransaction().commit();
+            session.close();
+            
+            
+            RequestDispatcher view = request.getRequestDispatcher("geregistreerd.jsp");
             view.forward(request, response);
-        }
+            
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

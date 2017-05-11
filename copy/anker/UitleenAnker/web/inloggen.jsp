@@ -11,7 +11,7 @@
 			<article id="formulier" align="center">
 				<h2 align="center">Inloggen</h2>
                                 <div id="foutmelding">
-                                    <%if(request.getAttribute("gebruikersnaam") != null && request.getAttribute("gebruikersnaam").equals("")) { %>
+                                    <%if(session.getAttribute("gebruikersnaam") != null && session.getAttribute("gebruikersnaam").equals("")) { %>
                                         Gebruikersnaam en wachtwoord zijn niet gekend.
                                     <%}%>
                                 </div>
