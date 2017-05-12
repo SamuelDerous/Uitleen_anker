@@ -6,6 +6,7 @@
 package servlets;
 
 import databank.TblPersoon;
+import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -42,15 +43,13 @@ public class Inloggen extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            Configuration configuration = new Configuration();
-            configuration.configure();
-            ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
-            configuration.getProperties()).build();
-            SessionFactory factory = configuration.buildSessionFactory(serviceRegistry);
+            
+            SessionFactory factory = HibernateFactory.getSessionFactory();
             Session session = factory.openSession();
             String gebruikersnaam = request.getParameter("txtGebruikersnaam");
             String wachtwoord = request.getParameter("txtWachtwoord");
-            Query zoeken = session.createQuery("from TblPersoon where wachtwoord = :wachtwoord");
+            Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam and wachtwoord = :wachtwoord");
+            zoeken.setParameter("gebruikersnaam", gebruikersnaam);
             zoeken.setParameter("wachtwoord", wachtwoord);
             List<TblPersoon> personen = zoeken.list();
             HttpSession sessie = request.getSession();

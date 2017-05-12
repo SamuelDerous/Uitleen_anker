@@ -21,6 +21,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,6 +48,7 @@ public class TblUitleen implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "uitleendatum")
     @Temporal(TemporalType.DATE)
     private Date uitleendatum;
@@ -56,6 +59,7 @@ public class TblUitleen implements Serializable {
     @Column(name = "boete")
     private Double boete;
     @Lob
+    @Size(max = 65535)
     @Column(name = "opmerking")
     private String opmerking;
     @Column(name = "huurprijs")
@@ -63,7 +67,7 @@ public class TblUitleen implements Serializable {
     @JoinColumn(name = "spel", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TblProduct spel;
-    @JoinColumn(name = "naam", referencedColumnName = "id")
+    @JoinColumn(name = "naam", referencedColumnName = "gebruikersnaam")
     @ManyToOne(optional = false)
     private TblPersoon naam;
 

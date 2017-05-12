@@ -6,16 +6,22 @@
 package databank;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TblPersoon.findAll", query = "SELECT t FROM TblPersoon t"),
-    @NamedQuery(name = "TblPersoon.findById", query = "SELECT t FROM TblPersoon t WHERE t.id = :id"),
     @NamedQuery(name = "TblPersoon.findByGebruikersnaam", query = "SELECT t FROM TblPersoon t WHERE t.gebruikersnaam = :gebruikersnaam"),
     @NamedQuery(name = "TblPersoon.findByNaam", query = "SELECT t FROM TblPersoon t WHERE t.naam = :naam"),
     @NamedQuery(name = "TblPersoon.findByVoornaam", query = "SELECT t FROM TblPersoon t WHERE t.voornaam = :voornaam"),
@@ -38,44 +43,41 @@ public class TblPersoon implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
-    @Column(name = "Gebruikersnaam")
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "gebruikersnaam")
     private String gebruikersnaam;
+    @Size(max = 50)
     @Column(name = "naam")
     private String naam;
+    @Size(max = 50)
     @Column(name = "voornaam")
     private String voornaam;
+    @Size(max = 100)
     @Column(name = "adres")
     private String adres;
+    @Size(max = 10)
     @Column(name = "telefoon")
     private String telefoon;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
     @Column(name = "eMail")
     private String eMail;
+    @Size(max = 150)
     @Column(name = "wachtwoord")
     private String wachtwoord;
+    @JoinColumn(name = "soort", referencedColumnName = "soort")
+    @ManyToOne
+    private TblSoort soort;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "naam")
+    private Collection<TblUitleen> tblUitleenCollection;
 
     public TblPersoon() {
     }
 
-    public TblPersoon(Integer id) {
-        this.id = id;
-    }
-
-    public TblPersoon(Integer id, String gebruikersnaam) {
-        this.id = id;
+    public TblPersoon(String gebruikersnaam) {
         this.gebruikersnaam = gebruikersnaam;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getGebruikersnaam() {
@@ -134,10 +136,27 @@ public class TblPersoon implements Serializable {
         this.wachtwoord = wachtwoord;
     }
 
+    public TblSoort getSoort() {
+        return soort;
+    }
+
+    public void setSoort(TblSoort soort) {
+        this.soort = soort;
+    }
+
+    @XmlTransient
+    public Collection<TblUitleen> getTblUitleenCollection() {
+        return tblUitleenCollection;
+    }
+
+    public void setTblUitleenCollection(Collection<TblUitleen> tblUitleenCollection) {
+        this.tblUitleenCollection = tblUitleenCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (gebruikersnaam != null ? gebruikersnaam.hashCode() : 0);
         return hash;
     }
 
@@ -148,7 +167,7 @@ public class TblPersoon implements Serializable {
             return false;
         }
         TblPersoon other = (TblPersoon) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.gebruikersnaam == null && other.gebruikersnaam != null) || (this.gebruikersnaam != null && !this.gebruikersnaam.equals(other.gebruikersnaam))) {
             return false;
         }
         return true;
@@ -156,7 +175,7 @@ public class TblPersoon implements Serializable {
 
     @Override
     public String toString() {
-        return "databank.TblPersoon[ id=" + id + " ]";
+        return "databank.TblPersoon[ gebruikersnaam=" + gebruikersnaam + " ]";
     }
     
 }

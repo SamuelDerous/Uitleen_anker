@@ -16,10 +16,15 @@
         tel.: 050 39 09 35 </header>
       <nav>
         <div id="menu" align="right">
+            <% if(session.getAttribute("gebruikersnaam") != null && !(session.getAttribute("gebruikersnaam").equals(""))) {
+                %><ul><li>Welkom, <%=session.getAttribute("gebruikersnaam")%></li>
+                </ul>
+            <%} else {%>
           <ul>
             <li><a href="inloggen.jsp">Inloggen</a></li>
             <li><a href="registreren.jsp">Registreren</a></li>
           </ul>
+          <%}%>
         </div>
         <div id="dataMenu">
         	<form method="post" action="zoeken.do">

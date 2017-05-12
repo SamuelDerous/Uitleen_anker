@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -45,6 +46,7 @@ public class TblProduct implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 50)
     @Column(name = "naam")
     private String naam;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -54,9 +56,11 @@ public class TblProduct implements Serializable {
     private Double breukprijs;
     @Column(name = "aantal")
     private Integer aantal;
+    @Size(max = 50)
     @Column(name = "beschrijving")
     private String beschrijving;
     @Lob
+    @Size(max = 65535)
     @Column(name = "opmerking")
     private String opmerking;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

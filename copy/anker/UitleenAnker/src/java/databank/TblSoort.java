@@ -15,6 +15,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -33,11 +35,13 @@ public class TblSoort implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "soort")
     private String soort;
-  /*  @OneToMany(mappedBy = "soort")
+    @OneToMany(mappedBy = "soort")
     private Collection<TblPersoon> tblPersoonCollection;
-*/
+
     public TblSoort() {
     }
 
@@ -52,7 +56,7 @@ public class TblSoort implements Serializable {
     public void setSoort(String soort) {
         this.soort = soort;
     }
-/*
+
     @XmlTransient
     public Collection<TblPersoon> getTblPersoonCollection() {
         return tblPersoonCollection;
@@ -61,7 +65,7 @@ public class TblSoort implements Serializable {
     public void setTblPersoonCollection(Collection<TblPersoon> tblPersoonCollection) {
         this.tblPersoonCollection = tblPersoonCollection;
     }
-*/
+
     @Override
     public int hashCode() {
         int hash = 0;

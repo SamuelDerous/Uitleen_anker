@@ -21,6 +21,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,13 +46,16 @@ public class TblInventarisatie implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "aantal")
     private int aantal;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "datum")
     @Temporal(TemporalType.DATE)
     private Date datum;
     @Lob
+    @Size(max = 65535)
     @Column(name = "opmerking")
     private String opmerking;
     @JoinColumn(name = "product", referencedColumnName = "id")
