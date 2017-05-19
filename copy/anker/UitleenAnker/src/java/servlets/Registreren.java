@@ -5,10 +5,12 @@
  */
 package servlets;
 
+import creatie.EncryptionIni;
 import databank.TblPersoon;
 import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,21 +50,42 @@ public class Registreren extends HttpServlet {
             String telefoon = request.getParameter("txtTelefoon");
             String email = request.getParameter("txtEmail");
             SessionFactory factory = HibernateFactory.getSessionFactory();
+            boolean correct = true;
             Session session = factory.openSession();
             Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam");
             zoeken.setParameter("gebruikersnaam", gebruikersnaam);
             List<TblPersoon> personen = zoeken.list();
             HttpSession sessie = request.getSession();
+            if(!wachtwoord.equals(bevestig)) {
+                request.setAttribute("wachtwoordenNotSame", "correct");
+                correct = false;
+            }
             if(!personen.isEmpty()) {
-                 request.setAttribute("gebruikersnaamNotUnique", "correct");
-                 session.close();
+                correct = false; 
+                request.setAttribute("gebruikersnaamNotUnique", "correct");
+            }
+            if(gebruikersnaam == null || gebruikersnaam.equals("") || wachtwoord == null || wachtwoord.equals("") || bevestig == null
+                    || bevestig.equals("") || naam == null || naam.equals("") || voornaam == null || voornaam.equals("") || email == null
+                    || email.equals("")) {
+                correct = false;
+                request.setAttribute("LegeVelden", "correct");
+            }
+            
+            if (correct == false) {
+                session.close();
+                request.setAttribute("naam", naam);
+                request.setAttribute("voornaam", voornaam);
+                request.setAttribute("adres", adres);
+                request.setAttribute("telefoon", telefoon);
+                request.setAttribute("email", email);
                  RequestDispatcher view = request.getRequestDispatcher("registreren.jsp");
                  view.forward(request, response);
-                
-            } else {
+            }     
+             else {
                 TblPersoon persoon = new TblPersoon();
                 persoon.setGebruikersnaam(gebruikersnaam);
-                persoon.setWachtwoord(wachtwoord);
+                String encrWachtwoord = EncryptionIni.encrypt(wachtwoord);
+                persoon.setWachtwoord(encrWachtwoord);
                 persoon.setNaam(naam);
                 persoon.setVoornaam(voornaam);
                 persoon.setAdres(adres);
@@ -78,6 +101,8 @@ public class Registreren extends HttpServlet {
                 view.forward(request, response);
             }
             
+        } catch (GeneralSecurityException ex) {
+            ex.printStackTrace();
         } 
     }
 

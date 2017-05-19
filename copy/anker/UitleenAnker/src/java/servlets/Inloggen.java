@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import creatie.EncryptionIni;
 import databank.TblPersoon;
 import databank.adapter.HibernateFactory;
 import java.io.IOException;
@@ -48,9 +49,10 @@ public class Inloggen extends HttpServlet {
             Session session = factory.openSession();
             String gebruikersnaam = request.getParameter("txtGebruikersnaam");
             String wachtwoord = request.getParameter("txtWachtwoord");
+            String decrWachtwoord = EncryptionIni.encrypt(wachtwoord);
             Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam and wachtwoord = :wachtwoord");
             zoeken.setParameter("gebruikersnaam", gebruikersnaam);
-            zoeken.setParameter("wachtwoord", wachtwoord);
+            zoeken.setParameter("wachtwoord", decrWachtwoord);
             List<TblPersoon> personen = zoeken.list();
             HttpSession sessie = request.getSession();
             if(!personen.isEmpty()) {
@@ -61,6 +63,8 @@ public class Inloggen extends HttpServlet {
             }
             RequestDispatcher view = request.getRequestDispatcher("inloggen.jsp");
             view.forward(request, response);
+        } catch(Exception ex) {
+            ex.printStackTrace();
         }
     }
 
