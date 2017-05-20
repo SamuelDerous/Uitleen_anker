@@ -7,6 +7,7 @@ package servlets;
 
 import creatie.EncryptionIni;
 import databank.TblPersoon;
+import databank.TblSoort;
 import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -90,6 +91,9 @@ public class Registreren extends HttpServlet {
                 persoon.setVoornaam(voornaam);
                 persoon.setAdres(adres);
                 persoon.setTelefoon(telefoon);
+                TblSoort soort = new TblSoort();
+                soort.setSoort("ontlener");
+                persoon.setSoort(soort);
                 persoon.setEMail(email);
                 SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
                 session = sessionFactory.openSession();

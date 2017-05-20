@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="header.jsp" />
-
+<jsp:include page="headers/header.jsp" />
+<jsp:include page="headers/menu.jsp" />
 <section id="hoofdinhoud">
 			<article id="formulier" align="center">
 				<h2 align="center">Inloggen</h2>

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="nl-be">
   <head>
-    <link rel="stylesheet" href="css/hoofdpagina.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hoofdpagina.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/menu.css">
   </head>
   <body>
     
     <div id="wrapper">
       <header> 
-      <img src="images/dekade.jpg">
+      <img src="${pageContext.request.contextPath}/images/dekade.jpg">
         <b>Begeleidingscentrum Spermalie</b><br>
         Staggaardstraat 9, 8000 Brugge<br>
         tel. 050 47 25 06 <br>

@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="header.jsp" />
+<jsp:include page="headers/header.jsp" />
 <script type="text/javascript" src="js/validation.js"></script>
 
 <section id="hoofdinhoud">
@@ -20,7 +20,7 @@
                                                     </div></td></tr>
                                                 <tr><td>Gebruikersnaam:<span id="vereist">*</span></td><td><input type="text" class="invullen" name="txtGebruikersnaam" id="txtGebruikersnaam" onKeypress="correct(this);"/></td></tr>
                                                 <tr><td>Wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="txtWachtwoord" id="txtWachtwoord" onKeypress="correct(this)" /></td></tr>
-                                                <tr><td>Bevestig wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name=txtBevestig" id="txtBevestig" onKeyUp="gelijkeWachtwoorden()" /></td></tr>
+                                                <tr><td>Bevestig wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="txtBevestig" id="txtBevestig" onKeyUp="gelijkeWachtwoorden()" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 <tr><td>Voornaam:<span id="vereist">*</span> </td><td><input type="text" value="<%= request.getAttribute("naam") == null ? "" : request.getAttribute("naam") %>" class="invullen" name="txtVoornaam" id="txtVoornaam" onKeypress="correct(this);"/></td></tr>
                                                 <tr><td>Naam:<span id="vereist">*</span> </td><td><input type="text" value="<%= request.getAttribute("voornaam") == null ? "" : request.getAttribute("voornaam") %>" class="invullen" name="txtNaam" id="txtNaam" onKeypress="correct(this)" /></td></tr>

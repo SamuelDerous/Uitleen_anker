@@ -16,21 +16,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.Transaction;
 
 /**
  *
  * @author zenodotus
  */
-public class Inloggen extends HttpServlet {
+public class Gebruikers extends HttpServlet {
 
-    private Session session;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,31 +41,21 @@ public class Inloggen extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+            String gebruikersnaam = request.getParameter("gebruiker");
             SessionFactory factory = HibernateFactory.getSessionFactory();
-            session = factory.openSession();
-            String gebruikersnaam = request.getParameter("txtGebruikersnaam");
-            String wachtwoord = request.getParameter("txtWachtwoord");
-            String decrWachtwoord = EncryptionIni.encrypt(wachtwoord);
-            Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam and wachtwoord = :wachtwoord");
+            Session session = factory.openSession();
+            Transaction tx = session.beginTransaction();
+            Query zoeken = session.createQuery("delete from TblPersoon where gebruikersnaam = :gebruikersnaam");
             zoeken.setParameter("gebruikersnaam", gebruikersnaam);
-            zoeken.setParameter("wachtwoord", decrWachtwoord);
-            List<TblPersoon> personen = zoeken.list();
-            HttpSession sessie = request.getSession();
-            if(!personen.isEmpty()) {
-                 sessie.setAttribute("gebruikersnaam", gebruikersnaam);
-                 sessie.setAttribute("soort", personen.get(0).getSoort().getSoort());
-                
-            } else {
-                sessie.setAttribute("gebruikersnaam", "");
-               
-            }
-            RequestDispatcher view = request.getRequestDispatcher("inloggen.jsp");
-            view.forward(request, response);
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        } finally {
+            int resultaat = zoeken.executeUpdate();
+            tx.commit();
             session.close();
+            
+            if(resultaat > 0) {
+                response.sendRedirect("users/gebruikers.jsp");
+                
+                
+            }
         }
     }
 
