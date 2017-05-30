@@ -19,6 +19,7 @@
         <div id="menu" align="right">
             <% if(session.getAttribute("gebruikersnaam") != null && !(session.getAttribute("gebruikersnaam").equals(""))) {
                 %><ul><li>Welkom, <%=session.getAttribute("gebruikersnaam")%></li>
+                    <li><a href="uitloggen.jsp">Uitloggen</a></li>
                 </ul>
             <%} else {%>
           <ul>

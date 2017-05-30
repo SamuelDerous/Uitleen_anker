@@ -27,7 +27,7 @@ import org.hibernate.SessionFactory;
  *
  * @author zenodotus
  */
-public class Registreren extends HttpServlet {
+public class Toevoegen extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,6 +42,7 @@ public class Registreren extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             String gebruikersnaam = request.getParameter("txtGebruikersnaam");
             String wachtwoord = request.getParameter("txtWachtwoord");
             String bevestig = request.getParameter("txtBevestig");
@@ -50,6 +51,7 @@ public class Registreren extends HttpServlet {
             String adres = request.getParameter("txtAdres");
             String telefoon = request.getParameter("txtTelefoon");
             String email = request.getParameter("txtEmail");
+            String soortGebruiker = request.getParameter("slctSoorten");
             SessionFactory factory = HibernateFactory.getSessionFactory();
             boolean correct = true;
             Session session = factory.openSession();
@@ -79,7 +81,7 @@ public class Registreren extends HttpServlet {
                 request.setAttribute("adres", adres);
                 request.setAttribute("telefoon", telefoon);
                 request.setAttribute("email", email);
-                 RequestDispatcher view = request.getRequestDispatcher("registreren.jsp");
+                 RequestDispatcher view = request.getRequestDispatcher("users/gebToevoegen.jsp");
                  view.forward(request, response);
             }     
              else {
@@ -92,7 +94,7 @@ public class Registreren extends HttpServlet {
                 persoon.setAdres(adres);
                 persoon.setTelefoon(telefoon);
                 TblSoort soort = new TblSoort();
-                soort.setSoort("gebruiker");
+                soort.setSoort(soortGebruiker);
                 persoon.setSoort(soort);
                 persoon.setEMail(email);
                 SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -101,13 +103,14 @@ public class Registreren extends HttpServlet {
                 session.save(persoon);
                 session.getTransaction().commit();
                 session.close();
-                RequestDispatcher view = request.getRequestDispatcher("geregistreerd.jsp");
+                RequestDispatcher view = request.getRequestDispatcher("users/gebToevoegen.jsp");
                 view.forward(request, response);
             }
             
         } catch (GeneralSecurityException ex) {
             ex.printStackTrace();
         } 
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -3,7 +3,7 @@
     Created on : 20-mei-2017, 12:14:16
     Author     : zenodotus
 --%>
-
+<% if((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals("")) && session.getAttribute("soort").equals("gebruiker")) { %>
 <%@page import="databank.TblPersoon"%>
 <%@page import="org.hibernate.Session"%>
 <%@page import="org.hibernate.SessionFactory"%>
@@ -40,3 +40,6 @@
 </section>    
 </body>
 </html>
+<%} else {
+    response.sendRedirect("/UitleenAnker/faces/inloggen.jsp");
+}%>

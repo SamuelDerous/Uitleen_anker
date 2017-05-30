@@ -46,6 +46,18 @@
         <servlet-name>Gebruikers</servlet-name>
         <servlet-class>servlets.Gebruikers</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Aanpassen</servlet-name>
+        <servlet-class>servlets.Aanpassen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Toevoegen</servlet-name>
+        <servlet-class>servlets.Toevoegen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Reset</servlet-name>
+        <servlet-class>servlets.Reset</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -65,6 +77,18 @@
     <servlet-mapping>
         <servlet-name>Gebruikers</servlet-name>
         <url-pattern>/Gebruikers.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Aanpassen</servlet-name>
+        <url-pattern>/Aanpassen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Toevoegen</servlet-name>
+        <url-pattern>/Toevoegen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Reset</servlet-name>
+        <url-pattern>/Reset.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
