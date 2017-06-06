@@ -5,13 +5,9 @@
  */
 package servlets;
 
-import creatie.EncryptionIni;
-import databank.TblPersoon;
 import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +21,7 @@ import org.hibernate.Transaction;
  *
  * @author zenodotus
  */
-public class Gebruikers extends HttpServlet {
+public class InventVerwijderen extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,25 +36,21 @@ public class Gebruikers extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            String gebruikersnaam = request.getParameter("gebruiker");
-            
+           String inventId = request.getParameter("invent");
             SessionFactory factory = HibernateFactory.getSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
-            Query zoeken = session.createQuery("delete from TblPersoon where gebruikersnaam = :gebruikersnaam");
-            zoeken.setParameter("gebruikersnaam", gebruikersnaam);
+            Query zoeken = session.createQuery("delete from TblInventarisatie where id = :id");
+            zoeken.setParameter("id", Integer.parseInt(inventId));
             int resultaat = zoeken.executeUpdate();
             tx.commit();
             session.close();
             
             if(resultaat > 0) {
-                response.sendRedirect("users/gebruikers.jsp");
+                response.sendRedirect("users/producten.jsp");
                 
                 
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 

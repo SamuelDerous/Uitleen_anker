@@ -58,6 +58,26 @@
         <servlet-name>Reset</servlet-name>
         <servlet-class>servlets.Reset</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProductVerwijderen</servlet-name>
+        <servlet-class>servlets.ProductVerwijderen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductAanpassen</servlet-name>
+        <servlet-class>servlets.ProductAanpassen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductToevoegen</servlet-name>
+        <servlet-class>servlets.ProductToevoegen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InventVerwijderen</servlet-name>
+        <servlet-class>servlets.InventVerwijderen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InventToevoegen</servlet-name>
+        <servlet-class>servlets.InventToevoegen</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -89,6 +109,26 @@
     <servlet-mapping>
         <servlet-name>Reset</servlet-name>
         <url-pattern>/Reset.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductVerwijderen</servlet-name>
+        <url-pattern>/ProductVerwijderen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductAanpassen</servlet-name>
+        <url-pattern>/ProductAanpassen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductToevoegen</servlet-name>
+        <url-pattern>/ProductToevoegen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InventVerwijderen</servlet-name>
+        <url-pattern>/InventVerwijderen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InventToevoegen</servlet-name>
+        <url-pattern>/InventToevoegen.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

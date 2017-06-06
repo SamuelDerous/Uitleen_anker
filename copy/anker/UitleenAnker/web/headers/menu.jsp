@@ -12,29 +12,29 @@ String soort = (String) session.getAttribute("soort"); %>
             <ul id="nav">
                 <li><a class="hsubs" href="#">Uitlenen</a>
                     <ul class="subs">
-                        <li><a href="../users/uitlenen.jsp">Uitlenen</a></li>
-                        <li><a href="../users/reservaties.jsp">Reservaties</a></li>
+                        <li><a href="/UitleenAnker/faces/users/uitlenen.jsp">Uitlenen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/reservaties.jsp">Reservaties</a></li>
                         
                     </ul>
                 </li>
                 <li><a class="hsubs" href="#">Gebruikers</a>
                     <ul class="subs">
-                        <li><a href="../users/gebruikers.jsp">Aanpassen/verwijderen</a></li>
-                        <li><a href="../users/gebToevoegen.jsp">Toevoegen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/gebruikers.jsp">Aanpassen/verwijderen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/gebToevoegen.jsp">Toevoegen</a></li>
                         
                     </ul>
                 </li>
                 <li><a class="hsubs" href="#">Productie</a>
                     <ul class="subs">
-                        <li><a href="../users/producten.jsp">Toevoegen/verwijderen</a></li>
-                        <li><a href="../users/productToevoegen.jsp">Aanpassen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/producten.jsp">Aanpassen/verwijderen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/productToevoegen.jsp">Toevoegen</a></li>
                         
                     </ul>
                 </li>
                 <li><a href="#">Inventarisatie</a>
                     <ul class="subs">
-                        <li><a href="../users/invAanpassen.jsp">Toevoegen/verwijderen</a></li>
-                        <li><a href="../users/invToevoegen.jsp">Aanpassen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/inventaris.jsp">Verwijderen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/inventToevoegen.jsp">Toevoegen</a></li>
                         
                     </ul>
                 </li>

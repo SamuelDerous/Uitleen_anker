@@ -6,22 +6,25 @@
 package databank;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblProduct.findByAankoopprijs", query = "SELECT t FROM TblProduct t WHERE t.aankoopprijs = :aankoopprijs"),
     @NamedQuery(name = "TblProduct.findByBreukprijs", query = "SELECT t FROM TblProduct t WHERE t.breukprijs = :breukprijs"),
     @NamedQuery(name = "TblProduct.findByAantal", query = "SELECT t FROM TblProduct t WHERE t.aantal = :aantal"),
-    @NamedQuery(name = "TblProduct.findByBeschrijving", query = "SELECT t FROM TblProduct t WHERE t.beschrijving = :beschrijving")})
+    @NamedQuery(name = "TblProduct.findByWebsite", query = "SELECT t FROM TblProduct t WHERE t.website = :website"),
+    @NamedQuery(name = "TblProduct.findByAankoopdatum", query = "SELECT t FROM TblProduct t WHERE t.aankoopdatum = :aankoopdatum")})
 public class TblProduct implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,17 +60,19 @@ public class TblProduct implements Serializable {
     private Double breukprijs;
     @Column(name = "aantal")
     private Integer aantal;
-    @Size(max = 50)
-    @Column(name = "beschrijving")
-    private String beschrijving;
     @Lob
     @Size(max = 65535)
     @Column(name = "opmerking")
     private String opmerking;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")
-    private Collection<TblInventarisatie> tblInventarisatieCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spel")
-    private Collection<TblUitleen> tblUitleenCollection;
+    @Size(max = 150)
+    @Column(name = "website")
+    private String website;
+    @Column(name = "Aankoopdatum")
+    @Temporal(TemporalType.DATE)
+    private Date aankoopdatum;
+    @JoinColumn(name = "beschrijving", referencedColumnName = "soort")
+    @ManyToOne
+    private TblBeschrijving beschrijving;
 
     public TblProduct() {
     }
@@ -115,14 +121,6 @@ public class TblProduct implements Serializable {
         this.aantal = aantal;
     }
 
-    public String getBeschrijving() {
-        return beschrijving;
-    }
-
-    public void setBeschrijving(String beschrijving) {
-        this.beschrijving = beschrijving;
-    }
-
     public String getOpmerking() {
         return opmerking;
     }
@@ -131,22 +129,34 @@ public class TblProduct implements Serializable {
         this.opmerking = opmerking;
     }
 
-    @XmlTransient
-    public Collection<TblInventarisatie> getTblInventarisatieCollection() {
-        return tblInventarisatieCollection;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setTblInventarisatieCollection(Collection<TblInventarisatie> tblInventarisatieCollection) {
-        this.tblInventarisatieCollection = tblInventarisatieCollection;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    @XmlTransient
-    public Collection<TblUitleen> getTblUitleenCollection() {
-        return tblUitleenCollection;
+    public Date getAankoopdatum() {
+        try {
+            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date dAankoopdatum = (Date) formatter.parse(aankoopdatum.toString());
+            return dAankoopdatum;
+        } catch(Exception ex) {
+            return aankoopdatum;
+        }
     }
 
-    public void setTblUitleenCollection(Collection<TblUitleen> tblUitleenCollection) {
-        this.tblUitleenCollection = tblUitleenCollection;
+    public void setAankoopdatum(Date aankoopdatum) {
+        this.aankoopdatum = aankoopdatum;
+    }
+
+    public TblBeschrijving getBeschrijving() {
+        return beschrijving;
+    }
+
+    public void setBeschrijving(TblBeschrijving beschrijving) {
+        this.beschrijving = beschrijving;
     }
 
     @Override
