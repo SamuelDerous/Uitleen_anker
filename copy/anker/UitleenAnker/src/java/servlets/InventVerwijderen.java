@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -36,7 +37,8 @@ public class InventVerwijderen extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           String inventId = request.getParameter("invent");
+            String web = (String) request.getSession().getAttribute("web");
+            String inventId = request.getParameter("invent");
             SessionFactory factory = HibernateFactory.getSessionFactory();
             Session session = factory.openSession();
             Transaction tx = session.beginTransaction();
@@ -47,7 +49,8 @@ public class InventVerwijderen extends HttpServlet {
             session.close();
             
             if(resultaat > 0) {
-                response.sendRedirect("users/producten.jsp");
+                String test = web;
+                response.sendRedirect(web);
                 
                 
             }

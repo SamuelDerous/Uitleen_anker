@@ -3,6 +3,7 @@
     Created on : 20-mei-2017, 17:36:35
     Author     : zenodotus
 --%>
+<%@page import="databank.TblInventarisatie"%>
 <% if((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals("")) && session.getAttribute("soort").equals("gebruiker")) { %>
 <%@page import="databank.TblBeschrijving"%>
 <%@page import="databank.TblProduct"%>
@@ -28,13 +29,19 @@
                 
                 Query zoeken = sessie.createQuery("from TblProduct where id = :id");
                 Query soort = sessie.createQuery("from TblBeschrijving");
+                
                 zoeken.setParameter("id", product);
+                
                 List<TblProduct> producten = zoeken.list();
                 List<TblBeschrijving> soorten = soort.list();
+                Query invent = sessie.createQuery("from TblInventarisatie where product = :product");
+                invent.setParameter("product", producten.get(0));
+                List<TblInventarisatie> invents = invent.list();
                 sessie.close();
+                session.setAttribute("web", "/UitleenAnker/faces/users/productAanpassen.jsp?product=" + product);
                 %>
                   </div></td></tr>
-                                                <tr><td><input type="hidden" name="product" value="<%=producten.get(0).getId()%>"/>Gebruikersnaam:</td><td><b><span name="product"><%= producten.get(0).getNaam()%></span></b> </td></tr>
+                                                <tr><td><input type="hidden" name="website" value="/UitleenAnker/faces/users/productAanpassen.jsp?product=<%=producten.get(0).getId()%>" /><input type="hidden" name="product" value="<%=producten.get(0).getId()%>"/>Gebruikersnaam:</td><td><b><span name="product"><%= producten.get(0).getNaam()%></span></b> </td></tr>
                                                 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 <tr><td>Aankoopprijs<span id="vereist">*</span> </td><td><input type="text" value="<%= producten.get(0).getAankoopprijs() %>" class="invullen" name="txtAankoopprijs" id="txtAankoopprijs" onKeypress="correct(this);"/></td></tr>
                                                 <tr><td>Breukprijs:<span id="vereist">*</span> </td><td><input type="text" value="<%= producten.get(0).getBreukprijs() %>" class="invullen" name="txtBreukprijs" id="txtBreukprijs" onKeypress="correct(this)" /></td></tr>
@@ -52,7 +59,19 @@
                                                 <tr><td colspan="2" align="center"><input type="submit" value="Aanpassen" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
         </table>
+                                                
 </form>
+                                                                        <% if(!invents.isEmpty()) {
+                                                                            int som = 0;%>
+                                                                            <h2 align="center">Inventarisatie</h2>
+                                                <table border="1" width="100%">
+                                                    <thead><td><b>Naam Product</b></td><td><b>Aantal</b></td><td>&nbsp;</td></thead>
+                                                    <% for(int i = 0; i < invents.size(); i++) {
+                                                        %><tr><td><%=invents.get(i).getProduct().getNaam()%></td><td><%=invents.get(i).getAantal()%></td><td><a href="../InventVerwijderen.do?invent=<%= invents.get(i).getId()%>">Verwijderen</a></td></tr>
+                                                        <% som += invents.get(i).getAantal(); }%>
+                                                        <tr><td>TOTAAL: </td><td><%=som%></td><td>&nbsp;</td></tr>
+                                                        </table>
+                                                        <%}%>
     </article>
 </section>
 </div>

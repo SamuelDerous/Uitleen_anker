@@ -20,9 +20,12 @@
                 SessionFactory factory = HibernateFactory.getSessionFactory();
                 Session sessie = factory.openSession();
                 Query zoeken = sessie.createQuery("from TblInventarisatie");
-                List<TblInventarisatie> invents = zoeken.list(); 
+                List<TblInventarisatie> invents = zoeken.list();
+                request.setAttribute("web", "users/inventaris.jsp");
+                
                 for(int i = 0; i < invents.size(); i++) {
                     request.setAttribute("inventaris", invents.get(i).getId());
+                    session.setAttribute("web", "/UitleenAnker/faces/users/inventaris.jsp");
                 %>
                 
                 <tr><td><%=invents.get(i).getProduct().getNaam()%></td>
