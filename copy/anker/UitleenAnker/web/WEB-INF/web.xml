@@ -78,6 +78,10 @@
         <servlet-name>InventToevoegen</servlet-name>
         <servlet-class>servlets.InventToevoegen</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Zoeken</servlet-name>
+        <servlet-class>servlets.Zoeken</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -129,6 +133,10 @@
     <servlet-mapping>
         <servlet-name>InventToevoegen</servlet-name>
         <url-pattern>/InventToevoegen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Zoeken</servlet-name>
+        <url-pattern>/Zoeken.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -41,8 +41,8 @@
           <%}%>
         </div>
         <div id="dataMenu">
-        	<form method="post" action="zoeken.do">
-				<input type="text" id="txtZoeken" placeholder="Geef een zoekterm in" size="25" />
+        	<form method="post" action="../Zoeken.do">
+				<input type="text" id="txtZoeken" name="txtZoeken" placeholder="Geef een zoekterm in" size="25" />
 				<input type="submit" value="Zoeken" />        	
         	</form>
         	<hr />

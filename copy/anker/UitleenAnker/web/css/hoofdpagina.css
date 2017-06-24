@@ -56,4 +56,11 @@ hr {
     color: red;
 }
 
+#zoekItem:hover {
+    display: block;
+    background-color:#ebd621;
+    font-weight: bold;
+
+}
+
 
