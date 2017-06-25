@@ -57,10 +57,15 @@ hr {
 }
 
 #zoekItem:hover {
-    display: block;
+    
     background-color:#ebd621;
     font-weight: bold;
 
+}
+
+.uitgeleend {
+    color:blue;
+    font-weight: bold;
 }
 
 

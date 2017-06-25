@@ -13,6 +13,6 @@
     <mapping class="databank.TblInventarisatie"/>
     <mapping class="databank.TblProduct"/>
     <mapping class="databank.TblUitleen"/>
-    
+    <mapping class="databank.TblReservatie"/>
   </session-factory>
 </hibernate-configuration>
