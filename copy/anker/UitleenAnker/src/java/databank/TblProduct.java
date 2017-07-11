@@ -6,8 +6,7 @@
 package databank;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,12 +20,13 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,8 +46,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblProduct.findByAankoopdatum", query = "SELECT t FROM TblProduct t WHERE t.aankoopdatum = :aankoopdatum")})
 public class TblProduct implements Serializable {
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "tblProduct")
-    private TblReservatie tblReservatie;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spel")
+    private Collection<TblUitleen> tblUitleenCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -143,13 +143,7 @@ public class TblProduct implements Serializable {
     }
 
     public Date getAankoopdatum() {
-        try {
-            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            Date dAankoopdatum = (Date) formatter.parse(aankoopdatum.toString());
-            return dAankoopdatum;
-        } catch(Exception ex) {
-            return aankoopdatum;
-        }
+        return aankoopdatum;
     }
 
     public void setAankoopdatum(Date aankoopdatum) {
@@ -189,12 +183,13 @@ public class TblProduct implements Serializable {
         return "databank.TblProduct[ id=" + id + " ]";
     }
 
-    public TblReservatie getTblReservatie() {
-        return tblReservatie;
+    @XmlTransient
+    public Collection<TblUitleen> getTblUitleenCollection() {
+        return tblUitleenCollection;
     }
 
-    public void setTblReservatie(TblReservatie tblReservatie) {
-        this.tblReservatie = tblReservatie;
+    public void setTblUitleenCollection(Collection<TblUitleen> tblUitleenCollection) {
+        this.tblUitleenCollection = tblUitleenCollection;
     }
     
 }

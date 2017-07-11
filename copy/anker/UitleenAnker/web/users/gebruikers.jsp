@@ -31,7 +31,10 @@
                     <td><%=personen.get(i).getAdres()%></td>
                     <td><%=personen.get(i).getTelefoon()%></td>
                     <td><%=personen.get(i).getEMail()%></td>
-                    <td><a href="../Gebruikers.do?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Verwijderen</a><br><a href="gebAanpassen.jsp?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Aanpassen</a></td></tr>
+                    <td><a href="../Gebruikers.do?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Verwijderen</a><br>
+                        <a href="gebAanpassen.jsp?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Aanpassen</a><br>
+                        <a href="GebUitlenen.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Uitlenen</a><br>
+                        <a href="Reserveren.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Reserveren</a></td></tr>
                 <%}
                 sessie.close();
                 %>

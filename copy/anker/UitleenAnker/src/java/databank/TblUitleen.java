@@ -41,6 +41,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblUitleen.findByHuurprijs", query = "SELECT t FROM TblUitleen t WHERE t.huurprijs = :huurprijs")})
 public class TblUitleen implements Serializable {
 
+    @Column(name = "aantal")
+    private Integer aantal;
+    @Column(name = "teruggebracht")
+    @Temporal(TemporalType.DATE)
+    private Date teruggebracht;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -170,6 +176,22 @@ public class TblUitleen implements Serializable {
     @Override
     public String toString() {
         return "databank.TblUitleen[ id=" + id + " ]";
+    }
+
+    public Integer getAantal() {
+        return aantal;
+    }
+
+    public void setAantal(Integer aantal) {
+        this.aantal = aantal;
+    }
+
+    public Date getTeruggebracht() {
+        return teruggebracht;
+    }
+
+    public void setTeruggebracht(Date teruggebracht) {
+        this.teruggebracht = teruggebracht;
     }
     
 }

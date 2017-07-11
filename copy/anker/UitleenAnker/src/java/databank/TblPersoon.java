@@ -41,6 +41,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblPersoon.findByWachtwoord", query = "SELECT t FROM TblPersoon t WHERE t.wachtwoord = :wachtwoord")})
 public class TblPersoon implements Serializable {
 
+    @OneToMany(mappedBy = "gebruiker")
+    private Collection<TblReservatie> tblReservatieCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -176,6 +179,15 @@ public class TblPersoon implements Serializable {
     @Override
     public String toString() {
         return "databank.TblPersoon[ gebruikersnaam=" + gebruikersnaam + " ]";
+    }
+
+    @XmlTransient
+    public Collection<TblReservatie> getTblReservatieCollection() {
+        return tblReservatieCollection;
+    }
+
+    public void setTblReservatieCollection(Collection<TblReservatie> tblReservatieCollection) {
+        this.tblReservatieCollection = tblReservatieCollection;
     }
     
 }

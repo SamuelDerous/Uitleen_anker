@@ -3,6 +3,17 @@
     Created on : 20-mei-2017, 5:09:16
     Author     : zenodotus
 --%>
+<%@page import="databank.TblUitleen"%>
+<%@page import="databank.TblReservatie"%>
+<%@page import="java.sql.Date"%>
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.List"%>
+<%@page import="databank.TblProduct"%>
+<%@page import="org.hibernate.Query"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="databank.adapter.HibernateFactory"%>
+<%@page import="org.hibernate.SessionFactory"%>
+
 <% String gebruiker = (String) session.getAttribute("gebruikersnaam");
 String soort = (String) session.getAttribute("soort"); %>
 <%if((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals(""))
@@ -12,7 +23,7 @@ String soort = (String) session.getAttribute("soort"); %>
             <ul id="nav">
                 <li><a class="hsubs" href="#">Uitlenen</a>
                     <ul class="subs">
-                        <li><a href="/UitleenAnker/faces/users/uitlenen.jsp">Uitlenen</a></li>
+                        <li><a href="/UitleenAnker/faces/users/uitleningen.jsp">Uitlenen</a></li>
                         <li><a href="/UitleenAnker/faces/users/reservaties.jsp">Reservaties</a></li>
                         
                     </ul>
@@ -39,8 +50,10 @@ String soort = (String) session.getAttribute("soort"); %>
                     </ul>
                 </li>
                 
+                
                 <div id="lavalamp"></div>
             </ul>
 
         </div>
+        
 <%}%>

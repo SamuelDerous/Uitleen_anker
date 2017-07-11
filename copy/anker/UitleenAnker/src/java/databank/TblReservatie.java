@@ -14,9 +14,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,9 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "TblReservatie.findAll", query = "SELECT t FROM TblReservatie t"),
     @NamedQuery(name = "TblReservatie.findById", query = "SELECT t FROM TblReservatie t WHERE t.id = :id"),
-    @NamedQuery(name = "TblReservatie.findByProduct", query = "SELECT t FROM TblReservatie t WHERE t.product = :product"),
     @NamedQuery(name = "TblReservatie.findByReservatieDatum", query = "SELECT t FROM TblReservatie t WHERE t.reservatieDatum = :reservatieDatum"),
-    @NamedQuery(name = "TblReservatie.findByOphaalDatum", query = "SELECT t FROM TblReservatie t WHERE t.ophaalDatum = :ophaalDatum")})
+    @NamedQuery(name = "TblReservatie.findByAantal", query = "SELECT t FROM TblReservatie t WHERE t.aantal = :aantal")})
 public class TblReservatie implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,17 +42,17 @@ public class TblReservatie implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "product")
-    private Integer product;
     @Column(name = "reservatieDatum")
     @Temporal(TemporalType.DATE)
     private Date reservatieDatum;
-    @Column(name = "ophaalDatum")
-    @Temporal(TemporalType.DATE)
-    private Date ophaalDatum;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private TblProduct tblProduct;
+    @Column(name = "aantal")
+    private Integer aantal;
+    @JoinColumn(name = "product", referencedColumnName = "id")
+    @ManyToOne
+    private TblProduct product;
+    @JoinColumn(name = "gebruiker", referencedColumnName = "gebruikersnaam")
+    @ManyToOne
+    private TblPersoon gebruiker;
 
     public TblReservatie() {
     }
@@ -70,14 +69,6 @@ public class TblReservatie implements Serializable {
         this.id = id;
     }
 
-    public Integer getProduct() {
-        return product;
-    }
-
-    public void setProduct(Integer product) {
-        this.product = product;
-    }
-
     public Date getReservatieDatum() {
         return reservatieDatum;
     }
@@ -86,20 +77,28 @@ public class TblReservatie implements Serializable {
         this.reservatieDatum = reservatieDatum;
     }
 
-    public Date getOphaalDatum() {
-        return ophaalDatum;
+    public Integer getAantal() {
+        return aantal;
     }
 
-    public void setOphaalDatum(Date ophaalDatum) {
-        this.ophaalDatum = ophaalDatum;
+    public void setAantal(Integer aantal) {
+        this.aantal = aantal;
     }
 
-    public TblProduct getTblProduct() {
-        return tblProduct;
+    public TblProduct getProduct() {
+        return product;
     }
 
-    public void setTblProduct(TblProduct tblProduct) {
-        this.tblProduct = tblProduct;
+    public void setProduct(TblProduct product) {
+        this.product = product;
+    }
+
+    public TblPersoon getGebruiker() {
+        return gebruiker;
+    }
+
+    public void setGebruiker(TblPersoon gebruiker) {
+        this.gebruiker = gebruiker;
     }
 
     @Override

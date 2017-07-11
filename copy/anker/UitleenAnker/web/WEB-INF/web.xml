@@ -82,6 +82,30 @@
         <servlet-name>Zoeken</servlet-name>
         <servlet-class>servlets.Zoeken</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Reserveren</servlet-name>
+        <servlet-class>servlets.Reserveren</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReservatieVerwijderen</servlet-name>
+        <servlet-class>servlets.ReservatieVerwijderen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Omzetten</servlet-name>
+        <servlet-class>servlets.Omzetten</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Terugbrengen</servlet-name>
+        <servlet-class>servlets.Terugbrengen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductUitlenen</servlet-name>
+        <servlet-class>servlets.ProductUitlenen</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Uitlenen</servlet-name>
+        <servlet-class>servlets.Uitlenen</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
@@ -137,6 +161,30 @@
     <servlet-mapping>
         <servlet-name>Zoeken</servlet-name>
         <url-pattern>/Zoeken.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Reserveren</servlet-name>
+        <url-pattern>/Reserveren.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservatieVerwijderen</servlet-name>
+        <url-pattern>/ReservatieVerwijderen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Omzetten</servlet-name>
+        <url-pattern>/Omzetten.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Terugbrengen</servlet-name>
+        <url-pattern>/Terugbrengen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductUitlenen</servlet-name>
+        <url-pattern>/ProductUitlenen.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Uitlenen</servlet-name>
+        <url-pattern>/Uitlenen.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
