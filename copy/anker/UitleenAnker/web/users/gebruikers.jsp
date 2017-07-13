@@ -3,6 +3,7 @@
     Created on : 20-mei-2017, 12:14:16
     Author     : zenodotus
 --%>
+<%@page import="databank.TblProduct"%>
 <% if((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals("")) && session.getAttribute("soort").equals("gebruiker")) { %>
 <%@page import="databank.TblPersoon"%>
 <%@page import="org.hibernate.Session"%>
@@ -33,8 +34,134 @@
                     <td><%=personen.get(i).getEMail()%></td>
                     <td><a href="../Gebruikers.do?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Verwijderen</a><br>
                         <a href="gebAanpassen.jsp?gebruiker=<%= personen.get(i).getGebruikersnaam()%>">Aanpassen</a><br>
-                        <a href="GebUitlenen.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Uitlenen</a><br>
-                        <a href="Reserveren.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Reserveren</a></td></tr>
+                        <script>
+                    $(function () {
+                            var dialog;
+
+                            // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+                            $("#dialog:ui-dialog").dialog("destroy");
+
+
+
+                            $("#uitleen<%=i%>").hide();
+
+                            dialog = $("#uitleen<%=i%>").dialog({
+                                autoOpen: false,
+                                height: 400,
+                                width: 350,
+                                modal: true,
+                                closeOnEscape: true,
+                                buttons: {
+                                    "Uitlenen": function () {
+                                        
+                                        $("#doen<%=i%>").submit();
+                                    }
+
+                                },
+                                close: function () {
+                                    dialog.dialog("close");
+
+                                }
+                            });
+
+
+
+
+                            $("#uitlenen<%=i%>").on("click", function (event) {
+                                event.preventDefault();
+                                dialog.dialog("open");
+                            });
+                        }
+                        );
+                </script>
+                    <a href="#" id="uitlenen<%=i%>">Uitlenen</a>
+                    <div id="uitleen<%=i%>" title="Uitlening" align="center">
+                            
+                        <form id="doen<%=i%>" action="../Uitlenen.do" method="post">
+                            
+                           <input type="hidden" value="<%=personen.get(i).getGebruikersnaam()%>" name="slctPersonen" />
+                           <input type="hidden" value="/users/gebruikers.jsp" name="website" />
+                            <% 
+                                Query qryProduct = sessie.createQuery("from TblProduct order by naam");
+                                
+                                List<TblProduct> producten = qryProduct.list(); %>
+                                
+                                
+                                <select name="productId">
+                                    <%for(int k = 0; k < producten.size(); k++) {%>
+                                    <option value="<%=producten.get(k).getId()%>"><%=producten.get(k).getNaam()%></option>
+                                    <%}%>
+                                </select>
+                                
+                                
+                            <input type="text" placeholder="aantal" size="4" name="txtAantal" />
+                        </form>
+
+                    </div>
+
+                        <br>
+                           <script>
+                    $(function () {
+                            var dialog;
+
+                            // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
+                            $("#dialog:ui-dialog").dialog("destroy");
+
+
+
+                            $("#reserveer<%=i%>").hide();
+
+                            dialog = $("#reserveer<%=i%>").dialog({
+                                autoOpen: false,
+                                height: 400,
+                                width: 350,
+                                modal: true,
+                                closeOnEscape: true,
+                                buttons: {
+                                    "Reserveren": function () {
+                                        
+                                        $("#reserve<%=i%>").submit();
+                                    }
+
+                                },
+                                close: function () {
+                                    dialog.dialog("close");
+
+                                }
+                            });
+
+
+
+
+                            $("#reserveren<%=i%>").on("click", function (event) {
+                                event.preventDefault();
+                                dialog.dialog("open");
+                            });
+                        }
+                        );
+                </script>
+                        <a id="reserveren<%=i%>" href="Reserveren.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Reserveren</a>
+                    <div id="reserveer<%=i%>" title="Reserveren" align="center">
+                            
+                        <form id="reserve<%=i%>" action="../Reservatie.do" method="post">
+                            
+                           <input type="hidden" value="<%=personen.get(i).getGebruikersnaam()%>" name="gebruikersnaam" />
+                            
+                                
+                                
+                                <select name="id">
+                                    <%for(int k = 0; k < producten.size(); k++) {%>
+                                    <option value="<%=producten.get(k).getId()%>"><%=producten.get(k).getNaam()%></option>
+                                    <%}%>
+                                </select>
+                                
+                                
+                            <input type="text" placeholder="aantal" size="4" name="txtAantal" />
+                        </form>
+
+                    </div>
+
+                    </td></tr>
                 <%}
                 sessie.close();
                 %>

@@ -8,7 +8,6 @@ package servlets;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
-import databank.TblUitleen;
 import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -28,7 +28,7 @@ import static servlets.ProductAanpassen.isNumeric;
  *
  * @author zenodotus
  */
-public class Uitlenen extends HttpServlet {
+public class Reservatie extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,9 @@ public class Uitlenen extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("productId");
-            String gebruikersnaam = request.getParameter("slctPersonen");
             String aantal = request.getParameter("txtAantal");
-            String website = request.getParameter("website");
+            int id = Integer.parseInt(request.getParameter("id"));
+            String gebruiker = request.getParameter("gebruikersnaam");
             
             boolean correct = true;
             if(!isNumeric(aantal)) {
@@ -57,39 +56,34 @@ public class Uitlenen extends HttpServlet {
                 }
             }
             if(correct) {
-                TblUitleen uitleen = new TblUitleen();
+                TblReservatie reservatie = new TblReservatie();
                 SessionFactory factory = HibernateFactory.getSessionFactory();
                 Session session = factory.openSession();
                 Query qryGebruiker = session.createQuery("from TblPersoon where gebruikersnaam = :gebruiker");
-                qryGebruiker.setParameter("gebruiker", gebruikersnaam);
+                qryGebruiker.setParameter("gebruiker", gebruiker);
                 Query qryProduct = session.createQuery("from TblProduct where id = :id");
-                qryProduct.setParameter("id", Integer.parseInt(id));
+                qryProduct.setParameter("id", id);
                 GregorianCalendar cal = new GregorianCalendar();
                 Date datum = new Date(cal.getTimeInMillis());
                 TblProduct product = (TblProduct) qryProduct.list().get(0);
-                uitleen.setSpel(product);
+                reservatie.setProduct(product);
                 TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
-                uitleen.setNaam(persoon);
-                uitleen.setUitleendatum(datum);
-                uitleen.setAantal(Integer.parseInt(aantal));
-                GregorianCalendar calTermijn = new GregorianCalendar();
-                calTermijn.add(GregorianCalendar.DAY_OF_YEAR, 28);
-                Date termijn = new Date(calTermijn.getTimeInMillis());
-                uitleen.setTerugbrengdatum(termijn);
+                reservatie.setGebruiker(persoon);
+                reservatie.setReservatieDatum(datum);
+                reservatie.setAantal(Integer.parseInt(aantal));
                 
                 session.beginTransaction();
-                session.save(uitleen);
+                session.save(reservatie);
                 session.getTransaction().commit();
                 session.close();
-                RequestDispatcher view = request.getRequestDispatcher(website);
+                RequestDispatcher view = request.getRequestDispatcher("/users/gebruikers.jsp");
                 view.forward(request, response);
             
         } else {
-                RequestDispatcher view = request.getRequestDispatcher(website);
+                RequestDispatcher view = request.getRequestDispatcher("/users/gebruikers.jsp");
                 view.forward(request, response);
             }
-    }
-        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

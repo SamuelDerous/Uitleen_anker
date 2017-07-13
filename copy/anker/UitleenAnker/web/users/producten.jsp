@@ -44,9 +44,8 @@ crossorigin="anonymous"></script>
                 <td class="test"><a href="../ProductVerwijderen.do?product=<%= producten.get(i).getId()%>">Verwijderen</a><br>
                     
                     <a href="productAanpassen.jsp?product=<%= producten.get(i).getId()%>">Aanpassen</a><br>
-                        
                     <script>
-                        $(function () {
+                    $(function () {
                             var dialog;
 
                             // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
@@ -84,24 +83,26 @@ crossorigin="anonymous"></script>
                             });
                         }
                         );
-                    </script>
+                </script>
                     <a href="#" id="uitlenen<%=i%>">Uitlenen</a>
                     <div id="uitleen<%=i%>" title="Uitlening" align="center">
                             
                         <form id="doen<%=i%>" action="../Uitlenen.do" method="post">
-                            <%=producten.get(i).getId()%>
+                           
                            <input type="hidden" value="<%=producten.get(i).getId()%>" name="productId" />
+                           <input type="hidden" value="/users/producten.jsp" name="website" /> 
                             <% 
                                 Query personen = sessie.createQuery("from TblPersoon order by gebruikersnaam");
                                 
                                 List<TblPersoon> pers = personen.list(); %>
                                 
-                                <select name="slctPersonen">
+                                
+                                <select name="id">
                                     <%for(int k = 0; k < pers.size(); k++) {%>
-                                    <option value="<%=pers.get(k).getGebruikersnaam()%>"><%=pers.get(k).getGebruikersnaam()%>
-                                    <%}%>
+                                    <option value="<%=pers.get(k).getGebruikersnaam()%>"><%=pers.get(k).getGebruikersnaam()%></option>
+                                            
+                                            <%}%>
                                 </select>
-                                <%=i%>
                             <input type="text" placeholder="aantal" size="4" name="txtAantal" />
                         </form>
 
