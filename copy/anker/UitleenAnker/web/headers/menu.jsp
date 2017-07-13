@@ -23,6 +23,7 @@ String soort = (String) session.getAttribute("soort"); %>
             <ul id="nav">
                 <li><a class="hsubs" href="#">Uitlenen</a>
                     <ul class="subs">
+                        <li><a href="/UitleenAnker/faces/users/uitleningToevoegen.jsp">Toevoegen</a></li>
                         <li><a href="/UitleenAnker/faces/users/uitleningen.jsp">Uitlenen</a></li>
                         <li><a href="/UitleenAnker/faces/users/reservaties.jsp">Reservaties</a></li>
                         
