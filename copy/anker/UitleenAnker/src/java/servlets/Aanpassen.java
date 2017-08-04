@@ -45,7 +45,9 @@ public class Aanpassen extends HttpServlet {
             String telefoon = request.getParameter("txtTelefoon");
             String email = request.getParameter("txtEmail");
             String soort = request.getParameter("slctSoorten");
-            
+            if(soort == null || soort.equals("")) {
+                soort = "ontlener";
+            }
             SessionFactory factory = HibernateFactory.getSessionFactory();
             boolean correct = true;
             Session sessie = factory.openSession();

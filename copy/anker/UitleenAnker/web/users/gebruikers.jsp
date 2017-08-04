@@ -46,7 +46,7 @@
                             $("#uitleen<%=i%>").hide();
 
                             dialog = $("#uitleen<%=i%>").dialog({
-                                autoOpen: false,
+                                autoOpen: ${automatischOpenen},
                                 height: 400,
                                 width: 350,
                                 modal: true,
@@ -76,7 +76,12 @@
                 </script>
                     <a href="#" id="uitlenen<%=i%>">Uitlenen</a>
                     <div id="uitleen<%=i%>" title="Uitlening" align="center">
-                            
+                          <div id="foutmelding">
+                            <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
+                                Het maximaal aantal uitleningen is bereikt
+                                <%request.setAttribute("automatischOpenen", true);
+                            }%>
+                        </div>  
                         <form id="doen<%=i%>" action="../Uitlenen.do" method="post">
                             
                            <input type="hidden" value="<%=personen.get(i).getGebruikersnaam()%>" name="slctPersonen" />
@@ -112,7 +117,7 @@
                             $("#reserveer<%=i%>").hide();
 
                             dialog = $("#reserveer<%=i%>").dialog({
-                                autoOpen: false,
+                                autoOpen: ${automatischOpenen},
                                 height: 400,
                                 width: 350,
                                 modal: true,
@@ -142,7 +147,12 @@
                 </script>
                         <a id="reserveren<%=i%>" href="Reserveren.do?gebruiker=<%=personen.get(i).getGebruikersnaam()%>">Reserveren</a>
                     <div id="reserveer<%=i%>" title="Reserveren" align="center">
-                            
+                            <div id="foutmelding">
+                            <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
+                                Het maximaal aantal uitleningen is bereikt
+                                <%request.setAttribute("automatischOpenen", true);
+                            }%>
+                        </div>
                         <form id="reserve<%=i%>" action="../Reservatie.do" method="post">
                             
                            <input type="hidden" value="<%=personen.get(i).getGebruikersnaam()%>" name="gebruikersnaam" />

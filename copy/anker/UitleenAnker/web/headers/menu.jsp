@@ -57,4 +57,24 @@ String soort = (String) session.getAttribute("soort"); %>
 
         </div>
         
+<%} else if ((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals(""))
+        && (session.getAttribute("soort") != null && (session.getAttribute("soort").equals("medewerker") || session.getAttribute("soort").equals("ontlener")))) { %>
+<div class="container">
+
+            <ul id="nav">
+                <li><a class="hsubs" href="../ontleners/uitleningen.jsp?action=uitlening">Uitleningen</a>
+                    
+                </li>
+                <li><a class="hsubs" href="../ontleners/uitleningen.jsp?action=reservering">Reserveringen</a>
+                    
+                </li>
+                <li><a class="hsubs" href="../ontleners/account.jsp">Account</a>
+                    
+                </li>
+                
+                <div id="lavalamp"></div>
+            </ul>
+
+        </div>
+        
 <%}%>

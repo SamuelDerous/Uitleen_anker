@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import creatie.Aantal;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
@@ -12,8 +13,6 @@ import databank.adapter.HibernateFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -70,6 +69,13 @@ public class Reserveren extends HttpServlet {
                 GregorianCalendar cal = new GregorianCalendar();
                 Date datum = new Date(cal.getTimeInMillis());
                 TblProduct product = (TblProduct) qryProduct.list().get(0);
+                Aantal aantallen = new Aantal();
+                int maxAantal = aantallen.maxAantal(product, session);
+                if(maxAantal < Integer.parseInt(aantal)) {
+                    request.setAttribute("reservatie", "gereserveerd");
+                    RequestDispatcher view = request.getRequestDispatcher("reservatie.jsp");
+                    view.forward(request, response);
+                } else {
                 reservatie.setProduct(product);
                 TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
                 reservatie.setGebruiker(persoon);
@@ -82,7 +88,7 @@ public class Reserveren extends HttpServlet {
                 session.close();
                 RequestDispatcher view = request.getRequestDispatcher("reservatie.jsp");
                 view.forward(request, response);
-            
+                }
         } else {
                 RequestDispatcher view = request.getRequestDispatcher("reservatie.jsp");
                 view.forward(request, response);

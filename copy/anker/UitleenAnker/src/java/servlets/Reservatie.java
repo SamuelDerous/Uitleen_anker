@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import creatie.Aantal;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
@@ -56,6 +57,7 @@ public class Reservatie extends HttpServlet {
                 }
             }
             if(correct) {
+                Aantal aantallen = new Aantal();
                 TblReservatie reservatie = new TblReservatie();
                 SessionFactory factory = HibernateFactory.getSessionFactory();
                 Session session = factory.openSession();
@@ -66,6 +68,12 @@ public class Reservatie extends HttpServlet {
                 GregorianCalendar cal = new GregorianCalendar();
                 Date datum = new Date(cal.getTimeInMillis());
                 TblProduct product = (TblProduct) qryProduct.list().get(0);
+                int resAantal = aantallen.maxAantal(product, session);
+                if(resAantal < Integer.parseInt(aantal)) {
+                    request.setAttribute("reservatie", "gereserveerd");
+                    RequestDispatcher view = request.getRequestDispatcher("/users/gebruikers.jsp");
+                    view.forward(request, response);
+                } else {
                 reservatie.setProduct(product);
                 TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
                 reservatie.setGebruiker(persoon);
@@ -78,6 +86,7 @@ public class Reservatie extends HttpServlet {
                 session.close();
                 RequestDispatcher view = request.getRequestDispatcher("/users/gebruikers.jsp");
                 view.forward(request, response);
+                }
             
         } else {
                 RequestDispatcher view = request.getRequestDispatcher("/users/gebruikers.jsp");

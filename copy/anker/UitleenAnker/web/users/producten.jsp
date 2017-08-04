@@ -56,7 +56,7 @@ crossorigin="anonymous"></script>
                             $("#uitleen<%=i%>").hide();
 
                             dialog = $("#uitleen<%=i%>").dialog({
-                                autoOpen: false,
+                                autoOpen: ${automatischOpenen},
                                 height: 400,
                                 width: 350,
                                 modal: true,
@@ -86,7 +86,12 @@ crossorigin="anonymous"></script>
                 </script>
                     <a href="#" id="uitlenen<%=i%>">Uitlenen</a>
                     <div id="uitleen<%=i%>" title="Uitlening" align="center">
-                            
+                        <div id="foutmelding">
+                            <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
+                                Het maximaal aantal uitleningen is bereikt
+                                <%request.setAttribute("automatischOpenen", true);
+                            }%>
+                        </div>
                         <form id="doen<%=i%>" action="../Uitlenen.do" method="post">
                            
                            <input type="hidden" value="<%=producten.get(i).getId()%>" name="productId" />

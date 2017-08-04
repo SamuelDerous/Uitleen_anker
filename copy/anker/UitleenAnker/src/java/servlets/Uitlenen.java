@@ -5,6 +5,8 @@
  */
 package servlets;
 
+import creatie.Aantal;
+import databank.TblInventarisatie;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -49,6 +52,22 @@ public class Uitlenen extends HttpServlet {
             String website = request.getParameter("website");
             
             boolean correct = true;
+            boolean isUitgeleend = false;
+            boolean isGereserveerd = false;
+            
+            SessionFactory factory = HibernateFactory.getSessionFactory();
+            Session session = factory.openSession();
+            Query qryGebruiker = session.createQuery("from TblPersoon where gebruikersnaam = :gebruiker");
+            qryGebruiker.setParameter("gebruiker", gebruikersnaam);
+            Query qryProduct = session.createQuery("from TblProduct where id = :id");
+            qryProduct.setParameter("id", Integer.parseInt(id));
+            TblProduct product = (TblProduct) qryProduct.list().get(0);
+            TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
+            Aantal aantallen = new Aantal();
+            int aantalUitlenen = aantallen.aantalUitgeleend(product, session);
+            int aantalReservaties = aantallen.aantalReservaties(product, session);
+                  
+                        
             if(!isNumeric(aantal)) {
                 if(aantal.equals("")) {
                     aantal = "1";
@@ -56,19 +75,24 @@ public class Uitlenen extends HttpServlet {
                     correct = false;
                 }
             }
+            if(isNumeric(aantal)) {
+                if((aantalUitlenen + Integer.parseInt(aantal)) > (aantalUitlenen)) {
+                    isUitgeleend = true;
+                    correct = false;
+                }
+                if(aantalReservaties + (Integer.parseInt(aantal)) > (aantalReservaties)) {
+                    isGereserveerd = true;
+                    correct = false;
+                }
+            }
+            
             if(correct) {
                 TblUitleen uitleen = new TblUitleen();
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session session = factory.openSession();
-                Query qryGebruiker = session.createQuery("from TblPersoon where gebruikersnaam = :gebruiker");
-                qryGebruiker.setParameter("gebruiker", gebruikersnaam);
-                Query qryProduct = session.createQuery("from TblProduct where id = :id");
-                qryProduct.setParameter("id", Integer.parseInt(id));
+                
                 GregorianCalendar cal = new GregorianCalendar();
                 Date datum = new Date(cal.getTimeInMillis());
-                TblProduct product = (TblProduct) qryProduct.list().get(0);
                 uitleen.setSpel(product);
-                TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
+                
                 uitleen.setNaam(persoon);
                 uitleen.setUitleendatum(datum);
                 uitleen.setAantal(Integer.parseInt(aantal));
@@ -85,9 +109,16 @@ public class Uitlenen extends HttpServlet {
                 view.forward(request, response);
             
         } else {
+                if(isGereserveerd) {
+                    request.setAttribute("reservering", "gereserveerd");
+                }
+                if(isUitgeleend) {
+                    request.setAttribute("uitlening", "uitgeleend");
+                }
                 RequestDispatcher view = request.getRequestDispatcher(website);
                 view.forward(request, response);
             }
+            
     }
         
     }

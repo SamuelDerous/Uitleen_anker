@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import creatie.Aantal;
 import creatie.EncryptionIni;
 import databank.TblPersoon;
 import databank.TblReservatie;
@@ -50,7 +51,16 @@ public class Omzetten extends HttpServlet {
             Query zoeken = session.createQuery("from TblReservatie where id = :id");
             zoeken.setParameter("id", Integer.parseInt(reservatieId));
             List<TblReservatie> reservatie = zoeken.list();
+            Aantal aantallen = new Aantal();
+            int aantalUitleningen = aantallen.aantalUitgeleend(reservatie.get(0).getProduct(), session);
             if(!reservatie.isEmpty()) {
+                if((aantalUitleningen + reservatie.get(0).getAantal()) > aantalUitleningen) {
+                    session.close();
+                    request.setAttribute("Uitlening", "uitgeleend");
+                    RequestDispatcher view = request.getRequestDispatcher("users/Reservaties.jsp");
+                    view.forward(request, response);
+                
+                } else {
                 TblUitleen uitlening = new TblUitleen();
                 uitlening.setNaam(reservatie.get(0).getGebruiker());
                 uitlening.setSpel(reservatie.get(0).getProduct());
@@ -69,7 +79,7 @@ public class Omzetten extends HttpServlet {
                 session.close();
                 RequestDispatcher view = request.getRequestDispatcher("users/Reservaties.jsp");
                 view.forward(request, response);
-                
+                }
             }
             
         }

@@ -15,6 +15,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+<script>
+    function bericht() {
+    <% if(request.getAttribute("reservatie") != null && request.getAttribute("reservatie").equals("gereserveerd")) {%>
+            alert("Het maximaal aantal reservaties is bereikt");
+        
+    <%}%>
+</script>
+    
 <section id="hoofdinhoud">
     <article id="gebruikers">
         <table border="1" width="100%">
@@ -33,7 +41,7 @@
                     <td><%=reservaties.get(i).getAantal()%></td>
                     <td><%=reservaties.get(i).getReservatieDatum()%>
                     <td><a href="../ReservatieVerwijderen.do?reservatie=<%= reservaties.get(i).getId()%>">Verwijderen</a><br>
-                        <a href="../Omzetten.do?reservatie=<%=reservaties.get(i).getId()%>">Uitlenen</a><br></td></tr>
+                        <a href="../Omzetten.do?reservatie=<%=reservaties.get(i).getId()%>" onclick="bericht();">Uitlenen</a><br></td></tr>
                 <%}
                 sessie.close();
                 %>
