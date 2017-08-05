@@ -66,6 +66,7 @@ public class Uitlenen extends HttpServlet {
             Aantal aantallen = new Aantal();
             int aantalUitlenen = aantallen.aantalUitgeleend(product, session);
             int aantalReservaties = aantallen.aantalReservaties(product, session);
+            int maxUitleningen = aantallen.maxAantal(product, session);
                   
                         
             if(!isNumeric(aantal)) {
@@ -76,11 +77,11 @@ public class Uitlenen extends HttpServlet {
                 }
             }
             if(isNumeric(aantal)) {
-                if((aantalUitlenen + Integer.parseInt(aantal)) > (aantalUitlenen)) {
+                if((aantalUitlenen + Integer.parseInt(aantal)) > maxUitleningen) {
                     isUitgeleend = true;
                     correct = false;
                 }
-                if(aantalReservaties + (Integer.parseInt(aantal)) > (aantalReservaties)) {
+                if(aantalReservaties + (Integer.parseInt(aantal)) > maxUitleningen) {
                     isGereserveerd = true;
                     correct = false;
                 }

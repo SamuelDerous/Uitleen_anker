@@ -5,6 +5,9 @@
  */
 package servlets;
 
+import creatie.MailSend;
+import databank.TblPersoon;
+import databank.TblProduct;
 import databank.TblReservatie;
 import databank.TblUitleen;
 import databank.adapter.HibernateFactory;
@@ -51,6 +54,19 @@ public class Terugbrengen extends HttpServlet {
                 GregorianCalendar cal = new GregorianCalendar();
                 Date datum = new Date(cal.getTimeInMillis());
                 uitleen.get(0).setTeruggebracht(datum);
+                TblProduct product = uitleen.get(0).getSpel();
+                TblPersoon persoon = uitleen.get(0).getNaam();
+                Query qryGereserveerd = session.createQuery("from TblReservatie where product = :product order by reservatiedatum");
+                qryGereserveerd.setParameter("product", product);
+                List<TblReservatie> reserveringen = qryGereserveerd.list();
+                if(!reserveringen.isEmpty()) {
+                    MailSend mailSend;
+                    mailSend = new MailSend("smtp.scarlet.be", "noreply@anker.be", reserveringen.get(0).getGebruiker().getEMail(), 
+                            "Uw reserveratie is binnen", "Geachte,\n Het product " + reserveringen.get(0).getProduct().getNaam() + " is binnengekomen. U kunt het vanaof nu afhalen.\n\nMet vriendelijke groeten,\nDe bibliotheek");
+                    mailSend.verzend();
+                    request.setAttribute("email", "verzonden");
+                }
+                
                 session.beginTransaction();
                 session.update(uitleen.get(0));
                 session.getTransaction().commit();

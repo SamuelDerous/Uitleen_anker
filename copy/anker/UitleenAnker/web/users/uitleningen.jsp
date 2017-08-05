@@ -19,6 +19,10 @@
     <article id="gebruikers">
         <table border="1" width="100%">
             <% 
+                if(request.getAttribute("email") != null && request.getAttribute("email").equals("verzonden")) {
+            %><script> alert("Dit product is gereserveerd er is naar de gebruiker een bericht gezonden");</script><%
+                    
+            }
                 SessionFactory factory = HibernateFactory.getSessionFactory();
                 Session sessie = factory.openSession();
                 Query zoeken = sessie.createQuery("from TblUitleen where teruggebracht = null or teruggebracht = ''");

@@ -41,7 +41,7 @@ public class Aantal {
         return aantalInvent + aantalUitlenen;
     }
     
-    public int aantalReservaties(TblProduct product, Session session) {
+    public int maxReservaties(TblProduct product, Session session) {
             Query qryReservaties = session.createQuery("from TblReservatie where product = :product");
             qryReservaties.setParameter("product", product);
             Query qryInventaris = session.createQuery("from TblInventarisatie where product = :product");
@@ -61,7 +61,7 @@ public class Aantal {
             
             return aantalReservaties + aantalInvent;
     }
-    public int maxReservaties(TblProduct product, Session session) {
+    public int aantalReservaties(TblProduct product, Session session) {
             Query qryReservaties = session.createQuery("from TblReservatie where product = :product");
             qryReservaties.setParameter("product", product);
             List<TblReservatie> reservaties = qryReservaties.list();
