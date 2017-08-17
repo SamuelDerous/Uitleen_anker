@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="default" extends="struts-default">
+        <action name="loginUser" class="com.action.LoginAction">
+            <result name="success">ingelogd.jsp</result>
+            <result name="input">inloggen.jsp</result>
+        </action>
+        <action name="registreren" class="com.action.RegistreerAction">
+            <result name="success">inloggen.jsp</result>
+            <result name="input">registreren.jsp</result>
+        </action>
+    </package>
+</struts>
