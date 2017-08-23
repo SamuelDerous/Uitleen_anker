@@ -5,15 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Uitloggen</title>
     </head>
     <body>
-        <% session.setAttribute("gebruikersnaam", null);
-        session.setAttribute("soort", null);
-        response.sendRedirect("inloggen.jsp"); %>
+        <c:remove var="gebruikersnaam" scope="session" />
+        <c:remove var="soort" scope="session" />
+        <c:redirect url="inloggen.jsp" />
     </body>
 </html>

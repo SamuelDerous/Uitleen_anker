@@ -17,7 +17,7 @@ import static servlets.ProductAanpassen.isNumeric;
  */
 public class RegistreerAction extends ActionSupport {
     
-    private String naam, voornaam, adres, telefoon, email, gebruikersnaam, wachtwoord, bevestig;
+    private String naam, voornaam, adres, telefoon, email, gebruikersnaam, wachtwoord, bevestig, soort;
 
     public String getNaam() {
         return naam;
@@ -82,6 +82,16 @@ public class RegistreerAction extends ActionSupport {
     public void setBevestig(String bevestig) {
         this.bevestig = bevestig;
     }
+
+    public String getSoort() {
+        return soort;
+    }
+
+    public void setSoort(String soort) {
+        this.soort = soort;
+    }
+    
+    
     
     @Override
     public String execute() {
@@ -91,35 +101,38 @@ public class RegistreerAction extends ActionSupport {
     @Override
     public void validate() {
         PersoonDao dao = new PersoonDao();
-        List<TblPersoon> notUnique = dao.gebruikers(gebruikersnaam);
+        TblPersoon notUnique = dao.getGebruiker(gebruikersnaam);
         boolean correct = true;
+        if(soort == null || soort.isEmpty()) {
+            soort = "ontlener";
+        }
         if(gebruikersnaam.isEmpty()) {
             correct = false;
-            addActionError("Er dient een unieke gebruikersnaam ingevuld te zijn. ");
+            addActionError("Er dient een unieke gebruikersnaam ingevuld te worden.<br>");
         }
         if(wachtwoord.isEmpty()) {
             correct = false;
-            addActionError("Er dient een wachtwoord opgegeven te worden.");
+            addActionError("Er dient een wachtwoord opgegeven te worden.<br>");
         }
         if(!bevestig.equals(wachtwoord)) {
             correct = false;
-            addActionError("Het wachtwoord is niet gelijk aan de bevestiging.");
+            addActionError("Het wachtwoord is niet gelijk aan de bevestiging.<br>");
         }
         if(email.isEmpty()) {
             correct = false;
-            addActionError("Er dient een correct e-mailadres opgegeven te worden");
+            addActionError("Er dient een correct e-mailadres opgegeven te worden.<br>");
         }
-        if(!notUnique.isEmpty()) {
+        if(notUnique != null) {
             correct = false;
-            addActionError("Deze gebruikersnaam is al in gebruik. Probeer een andere.");
+            addActionError("Deze gebruikersnaam is al in gebruik. Probeer een andere.<br>");
         }
         if(!isNumeric(telefoon)) {
             correct = false;
-            addActionError("Het telefoonnummer dient uitsluitend uit cijfers te bestaan.");
+            addActionError("Het telefoonnummer dient uitsluitend uit cijfers te bestaan.<br>");
         }
         if(correct == true) {
-            if(!dao.toevoegen(gebruikersnaam, voornaam, naam, wachtwoord, adres, telefoon, email, "ontlener")) {
-                addActionError("Er is iets fout gegaan tijdens de verwerking van uw registratie");
+            if(!dao.toevoegen(gebruikersnaam, voornaam, naam, wachtwoord, adres, telefoon, email, soort)) {
+                addActionError("Er is iets fout gegaan tijdens de verwerking van uw registratie.<br>");
             }
         }
         

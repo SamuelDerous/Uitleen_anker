@@ -11,8 +11,13 @@
 <%@page import="org.hibernate.Session"%>
 <%@page import="databank.adapter.HibernateFactory"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<s:set name="theme" value="'simple'" scope="page" />
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+
 
 <script type="text/javascript" src="../js/validation.js"></script>
 <% 
@@ -27,32 +32,31 @@
 <section id="hoofdinhoud">
 			<article id="formulier" align="center">
 				<h2 align="center">Gebruiker Toevoegen</h2>
-				<form method="post" action="/UitleenAnker/faces/Toevoegen.do" name="toevoegen" onSubmit="return leeg();">
+				<s:form method="post" action="toevoegen" name="toevoegen">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">
-                                                <%if((request.getAttribute("gebruikersnaamNotUnique") != null) && (request.getAttribute("gebruikersnaamNotUnique").equals("correct"))) { %>
-                                        Er bestaat al een gebruiker met deze gebruikersnaam; kies een andere
-                                    <%}%>
+                                                            <s:actionerror escape="false" />
                                                     </div></td></tr>
-                                                <tr><td>Gebruikersnaam:<span id="vereist">*</span></td><td><input type="text" class="invullen" name="txtGebruikersnaam" id="txtGebruikersnaam" onKeypress="correct(this);"/></td></tr>
-                                                <tr><td>Wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="txtWachtwoord" id="txtWachtwoord" onKeypress="correct(this)" /></td></tr>
-                                                <tr><td>Bevestig wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="txtBevestig" id="txtBevestig" onKeyUp="gelijkeWachtwoorden()" /></td></tr>
+                                                <tr><td>Gebruikersnaam:<span id="vereist">*</span></td><td><s:textfield cssClass="invullen" name="gebruikersnaam" id="txtGebruikersnaam"/></td></tr>
+                                                <tr><td>Wachtwoord:<span id="vereist">*</span> </td><td><s:password cssClass="invullen" name="wachtwoord" id="txtWachtwoord" /></td></tr>
+                                                <tr><td>Bevestig wachtwoord:<span id="vereist">*</span> </td><td><s:password cssClass="invullen" name="bevestig" id="txtBevestig"/></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-                                                <tr><td>Voornaam:<span id="vereist">*</span> </td><td><input type="text" value="<%= request.getAttribute("naam") == null ? "" : request.getAttribute("naam") %>" class="invullen" name="txtVoornaam" id="txtVoornaam" onKeypress="correct(this);"/></td></tr>
-                                                <tr><td>Naam:<span id="vereist">*</span> </td><td><input type="text" value="<%= request.getAttribute("voornaam") == null ? "" : request.getAttribute("voornaam") %>" class="invullen" name="txtNaam" id="txtNaam" onKeypress="correct(this)" /></td></tr>
-						<tr><td>Adres: </td><td><textarea id="txtAdres" name="txtAdres" class="invullen" rows="3" ><%= request.getAttribute("adres") == null ? "" : request.getAttribute("adres") %></textarea></td></tr>
-						<tr><td>Telefoon: </td><td><input type="text" class="invullen" value="<%= request.getAttribute("telefoon") == null ? "" : request.getAttribute("telefoon") %>" name="txtTelefoon" id="txtTelefoon" /></td></tr>
-                                                <tr><td>E-mail:<span id="vereist">*</span> </td><td><input type="email" value="<%= request.getAttribute("email") == null ? "" : request.getAttribute("email") %>" class="invullen" name="txtEmail" id="txtEmail" onKeypress="correct(this)"/></td></tr>
-                                                <tr><td>Soort gebruiker:</td><td><select name="slctSoorten" class="invullen">
-                                                                        <%for(int i = 0; i < soorten.size(); i++) {
-                                                                        %><option value="<%=soorten.get(i).getSoort()%>"><%=soorten.get(i).getSoort()%></option> 
-                                                                        <%}%>
-                                                        </select></td>
+                                                <tr><td>Voornaam:<span id="vereist">*</span> </td><td><s:textfield cssClass="invullen" name="voornaam" id="txtVoornaam"/></td></tr>
+                                                <tr><td>Naam:<span id="vereist">*</span> </td><td><s:textfield cssClass="invullen" name="naam" id="txtNaam" /></td></tr>
+						<tr><td>Adres: </td><td><s:textarea id="txtAdres" name="adres" cssClass="invullen" rows="3" ></s:textarea></td></tr>
+						<tr><td>Telefoon: </td><td><s:textfield cssClass="invullen" name="telefoon" id="txtTelefoon" /></td></tr>
+                                                <tr><td>E-mail:<span id="vereist">*</span> </td><td><s:textfield cssClass="invullen" name="email" id="txtEmail"/></td></tr>
+                                                <tr><td>Soort gebruiker:</td><td><select name="soort" class="invullen">
+                                                            <jsp:useBean id="soorten" class="databank.dao.SoortDao" />
+                                                            <c:forEach var="soortItem" items="${soorten.soorten}">
+                                                                <option value="${soortItem.soort}">${soortItem.soort}</option>
+                                                            </c:forEach>
+                                                                                                                               </select></td>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-						<tr><td colspan="2" align="center"><input type="submit" value="Toevoegen" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>
+						<tr><td colspan="2" align="center"><s:submit value="Toevoegen" id="txtSubmit" /><s:reset value="Wissen" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>						
 					</table>				
-				</form>			
+				</s:form>			
 			</article>      
       </section>
     </div>

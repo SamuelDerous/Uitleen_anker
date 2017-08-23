@@ -13,5 +13,31 @@
             <result name="success">inloggen.jsp</result>
             <result name="input">registreren.jsp</result>
         </action>
+        <action name="verwijderenGebruiker" class="com.action.GebruikerVerwijderenAction">
+            <result name="success">/users/gebruikers.jsp</result>
+            <result name="error">/users/gebruikers.jsp</result>
+        </action>
+        <action name="uitlenenGebruiker" class="com.action.UitlenenAction">
+            <result name="success">/users/gebruikers.jsp</result>
+            <result name="input">/users/gebruikers.jsp</result>
+        </action>
+        <action name="reservatieGebruiker" class="com.action.ReserverenAction">
+            <result name="success">/users/gebruikers.jsp</result>
+            <result name="input">/users/gebruikers.jsp</result>
+        </action>
+        <action name="gebAanpassen" class="com.action.GebruikerAanpassenAction">
+            <result name="success">/users/gebruikers.jsp</result>
+            <result name="input" >/users/gebAanpassen.jsp </result>
+            
+        </action>
+        <action name="gebruikers" class="com.action.Gebruiker">
+            <result name="success">/users/gebAanpassen.jsp?gebruikersnaam=${persoon.gebruikersnaam}
+            </result>
+            <result name="error">/users/gebruikers.jsp</result>
+        </action>
+        <action name="toevoegen" class="com.action.RegistreerAction">
+            <result name="success">/users/gebruikers.jsp</result>
+            <result name="input">/users/gebToevoegen.jsp</result>
+        </action>
     </package>
 </struts>

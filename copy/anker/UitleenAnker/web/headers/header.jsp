@@ -31,12 +31,12 @@
         <div id="menu" align="right">
             <% if(session.getAttribute("gebruikersnaam") != null && !(session.getAttribute("gebruikersnaam").equals(""))) {
                 %><ul><li>Welkom, <%=session.getAttribute("gebruikersnaam")%></li>
-                    <li><a href="uitloggen.jsp">Uitloggen</a></li>
+                    <li><a href="${pageContext.request.contextPath}/uitloggen.jsp">Uitloggen</a></li>
                 </ul>
             <%} else {%>
           <ul>
-            <li><a href="inloggen.jsp">Inloggen</a></li>
-            <li><a href="registreren.jsp">Registreren</a></li>
+            <li><a href="${pageContext.request.contextPath}/inloggen.jsp">Inloggen</a></li>
+            <li><a href="${pageContext.request.contextPath}/registreren.jsp">Registreren</a></li>
           </ul>
           <%}%>
         </div>

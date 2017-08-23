@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -35,13 +36,18 @@ public class PersoonDao {
         zoeken.setParameter("wachtwoord", wachtwoord);
         List<TblPersoon> personen = zoeken.list();
         return personen;
+
     }
     
-    public List<TblPersoon> gebruikers(String gebruikersnaam) {
-        Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam");
-        zoeken.setParameter("gebruikersnaam", gebruikersnaam);
-        List<TblPersoon> personen = zoeken.list();
-        return personen;
+    public TblPersoon getGebruiker(String gebruikersnaam) {
+        try {
+            Query zoeken = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam");
+            zoeken.setParameter("gebruikersnaam", gebruikersnaam);
+            List<TblPersoon> personen = zoeken.list();
+            return personen.get(0);
+        } catch (Exception ex) {
+            return null;
+        }
             
     }
     
@@ -76,5 +82,40 @@ public class PersoonDao {
             return false;
         }
             
-    } 
+    }
+    
+    public void aanpassen(TblPersoon gebruiker) {
+        Transaction tx = session.beginTransaction();
+            TblPersoon persoon = (TblPersoon) session.load(TblPersoon.class, gebruiker.getGebruikersnaam());
+            tx.commit();
+            persoon.setNaam(gebruiker.getNaam());
+            persoon.setVoornaam(gebruiker.getVoornaam());
+            persoon.setAdres(gebruiker.getAdres());
+            persoon.setTelefoon(gebruiker.getTelefoon());
+            persoon.setEMail(gebruiker.getEMail());
+            TblSoort tblSoort = new TblSoort();
+            persoon.setSoort(gebruiker.getSoort());
+            
+            Transaction updatePersoon = session.beginTransaction();
+            session.update(persoon);
+            updatePersoon.commit();
+            
+            
+    }
+    
+    public List<TblPersoon> getAlleGebruikers() {
+        Query zoeken = session.createQuery("from TblPersoon");
+        List<TblPersoon> personen = zoeken.list();
+        return personen;
+    }
+    
+    public int verwijderGebruiker(String gebruikersnaam) {
+            Transaction tx = session.beginTransaction();
+            Query zoeken = session.createQuery("delete from TblPersoon where gebruikersnaam = :gebruikersnaam");
+            zoeken.setParameter("gebruikersnaam", gebruikersnaam);
+            int resultaat = zoeken.executeUpdate();
+            tx.commit();
+            return resultaat;
+      
+    }
 }

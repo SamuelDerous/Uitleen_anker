@@ -6,15 +6,15 @@
 package creatie;
 
 import databank.TblInventarisatie;
-import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
 import databank.TblUitleen;
-import databank.adapter.HibernateFactory;
+import databank.dao.UitleenDao;
+import databank.dao.InventarisDao;
+import databank.dao.ProductDao;
+import databank.dao.ReservatieDao;
 import java.util.List;
-import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  *
@@ -23,13 +23,11 @@ import org.hibernate.SessionFactory;
 public class Aantal {
     
         
-    public int aantalUitgeleend(TblProduct product, Session session) {
-        Query qryUitleningen = session.createQuery("from TblUitleen where spel = :product and (teruggebracht <> null or teruggebracht <> '')");
-        qryUitleningen.setParameter("product", product);
-        Query qryInventaris = session.createQuery("from TblInventarisatie where product = :product");
-        qryInventaris.setParameter("product", product);
-        List<TblUitleen> uitleningen = qryUitleningen.list();
-        List<TblInventarisatie> inventaris = qryInventaris.list();
+    public int aantalUitgeleend(TblProduct product) {
+        UitleenDao uitleenDao = new UitleenDao();
+        InventarisDao inventarisDao = new InventarisDao();
+        List<TblUitleen> uitleningen = uitleenDao.getActieveUitleningen(product);
+        List<TblInventarisatie> inventaris = inventarisDao.getInventarisProduct(product);
         int aantalUitlenen = 0;
         int aantalInvent = 0;
         for(int i = 0; i < uitleningen.size(); i++) {
@@ -42,12 +40,10 @@ public class Aantal {
     }
     
     public int maxReservaties(TblProduct product, Session session) {
-            Query qryReservaties = session.createQuery("from TblReservatie where product = :product");
-            qryReservaties.setParameter("product", product);
-            Query qryInventaris = session.createQuery("from TblInventarisatie where product = :product");
-            qryInventaris.setParameter("product", product);
-            List<TblReservatie> reservaties = qryReservaties.list();
-            List<TblInventarisatie> inventaris = qryInventaris.list();
+            ReservatieDao reservatieDao = new ReservatieDao();
+            InventarisDao inventarisDao = new InventarisDao();
+            List<TblReservatie> reservaties = reservatieDao.getReservatiesProduct(product);
+            List<TblInventarisatie> inventaris = inventarisDao.getInventarisProduct(product);
             int aantalUitlenen = 0;
             int aantalReservaties = 0;
             int aantalInvent = 0;
@@ -61,10 +57,9 @@ public class Aantal {
             
             return aantalReservaties + aantalInvent;
     }
-    public int aantalReservaties(TblProduct product, Session session) {
-            Query qryReservaties = session.createQuery("from TblReservatie where product = :product");
-            qryReservaties.setParameter("product", product);
-            List<TblReservatie> reservaties = qryReservaties.list();
+    public int aantalReservaties(TblProduct product) {
+            ReservatieDao reservatieDao = new ReservatieDao();
+            List<TblReservatie> reservaties = reservatieDao.getReservatiesProduct(product);
             int aantalReservaties = 0;
             
             for(int i = 0; i < reservaties.size(); i++) {
@@ -74,18 +69,14 @@ public class Aantal {
             return aantalReservaties;
     }
     
-    public int maxAantal(TblProduct product, Session session) {
-        Query qryAantalProduct = session.createQuery("from TblProduct where id = :id");
-        qryAantalProduct.setParameter("id", product.getId());
-        Query qryAantalInvent = session.createQuery("from TblInventarisatie where product = :product");
-        qryAantalInvent.setParameter("product", product);
+    public int maxAantal(TblProduct product) {
+        ProductDao productDao = new ProductDao();
+        InventarisDao inventarisDao = new InventarisDao();
         int aantalProduct = 0;
         int aantalInvent = 0;
-        List<TblProduct> producten = qryAantalProduct.list();
-        List<TblInventarisatie> invents = qryAantalInvent.list();
-        for(int i = 0; i < producten.size(); i++) {
-            aantalProduct += producten.get(i).getAantal();
-        }
+        TblProduct producten = productDao.getProductById(product.getId());
+        List<TblInventarisatie> invents = inventarisDao.getInventarisProduct(product);
+        aantalProduct = producten.getAantal();
         for(int i = 0; i < invents.size(); i++) {
             aantalInvent += invents.get(i).getAantal();
         }
