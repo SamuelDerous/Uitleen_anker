@@ -13,28 +13,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <section id="hoofdinhoud">
     <article id="gebruikers">
         <table border="1" width="100%">
-            <% 
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session sessie = factory.openSession();
-                Query zoeken = sessie.createQuery("from TblInventarisatie");
-                List<TblInventarisatie> invents = zoeken.list();
-                request.setAttribute("web", "users/inventaris.jsp");
-                
-                for(int i = 0; i < invents.size(); i++) {
-                    request.setAttribute("inventaris", invents.get(i).getId());
-                    session.setAttribute("web", "/UitleenAnker/faces/users/inventaris.jsp");
-                %>
-                
-                <tr><td><%=invents.get(i).getProduct().getNaam()%></td>
-                    <td><%=invents.get(i).getAantal()%></td>
-                    <td><%=invents.get(i).getOpmerking()%></td>
-                    <td><a href="../InventVerwijderen.do?invent=<%= invents.get(i).getId()%>">Verwijderen</a><br></td></tr>
-                <%}
-                sessie.close();
-                %>
+            
+                <jsp:useBean id="invents" class="databank.dao.InventarisDao" />
+                <c:forEach var="invent" items="${invents.inventaris}">
+                <tr><td>${invent.product.naam}</td>
+                    <td>${invent.aantal}</td>
+                    <td>${invent.opmerking}</td>
+                    <td><a href="inventVerwijderen?invent=${invent.id}">Verwijderen</a><br></td></tr>
+                </c:forEach>
         </table>
     </article>
 </section>    

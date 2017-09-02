@@ -15,37 +15,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
 <script>
-    function bericht() {
-    <% if(request.getAttribute("reservatie") != null && request.getAttribute("reservatie").equals("gereserveerd")) {%>
-            alert("Het maximaal aantal reservaties is bereikt");
-        
-    <%}%>
+    
 </script>
     
 <section id="hoofdinhoud">
     <article id="gebruikers">
         <table border="1" width="100%">
-            <% 
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session sessie = factory.openSession();
-                Query zoeken = sessie.createQuery("from TblReservatie");
-                List<TblReservatie> reservaties = zoeken.list();
+            <tr><td colspan="5"><div id="foutmelding"><s:actionerror escape="false" /></div></td>
                 
-                
-                for(int i = 0; i < reservaties.size(); i++) {
-                    %>
-                
-                    <tr><td><%=reservaties.get(i).getGebruiker().getGebruikersnaam()%></td>
-                    <td><%=reservaties.get(i).getProduct().getNaam()%></td>
-                    <td><%=reservaties.get(i).getAantal()%></td>
-                    <td><%=reservaties.get(i).getReservatieDatum()%>
-                    <td><a href="../ReservatieVerwijderen.do?reservatie=<%= reservaties.get(i).getId()%>">Verwijderen</a><br>
-                        <a href="../Omzetten.do?reservatie=<%=reservaties.get(i).getId()%>" onclick="bericht();">Uitlenen</a><br></td></tr>
-                <%}
-                sessie.close();
-                %>
-        </table>
+                    <jsp:useBean id="reservaties" class="databank.dao.ReservatieDao" />
+                    <c:forEach var="reservatie" items="${reservaties.alleReservaties}">
+                    <tr><td>${reservatie.gebruiker.gebruikersnaam}</td>
+                    <td>${reservatie.product.naam}</td>
+                    <td>${reservatie.aantal}</td>
+                    <td>${reservatie.reservatieDatum}
+                    <td><a href="reservatieVerwijderen?reservatie=${reservatie.id}">Verwijderen</a><br>
+                        <a href="omzetten?reservatie=${reservatie.id}" onclick="bericht();">Uitlenen</a><br></td></tr>
+                    </c:forEach>
+                        </table>
     </article>
 </section>    
 </body>

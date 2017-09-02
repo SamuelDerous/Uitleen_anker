@@ -5,13 +5,16 @@
  */
 package databank.dao;
 
+import databank.TblBeschrijving;
 import databank.TblPersoon;
 import databank.TblProduct;
+import databank.TblSoort;
 import databank.adapter.HibernateFactory;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -38,5 +41,46 @@ public class ProductDao {
             
             return product;
             
+    }
+    
+    public int verwijderProduct(int id) {
+            
+            Transaction tx = session.beginTransaction();
+            Query zoeken = session.createQuery("delete from TblProduct where id = :id");
+            zoeken.setParameter("id", id);
+            int resultaat = zoeken.executeUpdate();
+            tx.commit();
+            return resultaat;
+      
+    }
+    
+    public void aanpassen(TblProduct product) {
+            Transaction tx = session.beginTransaction();
+            TblProduct productTabel = (TblProduct) session.load(TblProduct.class, product.getId());
+            tx.commit();
+            productTabel.setAankoopprijs(product.getAankoopprijs());
+            productTabel.setBreukprijs(product.getBreukprijs());
+            productTabel.setAantal(product.getAantal());
+            productTabel.setOpmerking(product.getOpmerking());
+            productTabel.setAankoopdatum(product.getAankoopdatum());
+            productTabel.setBeschrijving(product.getBeschrijving());
+            productTabel.setWebsite(product.getWebsite());
+            productTabel.setPlaats(product.getPlaats());
+            productTabel.setVolledig(product.getVolledig());
+            productTabel.setUitleentermijn(product.getUitleentermijn());
+            Transaction updateProduct = session.beginTransaction();
+            session.update(productTabel);
+            updateProduct.commit();
+            session.close();
+            
+            
+    }
+    
+    public void toevoegen(TblProduct product) {
+        Transaction tx = session.beginTransaction();
+        
+        session.save(product);
+        session.getTransaction().commit();
+        session.close();
     }
 }

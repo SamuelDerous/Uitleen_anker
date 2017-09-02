@@ -15,6 +15,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
 <section id="hoofdinhoud">
     <article id="gebruikers">
         <table border="1" width="100%">
@@ -23,26 +25,18 @@
             %><script> alert("Dit product is gereserveerd er is naar de gebruiker een bericht gezonden");</script><%
                     
             }
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session sessie = factory.openSession();
-                Query zoeken = sessie.createQuery("from TblUitleen where teruggebracht = null or teruggebracht = ''");
-                List<TblUitleen> uitleningen = zoeken.list();
-                
-                
-                for(int i = 0; i < uitleningen.size(); i++) {
                     %>
-                
-                    <tr><td><%=uitleningen.get(i).getNaam().getGebruikersnaam()%></td>
-                        <td><%=uitleningen.get(i).getSpel().getNaam()%></td>
-                    <td><%=uitleningen.get(i).getAantal()%></td>
-                    <td><%=uitleningen.get(i).getUitleendatum()%></td>
-                    <td><%=uitleningen.get(i).getTerugbrengdatum()%></td>
-                    <td><a href="../Terugbrengen.do?uitleen=<%=uitleningen.get(i).getId()%>">Teruggebracht</a><br>
-                        <a href="../uitleenAanpassen.jsp?uitleen=<%=uitleningen.get(i).getId()%>">Aanpassen</a><br />
-                        <a href="../verlengen.do?uitleen=<%=uitleningen.get(i).getId()%>">Verlengen</a></td></tr>
-                <%}
-                sessie.close();
-                %>
+                    <jsp:useBean id="uitleningen" class="databank.dao.UitleenDao" />
+                    <c:forEach var="uitlening" items="${uitleningen.actieveUitleningen}">
+                    <tr><td>${uitlening.naam.gebruikersnaam}</td>
+                        <td>${uitlening.spel.naam}</td>
+                    <td>${uitlening.aantal}</td>
+                    <td>${uitlening.uitleendatum}</td>
+                    <td>${uitlening.terugbrengdatum}</td>
+                    <td><a href="terugbrengen?uitleen=${uitlening.id}">Teruggebracht</a><br>
+                        <a href="uitleenAanpassen.jsp?uitleen=${uitlening.id}">Aanpassen</a><br />
+                        <a href="verlengen?uitleen=${uitlening.id}">Verlengen</a></td></tr>
+                    </c:forEach>
         </table>
     </article>
 </section>    

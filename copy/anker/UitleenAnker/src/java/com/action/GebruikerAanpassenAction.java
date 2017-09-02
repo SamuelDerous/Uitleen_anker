@@ -8,12 +8,12 @@ package com.action;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
+import static creatie.Controle.isNumeric;
 import databank.TblPersoon;
 import databank.TblSoort;
 import databank.dao.PersoonDao;
 import java.util.HashMap;
 import java.util.Map;
-import static servlets.ProductAanpassen.isNumeric;
 
 /**
  *

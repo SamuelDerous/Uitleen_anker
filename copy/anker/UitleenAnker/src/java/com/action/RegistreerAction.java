@@ -6,10 +6,9 @@
 package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
+import static creatie.Controle.isNumeric;
 import databank.TblPersoon;
 import databank.dao.PersoonDao;
-import java.util.List;
-import static servlets.ProductAanpassen.isNumeric;
 
 /**
  *

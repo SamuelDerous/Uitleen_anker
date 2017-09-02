@@ -46,6 +46,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblProduct.findByAankoopdatum", query = "SELECT t FROM TblProduct t WHERE t.aankoopdatum = :aankoopdatum")})
 public class TblProduct implements Serializable {
 
+    @Column(name = "uitleentermijn")
+    private Integer uitleentermijn;
+    @Size(max = 50)
+    @Column(name = "plaats")
+    private String plaats;
+    @Column(name = "volledig")
+    private Integer volledig;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spel")
     private Collection<TblUitleen> tblUitleenCollection;
 
@@ -190,6 +198,30 @@ public class TblProduct implements Serializable {
 
     public void setTblUitleenCollection(Collection<TblUitleen> tblUitleenCollection) {
         this.tblUitleenCollection = tblUitleenCollection;
+    }
+
+    public Integer getUitleentermijn() {
+        return uitleentermijn;
+    }
+
+    public void setUitleentermijn(Integer uitleentermijn) {
+        this.uitleentermijn = uitleentermijn;
+    }
+
+    public String getPlaats() {
+        return plaats;
+    }
+
+    public void setPlaats(String plaats) {
+        this.plaats = plaats;
+    }
+
+    public Integer getVolledig() {
+        return volledig;
+    }
+
+    public void setVolledig(Integer volledig) {
+        this.volledig = volledig;
     }
     
 }

@@ -15,43 +15,35 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+<%@taglib uri="/struts-tags" prefix="s"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <section id="hoofdinhoud">
     <article id="formulier" align="center">
 				<h2 align="center">Toevoegen</h2>
-				<form method="post" action="../Uitlenen.do" name="Toevoegen" onSubmit="return leeg();">
+				<form method="post" action="uitlenen" name="Toevoegen" onSubmit="return leeg();">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">
-                                                            <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
-                                                                    Het maximaal aantal uitleningen voor dit product zal overschreden worden.
-                                                             <%}%>
-                                                             <%if(request.getAttribute("reservering") != null && request.getAttribute("reservering").equals("gereserveerd")) {%>
-                                                                    Dit product is gereserveerd
-                                                             <%}%>
-            <% 
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session sessie = factory.openSession();
-                Query qryGebruikers = sessie.createQuery("from TblPersoon order by gebruikersnaam");
-                Query qryProducten = sessie.createQuery("from TblProduct order by naam");
-                List<TblPersoon> personen = qryGebruikers.list();
-                List<TblProduct> producten = qryProducten.list();
-                sessie.close();
-                %>
+                                                            <s:actionerror escape="false" />
+            
                   </div></td></tr>
-                                                <tr><td><input type="hidden" name="website" value="/users/uitleningToevoegen.jsp" />
-                                                        Gebruikersnaam<span id="vereist">*</span></td><td><input type="text" autocomplet="on" class="invullen" name="slctPersonen" id="txtGebruikersnaam" list="gebruikers" />
+                                                <tr><td><input type="hidden" name="action" value="toevoegen" />
+                                                        Gebruikersnaam<span id="vereist">*</span></td><td><input type="text" autocomplet="on" class="invullen" name="slctPersonen" id="gebruikersnaam" list="gebruikers" />
                                                         <datalist id="gebruikers">
-                                                            <%for(int i = 0; i < personen.size(); i++) {%>
-                                                            <option value="<%=personen.get(i).getGebruikersnaam()%>" />
-                                                            <%}%>
+                                                            <jsp:useBean id="personen" class="databank.dao.PersoonDao" />
+                                                            <c:forEach var="gebruiker" items="${pesonen.alleGebruikers}">
+                                                            <option value="${gebruiker.gebruikersnaam}" />
+                                                            </c:forEach>
                                                             
                                                         </datalist></td></tr>
                                                 <tr><td>Product ID<span id="vereist">*</span> </td><td><input type="text" class="invullen" name="productId" id="txtProductId" list="producten"/>
                                                         <datalist id="producten">
-                                                            <%for(int i = 0; i < producten.size(); i++) {%>
-                                                            <option value="<%=producten.get(i).getId()%>"><%=producten.get(i).getNaam()%></option>
-                                                            <%}%>
+                                                            <jsp:useBean id="productie" class="databank.dao.ProductDao" />
+                                                            <c:forEach var="product" items="${productie.alleProducten}">
+                                                            <option value="${product.id}">${product.naam}</option>
+                                                            </c:forEach>
                                                         </datalist></td></tr>
-                                                <tr><td>Aantal: <span id="vereist">*</span> </td><td><input type="text" class="invullen" name="txtAantal" id="txtAantal" /></td></tr>
+                                                <tr><td>Aantal: <span id="vereist">*</span> </td><td><input type="text" class="invullen" name="aantal" id="txtAantal" /></td></tr>
                                                 
                                                 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 <tr><td colspan="2" align="center"><input type="submit" value="Toevoegen" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>

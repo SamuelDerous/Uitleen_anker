@@ -39,5 +39,53 @@
             <result name="success">/users/gebruikers.jsp</result>
             <result name="input">/users/gebToevoegen.jsp</result>
         </action>
+        <action name="verwijderenProduct" class="com.action.ProductVerwijderenAction">
+            <result name="success">/users/producten.jsp</result>
+            <result name="error">/users/producten.jsp</result>
+        </action>
+        <action name="producten" class="com.action.Product">
+            <result name="success">/users/productAanpassen.jsp</result>
+            <result name="error">/users.producten.jsp</result>
+        </action>
+        <action name="aanpassenProduct" class="com.action.ProductAanpassenAction">
+            <result name="success">/users/producten.jsp</result>
+            <result name="input">/users/productAanpassen.jsp</result>
+        </action>
+        <action name="productToevoegen" class="com.action.ProductAanpassenAction">
+            <result name="success">/users/productToevoegen.jsp</result>
+            <result name="input">/users/productToevoegen.jsp</result>
+        </action>
+        <action name="inventVerwijderen" class="com.action.InventVerwijderen">
+            <result name="success">/users/inventaris.jsp</result>
+            <result name="error">/users/inventaris.jsp</result>
+        </action>
+        <action name="inventToevoegen" class="com.action.InventToevoegenAction">
+            <result name="success">/users/inventToevoegen.jsp</result>
+            <result name="input">/users/inventToevoegen.jsp</result>
+        </action>
+        <action name="inventVerwijderenProduct" class="com.action.InventVerwijderen">
+            <result name="success">/users/productAanpassen.jsp</result>
+            <result name="error">/users/productAanpassen.jsp</result>
+        </action>
+        <action name="reservatieVerwijderen" class="com.action.ReservatieVerwijderenAction">
+            <result name="success">/users/reservaties.jsp</result>
+            <result name="error">/users/reservaties.jsp</result>
+        </action>
+        <action name="omzetten" class="com.action.OmzettenReservatieAction">
+            <result name="success">/users/reservaties.jsp</result>
+            <result name="input">/users/reservaties.jsp</result>
+        </action>
+        <action name="reset" class="com.action.ResetAction">
+            <result name="success">/users/gebAanpassen.jsp</result>
+            <result name="input">/users/resetWachtwoord.jsp</result>
+        </action>
+        <action name="terugbrengen" class="com.action.Terugbrengen">
+            <result name="success">/users/uitleningen.jsp</result>
+            <result name="error">/users/uitleningen.jsp</result>
+        </action>
+        <action name="verlengen" class="com.action.Verlengen">
+            <result name="success">/users/uitleningen.jsp</result>
+            <result name="error">/users/uitleningen.jsp</result>
+        </action>
     </package>
 </struts>

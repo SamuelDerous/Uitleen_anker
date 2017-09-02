@@ -13,8 +13,11 @@
 <%@page import="databank.adapter.HibernateFactory"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
+
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
+
 <script	  src="https://code.jquery.com/jquery-3.2.1.js"
           integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
 crossorigin="anonymous"></script>
@@ -25,25 +28,17 @@ crossorigin="anonymous"></script>
     <article id="gebruikers">
         <table border="1" width="100%">
 
-            <%
-                SessionFactory factory = HibernateFactory.getSessionFactory();
-                Session sessie = factory.openSession();
-                Query zoeken = sessie.createQuery("from TblProduct");
-                List<TblProduct> producten = zoeken.list();
-                for (i = 0; i < producten.size(); i++) {
-                    request.setAttribute("product", producten.get(i).getId());
-            %>
+            
+            <jsp:useBean id="producten" class="databank.dao.ProductDao" />
+            <c:forEach var="product" items="${producten.alleProducten}">
 
 
-
-
-
-            <tr><td><%if (producten.get(i).getWebsite() != null && !producten.get(i).getWebsite().equals("")) {%><a href="<%=producten.get(i).getWebsite()%>" target="_blank"><%=producten.get(i).getNaam()%></a><% } else {%><%=producten.get(i).getNaam()%><%}%></td>
-                <td><%=producten.get(i).getAantal()%></td>
-                <td><%=producten.get(i).getBeschrijving().getSoort()%></td>
-                <td class="test"><a href="../ProductVerwijderen.do?product=<%= producten.get(i).getId()%>">Verwijderen</a><br>
+                <tr><td><c:if test="${product.website ne null || product.website ne ''}" var="testWebsite"><a href="${product.website}" target="_blank"></c:if>${product.naam}<c:if test="${testWebsite}"></a></c:if></td>
+                <td>${product.aantal}</td>
+                <td>${product.beschrijving.soort}</td>
+                <td class="test"><a href="verwijderenProduct?productId=${product.id}">Verwijderen</a><br>
                     
-                    <a href="productAanpassen.jsp?product=<%= producten.get(i).getId()%>">Aanpassen</a><br>
+                    <a href="producten?productId=${product.id}">Aanpassen</a><br>
                     <script>
                     $(function () {
                             var dialog;
@@ -53,10 +48,10 @@ crossorigin="anonymous"></script>
 
 
 
-                            $("#uitleen<%=i%>").hide();
+                            $("#uitleen${product.id}").hide();
 
-                            dialog = $("#uitleen<%=i%>").dialog({
-                                autoOpen: ${automatischOpenen},
+                            dialog = $("#uitleen${product.id}").dialog({
+                                autoOpen: false,
                                 height: 400,
                                 width: 350,
                                 modal: true,
@@ -64,7 +59,7 @@ crossorigin="anonymous"></script>
                                 buttons: {
                                     "Uitlenen": function () {
                                         
-                                        $("#doen<%=i%>").submit();
+                                        $("#doen${product.id}").submit();
                                     }
 
                                 },
@@ -77,47 +72,40 @@ crossorigin="anonymous"></script>
 
 
 
-                            $("#uitlenen<%=i%>").on("click", function (event) {
+                            $("#uitlenen${product.id}").on("click", function (event) {
                                 event.preventDefault();
                                 dialog.dialog("open");
                             });
                         }
                         );
                 </script>
-                    <a href="#" id="uitlenen<%=i%>">Uitlenen</a>
-                    <div id="uitleen<%=i%>" title="Uitlening" align="center">
+                    <a href="#" id="uitlenen${product.id}">Uitlenen</a>
+                    <div id="uitleen${product.id}" title="Uitlening" align="center">
                         <div id="foutmelding">
-                            <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
-                                Het maximaal aantal uitleningen is bereikt
-                                <%request.setAttribute("automatischOpenen", true);
-                            }%>
+                            <s:actionerror escape="false" />
                         </div>
-                        <form id="doen<%=i%>" action="../Uitlenen.do" method="post">
+                        <form id="doen${product.id}" action="../Uitlenen.do" method="post">
                            
-                           <input type="hidden" value="<%=producten.get(i).getId()%>" name="productId" />
+                           <input type="hidden" value="${product.id}" name="productId" />
                            <input type="hidden" value="/users/producten.jsp" name="website" /> 
-                            <% 
-                                Query personen = sessie.createQuery("from TblPersoon order by gebruikersnaam");
+                           <select name="id"> 
+                                <jsp:useBean id="gebruikers" class="databank.dao.PersoonDao" />
+                                <c:forEach var="gebruiker" items="${gebruikers.alleGebruikers}">
                                 
-                                List<TblPersoon> pers = personen.list(); %>
                                 
-                                
-                                <select name="id">
-                                    <%for(int k = 0; k < pers.size(); k++) {%>
-                                    <option value="<%=pers.get(k).getGebruikersnaam()%>"><%=pers.get(k).getGebruikersnaam()%></option>
+                                    
+                                    <option value="${gebruiker.gebruikersnaam}">${gebruiker.gebruikersnaam}</option>
                                             
-                                            <%}%>
+                                </c:forEach>           
                                 </select>
-                            <input type="text" placeholder="aantal" size="4" name="txtAantal" />
+                            <input type="text" placeholder="aantal" size="4" name="aantal" />
                         </form>
 
                     </div>
 
                 </td>               
             </tr>           
-            <%}
-                sessie.close();
-            %>
+            </c:forEach>
         </table>
     </article>
 </section>    

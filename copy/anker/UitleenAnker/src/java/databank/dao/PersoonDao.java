@@ -103,6 +103,15 @@ public class PersoonDao {
             
     }
     
+    public void aanpassenWachtwoord(String gebruikersnaam, String wachtwoord) {
+            TblPersoon persoon = (TblPersoon) session.load(TblPersoon.class, gebruikersnaam);
+            persoon.setWachtwoord(wachtwoord);
+            Transaction updatePersoon = session.beginTransaction();
+            session.update(persoon);
+            updatePersoon.commit();
+            
+    }
+    
     public List<TblPersoon> getAlleGebruikers() {
         Query zoeken = session.createQuery("from TblPersoon");
         List<TblPersoon> personen = zoeken.list();

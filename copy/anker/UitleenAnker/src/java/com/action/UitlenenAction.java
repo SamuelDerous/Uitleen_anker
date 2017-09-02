@@ -6,9 +6,8 @@
 package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import creatie.Aantal;
-import static databank.TblInventarisatie_.product;
+import static creatie.Controle.isNumeric;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblUitleen;
@@ -17,8 +16,6 @@ import databank.dao.ProductDao;
 import databank.dao.UitleenDao;
 import java.sql.Date;
 import java.util.GregorianCalendar;
-import javax.servlet.RequestDispatcher;
-import static servlets.ProductAanpassen.isNumeric;
 
 /**
  *

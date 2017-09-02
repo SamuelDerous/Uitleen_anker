@@ -7,13 +7,13 @@ package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import creatie.Aantal;
+import static creatie.Controle.isNumeric;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.dao.PersoonDao;
 import databank.dao.ProductDao;
 import java.sql.Date;
 import java.util.GregorianCalendar;
-import static servlets.ProductAanpassen.isNumeric;
 import databank.TblReservatie;
 import databank.dao.ReservatieDao;
 
