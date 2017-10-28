@@ -43,7 +43,8 @@ public class OmzettenReservatieAction extends ActionSupport {
         Aantal aantallen = new Aantal();
         int aantalUitleningen = aantallen.aantalUitgeleend(reservaties.get(0).getProduct());
             if(!reservaties.isEmpty()) {
-                if((aantalUitleningen + reservaties.get(0).getAantal()) > aantalUitleningen) {
+                int a = reservaties.get(0).getAantal();
+                if((aantalUitleningen >= reservaties.get(0).getAantal())) {
                     addActionError("Het maximaal aantal uitleningen voor dit product is bereikt.<br>");
                 
                 } else {

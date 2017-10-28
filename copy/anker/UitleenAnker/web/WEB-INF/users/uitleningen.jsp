@@ -33,9 +33,9 @@
                     <td>${uitlening.aantal}</td>
                     <td>${uitlening.uitleendatum}</td>
                     <td>${uitlening.terugbrengdatum}</td>
-                    <td><a href="terugbrengen?uitleen=${uitlening.id}">Teruggebracht</a><br>
-                        <a href="uitleenAanpassen.jsp?uitleen=${uitlening.id}">Aanpassen</a><br />
-                        <a href="verlengen?uitleen=${uitlening.id}">Verlengen</a></td></tr>
+                    <td><a href="terugbrengenUitleningen?uitleen=${uitlening.id}">Teruggebracht</a><br>
+                        <a href="uitleningProductAanpassen?uitleen=${uitlening.id}">Aanpassen</a><br />
+                        <a href="verlengenUitleningen?uitleen=${uitlening.id}">Verlengen</a></td></tr>
                     </c:forEach>
         </table>
     </article>

@@ -38,7 +38,11 @@ public class Gebruiker implements Action {
     public String execute() throws Exception {
         PersoonDao persoonDao = new PersoonDao();
         gebruiker = persoonDao.getGebruiker(gebruikersnaam);
-        return SUCCESS;
+        if(gebruiker != null) {
+            return SUCCESS;
+        } else {
+            return LOGIN;
+        }
     }
     
     

@@ -21,22 +21,23 @@
 <section id="hoofdinhoud">
     <article id="formulier" align="center">
 				<h2 align="center">Toevoegen</h2>
-				<form method="post" action="uitlenen" name="Toevoegen" onSubmit="return leeg();">
+				<s:form method="post" action="toevoegenUitlening" name="Toevoegen">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">
                                                             <s:actionerror escape="false" />
             
                   </div></td></tr>
                                                 <tr><td><input type="hidden" name="action" value="toevoegen" />
-                                                        Gebruikersnaam<span id="vereist">*</span></td><td><input type="text" autocomplet="on" class="invullen" name="slctPersonen" id="gebruikersnaam" list="gebruikers" />
-                                                        <datalist id="gebruikers">
-                                                            <jsp:useBean id="personen" class="databank.dao.PersoonDao" />
-                                                            <c:forEach var="gebruiker" items="${pesonen.alleGebruikers}">
+                                                        Gebruikersnaam<span id="vereist">*</span></td>
+                                                    <td><input type="text" class="invullen" name="gebruikersnaam" id="txtGebruikersnaam" list="personen"/>
+                                                        <datalist id="personen">
+                                                            <jsp:useBean id="gebruikers" class="databank.dao.PersoonDao" />
+                                                            <c:forEach var="gebruiker" items="${gebruikers.alleGebruikers}">
                                                             <option value="${gebruiker.gebruikersnaam}" />
                                                             </c:forEach>
-                                                            
                                                         </datalist></td></tr>
-                                                <tr><td>Product ID<span id="vereist">*</span> </td><td><input type="text" class="invullen" name="productId" id="txtProductId" list="producten"/>
+                                                <tr><td>Product ID<span id="vereist">*</span> </td>
+                                                    <td><input type="text" class="invullen" name="productId" id="txtProductId" list="producten"/>
                                                         <datalist id="producten">
                                                             <jsp:useBean id="productie" class="databank.dao.ProductDao" />
                                                             <c:forEach var="product" items="${productie.alleProducten}">
@@ -49,7 +50,7 @@
                                                 <tr><td colspan="2" align="center"><input type="submit" value="Toevoegen" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
         </table>
-</form>
+</s:form>
     </article>
 </section>
 </div>

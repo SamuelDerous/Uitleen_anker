@@ -34,8 +34,12 @@ public class Verlengen implements Action {
         
         GregorianCalendar cal = new GregorianCalendar();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        cal.add(GregorianCalendar.DAY_OF_YEAR, (uitlening.getSpel().getUitleentermijn() * 7));
-        String terugbrengDatum = formatter.format(cal.getTime());
+        if(uitlening.getSpel().getUitleentermijn() != null && uitlening.getSpel().getUitleentermijn().equals("")) {
+            cal.add(GregorianCalendar.DAY_OF_YEAR, (uitlening.getSpel().getUitleentermijn() * 7));
+        } else {
+            cal.add(GregorianCalendar.DAY_OF_YEAR, 28);
+        }
+        
         uitlening.setTerugbrengdatum(cal.getTime());
         uitleenDao.aanpassen(uitlening);
         return SUCCESS;

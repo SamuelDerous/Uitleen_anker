@@ -5,6 +5,7 @@
  */
 package databank.dao;
 
+import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblReservatie;
 import databank.adapter.HibernateFactory;
@@ -33,6 +34,17 @@ public class ReservatieDao {
         qryReservaties.setParameter("product", product);
         return qryReservaties.list();
     }
+    
+    public List<TblReservatie> getReservatiesGebruiker(String gebruikersnaam) {
+        Query qryGebruiker = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam");
+        qryGebruiker.setParameter("gebruikersnaam", gebruikersnaam);
+        TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
+        Query qryReservaties = session.createQuery("from TblReservatie where gebruiker = :gebruiker");
+        qryReservaties.setParameter("gebruiker", persoon);
+        return qryReservaties.list();
+    }
+    
+    
     
     public List<TblReservatie> getAlleReservaties() {
         Query qryReservaties = session.createQuery("from TblReservatie");

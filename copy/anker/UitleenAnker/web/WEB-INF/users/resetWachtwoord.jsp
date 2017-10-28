@@ -16,14 +16,16 @@
 <jsp:include page="../headers/menu.jsp" />
 <%@taglib uri="/struts-tags" prefix="s"%>
 <section id="hoofdinhoud">
+    <% String gebruiker = (String) request.getAttribute("gebruikersnaam"); %>
     <article id="formulier" align="center">
 				<h2 align="center">Aanpassen</h2>
-				<form method="post" action="reset" name="Aanpassen" onSubmit="return leeg();">
+				<form method="post" action="resetUser" name="Aanpassen" onSubmit="return leeg();">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">
                                                             <s:actionerror escape="false" />
                   </div></td></tr>
-                                                <tr><td><input type="hidden" name="gebruikersnaam" value="${gebruiker}"/>Wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="wachtwoord" id="txtWachtwoord" onKeypress="correct(this)" /></td></tr>
+                                                <tr><td><input type="hidden" name="gebruikersnaam" value="${param.gebruikersnaam}" />
+                                                        Wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="wachtwoord" id="txtWachtwoord" onKeypress="correct(this)" /></td></tr>
                                                 <tr><td>Bevestig wachtwoord:<span id="vereist">*</span> </td><td><input type="password" class="invullen" name="bevestig" id="txtBevestig" onKeyUp="gelijkeWachtwoorden()" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                         

@@ -135,7 +135,7 @@
                         }
                         );
                 </script>
-                        <a id="reserveren${persoon.gebruikersnaam}" href="Reserveren.do?gebruiker=${persoon.gebruikersnaam}">Reserveren</a>
+                        <a id="reserveren${persoon.gebruikersnaam}" href=Reserveren.do?gebruiker=${persoon.gebruikersnaam}">Reserveren</a>
                     <div id="reserveer${persoon.gebruikersnaam}" title="Reserveren" align="center">
                             <div id="foutmelding">
                             <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>

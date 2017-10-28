@@ -84,11 +84,11 @@ crossorigin="anonymous"></script>
                         <div id="foutmelding">
                             <s:actionerror escape="false" />
                         </div>
-                        <form id="doen${product.id}" action="../Uitlenen.do" method="post">
+                        <form id="doen${product.id}" action="uitlenenProduct" method="post">
                            
                            <input type="hidden" value="${product.id}" name="productId" />
                            <input type="hidden" value="/users/producten.jsp" name="website" /> 
-                           <select name="id"> 
+                           <select name="gebruikersnaam"> 
                                 <jsp:useBean id="gebruikers" class="databank.dao.PersoonDao" />
                                 <c:forEach var="gebruiker" items="${gebruikers.alleGebruikers}">
                                 

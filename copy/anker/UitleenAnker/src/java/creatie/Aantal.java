@@ -29,14 +29,12 @@ public class Aantal {
         List<TblUitleen> uitleningen = uitleenDao.getActieveUitleningen(product);
         List<TblInventarisatie> inventaris = inventarisDao.getInventarisProduct(product);
         int aantalUitlenen = 0;
-        int aantalInvent = 0;
+        
         for(int i = 0; i < uitleningen.size(); i++) {
             aantalUitlenen += uitleningen.get(i).getAantal();
         }
-        for(int i = 0; i < inventaris.size(); i++) {
-            aantalInvent += inventaris.get(i).getAantal();
-        }  
-        return aantalInvent + aantalUitlenen;
+          
+        return aantalUitlenen;
     }
     
     public int maxReservaties(TblProduct product, Session session) {

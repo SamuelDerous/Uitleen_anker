@@ -23,22 +23,20 @@
 <section id="hoofdinhoud">
     <article id="formulier" align="center">
 				<h2 align="center">Aanpassen</h2>
-				<form method="post" action="uitleenAapassen" name="Aanpassen" onSubmit="return leeg();">
+				<form method="post" action="uitleenAanpassen" name="Aanpassen" onSubmit="return leeg();">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">
                                                             <s:actionerror escape="false" />
                   </div></td></tr>
-                                                <jsp:useBean id="uitleningen" class="databank.dao.UitleenDao" />
-                                                <c:forEach var="uitlening" items="${uitleningen.getUitleningen(uitleen)}">
                                                 <tr><td><input type="hidden" name="uitleen" value="${uitlening.id}"/>
                                                         
-                                                        Gebruikersnaam:</td><td><b><span>${uitlening.gebruikesnaam}</span></b> </td></tr>
+                                                        Gebruikersnaam:</td><td><b><span>${uitlening.naam.gebruikersnaam}</span></b> </td></tr>
                                                 <tr><td>Product</td><td><b>${uitlening.spel.naam}</b></td></tr>
-                                                <tr><td>Uitleendatum<span id="vereist">*</span> </td><td><input type="text" value="${uitlening.uitleenDatum}" class="invullen" name="uitleendatum" id="txtUitleendatum" onKeypress="correct(this)" /></td></tr>
+                                                <tr><td>Uitleendatum<span id="vereist">*</span> </td><td><input type="text" value="${uitlening.uitleendatum}" class="invullen" name="uitleendatum" id="txtUitleendatum" onKeypress="correct(this)" /></td></tr>
                                                 <tr><td>Terugbrengdatum<span id="vereist">*</span> </td><td><input type="text" value="${uitlening.terugbrengdatum}" class="invullen" name="terugbrengdatum" id="txtTerugbrengdatum" onKeypress="correct(this);"/></td></tr>
                                                 <tr><td>Aantal <span id="vereist">*</span> </td><td><input type="text" value="${uitlening.aantal}" class="invullen" name="aantal" id="txtAantal" onKeypress="correct(this)" /></td></tr>
                                                 
-                                                <tr><td>boete</td><td><input t ype="text" value="${uitlening.boete}" class=invullen" name="boete" id="txtBoete" /></td></tr>
+                                                <tr><td>boete</td><td><input t ype="text" value="${uitlening.boete}" class="invullen" name="boete" id="txtBoete" /></td></tr>
                                                 <tr><td>huurprijs</td><td><input type="text" class="invullen" value="${uitlening.huurprijs}" name="huurprijs" id="txtHuurprijs" /></td></tr>
                                                 <tr><td>Opmerking </td><td><textarea id="txtOpmerking" name="opmerking" class="invullen">${uitlening.opmerking}</textarea>
                                                 </td>
@@ -46,7 +44,7 @@
                                                 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 <tr><td colspan="2" align="center"><input type="submit" value="Aanpassen" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
-                                                </c:forEach>
+                                                
         </table>
                                                 
 </form>

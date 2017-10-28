@@ -29,15 +29,24 @@ public class UitleenDao {
     }
     
     public List<TblUitleen> getActieveUitleningen(TblProduct product) {
-        Query qryUitleningen = session.createQuery("from TblUitleen where spel = :product and (teruggebracht <> null or teruggebracht <> '')");
+        Query qryUitleningen = session.createQuery("from TblUitleen where spel = :product and (teruggebracht = null or teruggebracht = '')");
         qryUitleningen.setParameter("product", product);
         return qryUitleningen.list();
     }
     
     public List<TblUitleen> getActieveUitleningen() {
-        Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht <> null or teruggebracht <> '')");
+        Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = null or teruggebracht = '')");
         
         return qryUitleningen.list();
+    }
+    
+    public List<TblUitleen> getActieveUitleningenGebruiker(String gebruikersnaam) {
+        Query qryGebruiker = session.createQuery("from TblPersoon where gebruikersnaam = :gebruikersnaam");
+        qryGebruiker.setParameter("gebruikersnaam", gebruikersnaam);
+        TblPersoon persoon = (TblPersoon) qryGebruiker.list().get(0);
+        Query zoeken = session.createQuery("from TblUitleen where (teruggebracht = null or teruggebracht = '') and naam = :ontlener");
+        zoeken.setParameter("ontlener", persoon);
+        return zoeken.list();
     }
     
     
@@ -56,7 +65,7 @@ public class UitleenDao {
                 zoeken.setParameter("id", id);
                 
                 List<TblUitleen> uitleningen = zoeken.list();
-                session.close();
+                
                 return uitleningen.get(0);
                 
     }
@@ -75,7 +84,7 @@ public class UitleenDao {
             Transaction updateProduct = session.beginTransaction();
             session.update(uitleenTabel);
             updateProduct.commit();
-            session.close();
+            
             
             
     }

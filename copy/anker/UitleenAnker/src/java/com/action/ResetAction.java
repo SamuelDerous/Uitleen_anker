@@ -54,7 +54,7 @@ public class ResetAction extends ActionSupport {
     @Override
     public void validate() {
         boolean correct = true;
-            if(wachtwoord.equals("") || !wachtwoord.equals(bevestig)) {
+            if(wachtwoord == null || wachtwoord.equals("") || !wachtwoord.equals(bevestig)) {
                 correct = false;
                 addActionError("De beide wachtwoorden komen niet overeen.");
             }

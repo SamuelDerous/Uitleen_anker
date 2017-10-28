@@ -6,20 +6,22 @@
 
 <%@page import="java.util.ArrayList, org.apache.lucene.document.Document"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="/struts-tags" prefix="s" %>
 <jsp:include page="headers/header.jsp" />
 <jsp:include page="headers/menu.jsp" />
-<section id="hoofdinhoud">
-    <% ArrayList<Document> lijst = (ArrayList<Document>) request.getAttribute("documenten"); 
-    %><h2>Vond <%=lijst.size()%> hits </h2><%
-    for(int i = 0; i < lijst.size(); i++) {
-    %><a href="reservatie.jsp?id=<%= lijst.get(i).get("Nummer")%>"><article id="zoekItem">
-        <p><%= lijst.get(i).get("Naam")%> <br> <%=lijst.get(i).get("Beschrijving")%>
+<section id="hoofdinhoud"> 
+<h2>Vond <s:property value="lijst.size()" /> hits </h2>
+<s:iterator var="result" value="lijst">
+    
+    <a href="accountReserveren?id=${result.get('Nummer')}"><article id="zoekItem">
+            <p><s:property value="#result.get('Naam')" /> <s:property value="#result.get('Beschrijving')" />
         <hr>           
         </p>        
                 
                     
         </article></a>
-<%}%>
+</s:iterator>
+
 </section>
     </div>
   </body>

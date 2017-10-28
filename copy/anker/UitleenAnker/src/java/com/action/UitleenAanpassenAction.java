@@ -21,7 +21,7 @@ import java.util.GregorianCalendar;
 public class UitleenAanpassenAction extends ActionSupport {
     
     private int uitleen;
-    private String uitleenDatum;
+    private String uitleendatum;
     private String terugbrengdatum;
     private String aantal;
     private String boete;
@@ -39,12 +39,12 @@ public class UitleenAanpassenAction extends ActionSupport {
 
     
 
-    public String getUitleenDatum() {
-        return uitleenDatum;
+    public String getUitleendatum() {
+        return uitleendatum;
     }
 
-    public void setUitleenDatum(String uitleenDatum) {
-        this.uitleenDatum = uitleenDatum;
+    public void setUitleendatum(String uitleenDatum) {
+        this.uitleendatum = uitleenDatum;
     }
 
     public String getTerugbrengdatum() {
@@ -106,12 +106,12 @@ public class UitleenAanpassenAction extends ActionSupport {
         UitleenDao uitleenDao = new UitleenDao();
         TblUitleen uitlening = uitleenDao.getUitleningen(uitleen);
         boolean correct = true;
-        if(!isDate(uitleenDatum)) {
-                if(uitleenDatum.equals("")) {
+        if(!isDate(uitleendatum)) {
+                if(uitleendatum == null || uitleendatum.equals("")) {
                     java.util.Date nu = new java.util.Date();
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                     
-                    uitleenDatum = formatter.format(nu);
+                    uitleendatum = formatter.format(nu);
                 } else {
                     correct = false;
                     addActionError("De aankoopdatum dient een correcte datum te zijn.<br>");
@@ -122,12 +122,12 @@ public class UitleenAanpassenAction extends ActionSupport {
                     try {
                     GregorianCalendar cal = new GregorianCalendar();
                     DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    java.util.Date dAankoopdatum = (java.util.Date) formatter.parse(uitleenDatum);
+                    java.util.Date dAankoopdatum = (java.util.Date) formatter.parse(uitleendatum);
         
                     cal.setTime((dAankoopdatum));
                     cal.add(GregorianCalendar.DAY_OF_YEAR, (uitlening.getSpel().getUitleentermijn() * 7));
                                         
-                    uitleenDatum = formatter.format(cal.getTime());
+                    uitleendatum = formatter.format(cal.getTime());
                     } catch(Exception ex) {
                         addActionError("Er is een fout opgetreden bij het omzetten van de uitleendatum<br>");
                         ex.printStackTrace();
@@ -172,7 +172,7 @@ public class UitleenAanpassenAction extends ActionSupport {
         if(correct = true) {
             try {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date dUitleendatum = (java.util.Date) formatter.parse(uitleenDatum);
+            java.util.Date dUitleendatum = (java.util.Date) formatter.parse(uitleendatum);
             java.util.Date dTerugbrengdatum = (java.util.Date) formatter.parse(terugbrengdatum);
             
             uitlening.setUitleendatum(dUitleendatum);
