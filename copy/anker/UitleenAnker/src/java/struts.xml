@@ -5,6 +5,7 @@
 
 <struts>
     <constant name="struts.devMode" value="true" />
+    
     <package name="default" extends="struts-default">
         <interceptors>
                 <interceptor class="com.action.interceptors.AuthenticationInterceptor" name="loginInterceptor">
@@ -44,7 +45,7 @@
             <result name="input" >/WEB-INF/users/gebAanpassen.jsp </result>
             <result name="login">inloggen.jsp</result>
         </action>
-        <action name="gebruikers" class="com.action.Gebruiker">
+        <action name="aanpassenGebruiker" class="com.action.Gebruiker">
             <result name="success">/WEB-INF/users/gebAanpassen.jsp?gebruikersnaam=${persoon.gebruikersnaam}
             </result>
             <result name="error">/WEB-INF/users/gebruikers.jsp</result>
@@ -60,7 +61,7 @@
             <result name="error">/WEB-INF/users/producten.jsp</result>
             <result name="login">inloggen.jsp</result>
         </action>
-        <action name="producten" class="com.action.Product">
+        <action name="aanpassenProductForm" class="com.action.Product">
             <result name="success">/WEB-INF/users/productAanpassen.jsp</result>
             <result name="error">/WEB-INF/users.producten.jsp</result>
             <result name="login">inloggen.jsp</result>
@@ -158,6 +159,7 @@
         <action name="uitlenenProduct" class="com.action.UitlenenAction">
             <result name="success">/WEB-INF/users/producten.jsp</result>
             <result name="error">/WEB-INF/users/producten.jsp</result>
+            <result name="input">/WEB-INF/users/producten.jsp</result>
             <result name="login">inloggen.jsp</result>
             
         </action>
@@ -214,6 +216,10 @@
         
         <action name="uitleningenUitlener" class="com.action.Ontleners">
             <result name="success">/WEB-INF/ontleners/uitleningen.jsp</result>
+        </action>
+        
+        <action name="letsTest" class="com.action.Testing">
+            <result name="success">testJsp.jsp</result>
         </action>
     </package>
     

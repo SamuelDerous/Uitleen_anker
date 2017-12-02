@@ -156,12 +156,14 @@ public class ProductAanpassenAction extends ActionSupport {
         double dbAankoopprijs = 0, dbBreukprijs = 0;
         int intAantal = 0;
         int intUitleentermijn = 0;
-            
+        if(volledig != null) {   
         if(volledig.equals("on")) {
             volledig = "1";
         } else {
             volledig = "0";
         }
+        }
+        
         if(!isNumeric(aankoopprijs)) {
             if(aankoopprijs.equals("")) {
                 aankoopprijs = "0";
@@ -170,6 +172,7 @@ public class ProductAanpassenAction extends ActionSupport {
                 addActionError("De aankoopprijs dient een correct valuta te zijn.<br>");
             }
         }
+        
             if(!isNumeric(breukprijs)) {
                 if(breukprijs.equals("")) {
                     breukprijs = "0";
@@ -178,7 +181,7 @@ public class ProductAanpassenAction extends ActionSupport {
                     addActionError("De breukprijs dient een correct valuta te zijn.<br>");
                 }
             }
-            if(!isNumeric(aantal)) {
+        if(!isNumeric(aantal)) {
                 if(aantal.equals("")) {
                     aantal = "1";
                 } else {
@@ -205,7 +208,10 @@ public class ProductAanpassenAction extends ActionSupport {
                     addActionError("De uitleentermijn moet een correct getal zijn.<br>");
                 }
             }
-                
+            if(naam == null || naam.length() <= 0) {
+                correct = false;
+                addActionError("U dient een naam van het product op te geven");
+            }
             if(correct == true) {
             try {
             dbAankoopprijs = Double.parseDouble(aankoopprijs);

@@ -28,7 +28,7 @@
                 <td>
                          <a href="verwijderenGebruiker?gebruikersnaam=${persoon.gebruikersnaam}">Verwijderen</a><br>
                          
-                        <a href="gebruikers?gebruikersnaam=${persoon.gebruikersnaam}">Aanpassen</a><br>
+                        <a href="aanpassenGebruiker?gebruikersnaam=${persoon.gebruikersnaam}">Aanpassen</a><br>
                         <script>
                     $(function () {
                             var dialog;

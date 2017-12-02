@@ -32,7 +32,9 @@
                         <td>${uitlening.spel.naam}</td>
                     <td>${uitlening.aantal}</td>
                     <td>${uitlening.uitleendatum}</td>
-                    <td>${uitlening.terugbrengdatum}</td>
+                    <s:set value="%{uitlening.terugbrengdatum}" var="terugbrengdatum" />
+                    <s:text name="%{terugbrengdatum}" />
+                    <td><s:if test="%{compareDates(#attr.uitlening.terugbrengdatum)}"><span id="teLaat"></s:if>${uitlening.terugbrengdatum}<s:if test="%{compareDates(#attr.uitlening.terugbrengdatum)}"></span></s:if></td>
                     <td><a href="terugbrengenUitleningen?uitleen=${uitlening.id}">Teruggebracht</a><br>
                         <a href="uitleningProductAanpassen?uitleen=${uitlening.id}">Aanpassen</a><br />
                         <a href="verlengenUitleningen?uitleen=${uitlening.id}">Verlengen</a></td></tr>

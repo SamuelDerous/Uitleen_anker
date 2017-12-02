@@ -35,11 +35,15 @@ public class ProductDao {
     }
     
     public TblProduct getProductById(int id) {
-            Query qryProduct = session.createQuery("from TblProduct where id = :id");
+        try {    
+        Query qryProduct = session.createQuery("from TblProduct where id = :id");
             qryProduct.setParameter("id", id);
             TblProduct product = (TblProduct) qryProduct.list().get(0);
             
             return product;
+        } catch(Exception ex) {
+            return null;
+        }
             
     }
     

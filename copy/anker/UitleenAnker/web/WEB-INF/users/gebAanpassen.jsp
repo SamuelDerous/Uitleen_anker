@@ -2,6 +2,7 @@
     Document   : gebAanpassen
     Created on : 20-mei-2017, 17:36:35
     Author     : zenodotus
+test
 --%>
 <% if((session.getAttribute("gebruikersnaam") != null && !session.getAttribute("gebruikersnaam").equals("")) && session.getAttribute("soort").equals("gebruiker")) { %>
 <%@page import="databank.TblSoort"%>

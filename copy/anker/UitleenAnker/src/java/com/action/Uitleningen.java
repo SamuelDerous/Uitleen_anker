@@ -8,6 +8,7 @@ package com.action;
 import com.opensymphony.xwork2.ActionSupport;
 import databank.TblUitleen;
 import databank.dao.UitleenDao;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,6 +31,11 @@ public class Uitleningen extends ActionSupport {
 
     public void setUitleningen(List<TblUitleen> uitleningen) {
         this.uitleningen = uitleningen;
+    }
+    
+    public boolean compareDates(Date newDate) {
+        Date today = new Date();    
+        return (today.equals(newDate) || today.after(newDate));
     }
     
     

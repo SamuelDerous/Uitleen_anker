@@ -29,7 +29,7 @@
                   </div></td></tr>
                                                 <tr><td><input type="hidden" name="action" value="toevoegen" />
                                                         Gebruikersnaam<span id="vereist">*</span></td>
-                                                    <td><input type="text" class="invullen" name="gebruikersnaam" id="txtGebruikersnaam" list="personen"/>
+                                                    <td><input type="text" class="invullen" autocomplete="off" name="gebruikersnaam" id="txtGebruikersnaam" list="personen"/>
                                                         <datalist id="personen">
                                                             <jsp:useBean id="gebruikers" class="databank.dao.PersoonDao" />
                                                             <c:forEach var="gebruiker" items="${gebruikers.alleGebruikers}">
@@ -37,7 +37,7 @@
                                                             </c:forEach>
                                                         </datalist></td></tr>
                                                 <tr><td>Product ID<span id="vereist">*</span> </td>
-                                                    <td><input type="text" class="invullen" name="productId" id="txtProductId" list="producten"/>
+                                                    <td><input type="text" class="invullen" autocomplete="off" name="productId" id="txtProductId" list="producten"/>
                                                         <datalist id="producten">
                                                             <jsp:useBean id="productie" class="databank.dao.ProductDao" />
                                                             <c:forEach var="product" items="${productie.alleProducten}">

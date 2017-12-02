@@ -74,12 +74,14 @@ public class UitlenenAction extends ActionSupport {
             UitleenDao uitleenDao = new UitleenDao();
             TblPersoon persoon = persoonDao.getGebruiker(gebruikersnaam);
             TblProduct product = productDao.getProductById(productId);
-            
+            if(product != null) {
             Aantal aantallen = new Aantal();
             int aantalUitlenen = aantallen.aantalUitgeleend(product);
             int aantalReservaties = aantallen.aantalReservaties(product);
             int maxUitleningen = aantallen.maxAantal(product);
-                  
+            
+            
+            
                         
             if(!isNumeric(aantal)) {
                 if(aantal.equals("")) {
@@ -97,6 +99,14 @@ public class UitlenenAction extends ActionSupport {
                     isGereserveerd = true;
                     correct = false;
                 }
+            }
+            } else {
+                correct = false;
+                addActionError("Dit product bestaat niet in het systeem.");
+            }
+            if(persoon == null) {
+                correct = false;
+                addActionError("Deze gebruiker bestaat niet in het systeem.");
             }
             
             if(correct) {
@@ -121,9 +131,7 @@ public class UitlenenAction extends ActionSupport {
                 }
                 if(isUitgeleend) {
                     addActionError("Het maximaal aantal is al uitgeleend.");
-                } else {
-                    addActionError("Er is iets fout gegaan bij het verwerken van uw de uitlening.");
-                }
+                } 
                 
             }
             

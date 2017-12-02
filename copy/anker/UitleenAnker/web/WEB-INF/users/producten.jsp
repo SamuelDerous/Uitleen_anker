@@ -26,6 +26,9 @@ crossorigin="anonymous"></script>
 
 <section id="hoofdinhoud">
     <article id="gebruikers">
+        <div id="foutmelding">
+                            <s:actionerror escape="false" />
+                        </div>
         <table border="1" width="100%">
 
             
@@ -38,7 +41,7 @@ crossorigin="anonymous"></script>
                 <td>${product.beschrijving.soort}</td>
                 <td class="test"><a href="verwijderenProduct?productId=${product.id}">Verwijderen</a><br>
                     
-                    <a href="producten?productId=${product.id}">Aanpassen</a><br>
+                    <a href="aanpassenProductForm?productId=${product.id}">Aanpassen</a><br>
                     <script>
                     $(function () {
                             var dialog;
@@ -81,9 +84,7 @@ crossorigin="anonymous"></script>
                 </script>
                     <a href="#" id="uitlenen${product.id}">Uitlenen</a>
                     <div id="uitleen${product.id}" title="Uitlening" align="center">
-                        <div id="foutmelding">
-                            <s:actionerror escape="false" />
-                        </div>
+                        
                         <form id="doen${product.id}" action="uitlenenProduct" method="post">
                            
                            <input type="hidden" value="${product.id}" name="productId" />
