@@ -27,7 +27,7 @@
         color: gray;
     }
     .displayRow:hover {
-        background-color:yellow;
+        background-color:#ebd621;
 
     }
 

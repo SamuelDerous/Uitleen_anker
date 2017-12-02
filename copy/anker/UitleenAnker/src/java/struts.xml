@@ -102,7 +102,7 @@
             <result name="login">inloggen.jsp</result>
         </action>
         <action name="resetUser" class="com.action.ResetAction">
-            <result name="success" type="redirect">gebruikers?gebruikersnaam=${gebruikersnaam}</result>
+            <result name="success">/WEB-INF/users/gebruikers.jsp</result>
             <result name="input">/WEB-INF/users/resetWachtwoord.jsp</result>
             <result name="login">inloggen.jsp</result>
         </action>
@@ -174,7 +174,7 @@
         </action>
         <action name="reserverenVanafAccount" class="com.action.ReserverenAction">
             <result name="success" type="redirect">accountReserveren?gebruikersnaam=${gebruikersnaam}&amp;id=${productId}</result>
-            <result name="input,error" type="redirect">accountReserveren?id=${id}</result>
+            <result name="input" type="redirect">reserverenVanafAccount?id=${productId}</result>
             <result name="login">inloggen.jsp</result>
         </action>
         
@@ -220,6 +220,11 @@
         
         <action name="letsTest" class="com.action.Testing">
             <result name="success">testJsp.jsp</result>
+        </action>
+        
+        <action name="resetWachtwoord" class="com.action.ResetPassAction">
+            <result name="success">/WEB-INF/users/resetWachtwoord.jsp</result>
+            
         </action>
     </package>
     

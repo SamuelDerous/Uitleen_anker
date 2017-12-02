@@ -42,7 +42,7 @@ test
                                                             </c:forEach></select></td></tr>
                                                 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 
-                                                <tr><td colspan="2" align="center"><input type="submit" value="Aanpassen" id="txtSubmit" /><input type="reset" value="Wissen" /><input type="button" name="btnWachtwoord" onclick=location.href="resetWachtwoord.jsp?gebruikersnaam=${gebruiker.gebruikersnaam}"   value="Reset ww" /></td></tr>
+                                                <tr><td colspan="2" align="center"><input type="submit" value="Aanpassen" id="txtSubmit" /><input type="reset" value="Wissen" /><input type="button" name="btnWachtwoord" onclick=location.href="resetWachtwoord?gebruikersnaam=${gebruiker.gebruikersnaam}"   value="Reset ww" /></td></tr>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>	
         </table>
 </form>

@@ -30,7 +30,7 @@
                     <form id="doen" action="reserverenVanafAccount" method="post">
                         <table id="formTabel" border="0" align="center">
                             <tr><td><input type="hidden" name="gebruikersnaam" value="${sessionScope.gebruikersnaam}">
-                                    <input type="text" placeholder="aantal" size="4" name="aantal" />
+                                    <input type="text" placeholder="aantal" size="4" name="aantal" value="${aantal}" />
                                     <input type="hidden" name="productId" value="${product.id}" /></td></tr>
                         </table>
                     </form>
@@ -55,9 +55,9 @@
                                     
                                 <tr><td class="uitgeleend">Uitgeleend tot</td><td colspan="2" align="right" class="uitgeleend">${uitlening.terugbrengdatum}</td></tr>
                                     </s:iterator>
-                                <tr><td>Totaal</td><td colspan="2" align="right">${fn:length(uitleningen)}
+                                <tr><td>Totaal</td><td colspan="2" align="right">${fn:length(uitleningen)}</td></tr>
                                     </s:if>
-                                        
+                            </table>
 			</article>
                                         
                  
