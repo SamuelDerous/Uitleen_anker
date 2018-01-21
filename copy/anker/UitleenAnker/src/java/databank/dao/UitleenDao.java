@@ -9,6 +9,7 @@ import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblUitleen;
 import databank.adapter.HibernateFactory;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -26,6 +27,39 @@ public class UitleenDao {
         SessionFactory factory = HibernateFactory.getSessionFactory();
         session = factory.openSession();
             
+    }
+    
+    public int getOverzicht(TblProduct product, int jaar) {
+        Query qryUitleningen = session.createQuery("SELECT sum(aantal) FROM TblUitleen where spel = :product and year(uitleendatum) = :jaar");
+        qryUitleningen.setParameter("product", product);
+        qryUitleningen.setParameter("jaar", jaar);
+        List<Long> test = qryUitleningen.list();
+        if(test.isEmpty()) {
+            return 0;
+        } else {
+            if(test.get(0) != null) {
+                return test.get(0).intValue();
+            } else {
+                return 0;
+            }
+        }
+    }
+    
+    public int getOverzicht(TblProduct product, int jaar, int maand) {
+        Query qryUitleningen = session.createQuery("SELECT sum(aantal) FROM TblUitleen where spel = :product and year(uitleendatum) = :jaar and month(uitleendatum) = :maand");
+        qryUitleningen.setParameter("product", product);
+        qryUitleningen.setParameter("jaar", jaar);
+        qryUitleningen.setParameter("maand", maand);
+        List<Long> test = qryUitleningen.list();
+        if(test.isEmpty()) {
+            return 0;
+        } else {
+            if(test.get(0) != null) {
+                return test.get(0).intValue();
+            } else {
+                return 0;
+            }
+        }
     }
     
     public List<TblUitleen> getActieveUitleningen(TblProduct product) {

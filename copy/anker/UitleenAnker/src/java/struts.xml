@@ -226,6 +226,13 @@
             <result name="success">/WEB-INF/users/resetWachtwoord.jsp</result>
             
         </action>
+        <action name="overzichtUitleningen" class="com.action.Overzicht">
+            <result name="success">/WEB-INF/users/overzicht.jsp</result>
+        </action>
+        <action name="periodiekOverzicht" class="com.action.OverzichtAction">
+            <result name="success">/WEB-INF/users/overzichtPagina.jsp</result>
+            
+        </action>
     </package>
     
 </struts>
