@@ -21,14 +21,15 @@
 				<h2 align="center">Overzicht ${jaar}</h2>
 				
 					<table border="1" align="center" width="100%">
-						<jsp:useBean id="producten" class="databank.dao.ProductDao" scope="request" />                                              
-                                            <s:if test="productId == 0">
-                                                <thead><th>Product</th><th>Jaarlijks</th><th>Januari</th><th>Februari</th><th>Maart</th><th>April</th><th>Mei</th><th>Juni</th><th>Juli</th><th>Augustus</th><th>September</th><th>Oktober</th><th>November</th><th>December</th></thead>
+						<jsp:useBean id="producten" class="databank.dao.ProductDao" scope="request" />
+                                                <jsp:useBean id="kwartaalOptelling" class="databank.dao.UitleenDao" />
+                                            <thead><th>Product</th><th>Jaarlijks</th><th>Januari</th><th>Februari</th><th>Maart</th><th>April</th><th>Mei</th><th>Juni</th><th>Juli</th><th>Augustus</th><th>September</th><th>Oktober</th><th>November</th><th>December</th></thead>
+                                                
+                                                <s:if test="productId == 0">
                                                 <c:forEach var="producties" items="${producten.alleProducten}">
                                                 <c:set var="productie" value="${producties.naam}"/>
                                                 <tr><td>${productie}</td>
-                                                <s:if test="kwartaal.equals('alle')">
-                                                    <jsp:useBean id="kwartaalOptelling" class="databank.dao.UitleenDao" />
+                                                    
                                                     <c:set var="optelling" value="${kwartaalOptelling.getOverzicht(producties, jaar)}" />
                                                    <td>${optelling}</td>
                                                    
@@ -36,17 +37,21 @@
                                                       <c:set var="maandelijks" value="${kwartaalOptelling.getOverzicht(producties, jaar, teller)}" />
                                                     <td>${maandelijks}</td>
                                                    </c:forEach>
-                                                </s:if>
-                                                <s:elseif test="kwartaal.equals('maandelijks')">
-                                                    <jsp:useBean id="maandOptelling" class="databank.dao.UitleenDao" />
-                                                    <c:set var="optelling" value="${kwartaalOptelling.getOverzicht(product, jaar, maand)}" />
-                                                    <td>${optelling}</td>
-                                                </s:elseif>
                                                 </tr>
                                                 </c:forEach>
                                                 </s:if>
+                                                
                                                 <s:else>
-                                                    
+                                                    <c:set var="indProduct" value="${producten.getProductById(productId)}" />
+                                                    <tr><td>${indProduct.naam}</td>
+                                                    <c:set var="productJaar" value="${kwartaalOptelling.getOverzicht(indProduct, jaar)}" />
+                                                   <td>${productJaar}</td>
+                                                   
+                                                   <c:forEach var="teller" begin="1" end="12">
+                                                      <c:set var="productMaand" value="${kwartaalOptelling.getOverzicht(indProduct, jaar, teller)}" />
+                                                    <td>${productMaand}</td>
+                                                   </c:forEach>
+                                                </tr>
                                                 </s:else>   
                                                     
                                                 

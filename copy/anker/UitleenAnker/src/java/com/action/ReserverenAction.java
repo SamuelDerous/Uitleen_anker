@@ -73,9 +73,12 @@ public class ReserverenAction extends ActionSupport {
                 Aantal aantallen = new Aantal();
                 PersoonDao gebruikerDao = new PersoonDao();
                 ProductDao productDao = new ProductDao();
-                GregorianCalendar cal = new GregorianCalendar();
-                Date datum = new Date(cal.getTimeInMillis());
+                
                 TblProduct product = productDao.getProductById(productId);
+                GregorianCalendar cal = new GregorianCalendar();
+                cal.add(GregorianCalendar.DAY_OF_MONTH, (product.getUitleentermijn() * 7));
+                Date datum = new Date(cal.getTimeInMillis());
+                
                 int resAantal = aantallen.maxAantal(product);
                 if(resAantal < Integer.parseInt(aantal)) {
                     addActionError("Dit product is al gereserveerd.");

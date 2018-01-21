@@ -44,30 +44,6 @@
                                                             <option value="2019">2019</option>
                                                             <option value="2020">2020</option>
                                                         </select></td></tr>
-                                                <tr><td>Kwartaal:</td><td><select name="kwartaal" id="slctKwartaal">
-                                                            <option value="alle">Alle</option>
-                                                            <option value="kwartaal1">Eerste kwartaal</option>
-                                                            <option value="kwartaal2">Tweede kwartaal</option>
-                                                            <option value="kwaartaal3">Derde kwartaal</option>
-                                                            <option value="maandelijks">Maandelijks</option>
-                                                        </select>
-                                                        <tr id="rowMonth" style="display:none"><td>Maand: </td><td><select name="maand" id="slctMonth">
-                                                            <option value="1">Januari</option>
-                                                            <option value="2">Februari</option>
-                                                            <option value="3">Maart</option>
-                                                            <option value="4">April</option>
-                                                            <option value="5">Mei</option>
-                                                            <option value="6">Juni</option>
-                                                            <option value="7">Juli</option>
-                                                            <option value="8">Augustus</option>
-                                                            <option value="9">September</option>
-                                                            <option value="10">Oktober</option>
-                                                            <option value="11">November</option>
-                                                            <option value="12">December</option>
-                                                            
-                                                        </select>
-                                                                </td></tr> </div>   
-                                                        
                                                         
                                                 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
                                                 <tr><td colspan="2" align="center"><input type="submit" value="Overzicht" id="txtSubmit" /><input type="reset" value="Wissen" /></td></tr>
@@ -77,16 +53,6 @@
     </article>
 </section>
 </div>
-<script type="text/javascript">
-    $('#slctKwartaal').change(function() {
-        if(this.value == "maandelijks") {
-            $("#rowMonth").show();
-        } else {
-            $("#rowMonth").hide();
-        }
-});
-    
-</script>
 </body>
 </html><% } else {
     response.sendRedirect("/UitleenAnker/faces/inloggen.jsp");

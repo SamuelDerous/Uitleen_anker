@@ -161,8 +161,11 @@ public class ProductAanpassenAction extends ActionSupport {
             volledig = "1";
         } else {
             volledig = "0";
-        }
-        }
+        }      
+        } else {
+                volledig = "0";
+                }
+   
         
         if(!isNumeric(aankoopprijs)) {
             if(aankoopprijs.equals("")) {
