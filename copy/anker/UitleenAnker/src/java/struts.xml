@@ -233,6 +233,11 @@
             <result name="success">/WEB-INF/users/overzichtPagina.jsp</result>
             
         </action>
+        
+        <action name="mailPass" class="com.action.SendPassword">
+            <result name="success">mailPass.jsp</result>
+            <result name="input">mailPass.jsp</result>
+        </action>
     </package>
     
 </struts>

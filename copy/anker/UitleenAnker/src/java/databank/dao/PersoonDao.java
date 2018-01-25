@@ -5,7 +5,7 @@
  */
 package databank.dao;
 
-import creatie.EncryptionIni;
+import crypto.EncryptionIni;
 import databank.TblPersoon;
 import databank.TblSoort;
 import databank.adapter.HibernateFactory;
@@ -50,6 +50,19 @@ public class PersoonDao {
         }
             
     }
+    
+    public TblPersoon getGebruikerByMail(String mail) {
+        try {
+            Query zoeken = session.createQuery("from TblPersoon where eMail = :email");
+            zoeken.setParameter("email", mail);
+            List<TblPersoon> personen = zoeken.list();
+            return personen.get(0);
+        } catch (Exception ex) {
+            return null;
+        }
+            
+    }
+    
     
     public void toevoegen(TblPersoon persoon) {
         session.beginTransaction();

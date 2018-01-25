@@ -6,7 +6,7 @@
 package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import creatie.EncryptionIni;
+import crypto.EncryptionIni;
 import databank.TblPersoon;
 import databank.dao.PersoonDao;
 import org.hibernate.Session;
