@@ -151,6 +151,8 @@ public class ProductAanpassenAction extends ActionSupport {
         return SUCCESS;
     }
     
+    
+    
     public void validate() {
         boolean correct = true;
         double dbAankoopprijs = 0, dbBreukprijs = 0;
@@ -228,6 +230,7 @@ public class ProductAanpassenAction extends ActionSupport {
             product.setAankoopprijs(dbAankoopprijs);
             product.setBreukprijs(dbBreukprijs);
             product.setAantal(intAantal);
+            product.setWebsite(website);
             product.setUitleentermijn(Integer.parseInt(uitleentermijn));
             product.setOpmerking(opmerking);
             product.setAankoopdatum(dAankoopdatum);

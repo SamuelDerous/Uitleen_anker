@@ -7,10 +7,7 @@ package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import crypto.EncryptionIni;
-import databank.TblPersoon;
 import databank.dao.PersoonDao;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *

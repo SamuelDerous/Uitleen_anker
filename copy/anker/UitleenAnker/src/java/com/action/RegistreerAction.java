@@ -125,7 +125,7 @@ public class RegistreerAction extends ActionSupport {
             correct = false;
             addActionError("Deze gebruikersnaam is al in gebruik. Probeer een andere.<br>");
         }
-        if(!isNumeric(telefoon)) {
+        if((telefoon != null && !telefoon.isEmpty()) && !isNumeric(telefoon)) {
             correct = false;
             addActionError("Het telefoonnummer dient uitsluitend uit cijfers te bestaan.<br>");
         }
