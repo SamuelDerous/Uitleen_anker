@@ -23,8 +23,19 @@
     
 <section id="hoofdinhoud">
     <article id="gebruikers">
-        <table border="1" width="100%">
-            <tr><td colspan="5"><div id="foutmelding"><s:actionerror escape="false" /></div></td>
+        <div id="foutmelding"><s:actionerror escape="false" /></div>
+        <table id="reservatiesTable" border="1" width="100%">
+            <thead>
+                <tr>
+                    <td>Gebruikersnaam</td>
+                    <td>Productnaam</td>
+                    <td>Aantal</td>
+                    <td>ReservatieDatum</td>
+                    <td>Bewerkingen</td>
+                </tr>
+            </thead>
+            <tbody>
+            
                 
                     <jsp:useBean id="reservaties" class="databank.dao.ReservatieDao" />
                     <c:forEach var="reservatie" items="${reservaties.alleReservaties}">
@@ -35,9 +46,17 @@
                     <td><a href="reservatieVerwijderen?reservatie=${reservatie.id}">Verwijderen</a><br>
                         <a href="omzetten?reservatie=${reservatie.id}" onclick="bericht();">Uitlenen</a><br></td></tr>
                     </c:forEach>
+            </tbody>
                         </table>
     </article>
 </section>    
+                    <script language="JavaScript" type="text/javascript">
+<!--
+$(document).ready(function() {
+    $('#reservatiesTable').DataTable();
+} );
+-->
+</script> 
 </body>
 </html>
 <% } else {

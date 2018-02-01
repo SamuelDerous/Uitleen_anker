@@ -7,7 +7,6 @@ package com.action;
 
 import com.opensymphony.xwork2.Action;
 import databank.TblProduct;
-import databank.adapter.HibernateFactory;
 import databank.dao.ProductDao;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,6 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  *

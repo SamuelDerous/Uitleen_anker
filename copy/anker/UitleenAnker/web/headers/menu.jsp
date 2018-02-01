@@ -39,15 +39,22 @@ String soort = (String) session.getAttribute("soort"); %>
                 <li><a class="hsubs" href="#">Productie</a>
                     <ul class="subs">
                         <li><a href="productenUsers">Aanpassen/verwijderen</a></li>
+                        <li><a href="productControle">Te controleren</a></li>
                         <li><a href="productToevoegenUsers">Toevoegen</a></li>
                         
                     </ul>
                 </li>
-                <li><a href="#">Inventarisatie</a>
+                <li><a class="hsubs" href="#">Inventarisatie</a>
                     <ul class="subs">
                         <li><a href="inventarisUsers">Verwijderen</a></li>
                         <li><a href="inventToevoegenUsers">Toevoegen</a></li>
                         
+                    </ul>
+                </li>
+                <li><a class="hsubs" href="#">Overzichten</a>
+                    <ul class="subs">
+                        <li><a href="overzichtUitleningen">periodiek Overzicht</a></li>
+                        <li><a href="uitleningenArchief">Uitleningen</a>
                     </ul>
                 </li>
                 

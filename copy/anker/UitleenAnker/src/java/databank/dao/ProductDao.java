@@ -34,6 +34,11 @@ public class ProductDao {
         return qryProduct.list();
     }
     
+    public List<TblProduct> getTeControleren() {
+        Query qryProduct = session.createQuery("from TblProduct where controle = 0 order by naam");
+        return qryProduct.list();
+    }
+    
     public TblProduct getProductById(int id) {
         try {    
         Query qryProduct = session.createQuery("from TblProduct where id = :id");
@@ -71,6 +76,7 @@ public class ProductDao {
             productTabel.setWebsite(product.getWebsite());
             productTabel.setPlaats(product.getPlaats());
             productTabel.setVolledig(product.getVolledig());
+            productTabel.setControle(product.getControle());
             productTabel.setUitleentermijn(product.getUitleentermijn());
             Transaction updateProduct = session.beginTransaction();
             session.update(productTabel);

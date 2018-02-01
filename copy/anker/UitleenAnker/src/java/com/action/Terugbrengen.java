@@ -6,7 +6,9 @@
 package com.action;
 
 import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
 import databank.TblUitleen;
+import databank.dao.ProductDao;
 import databank.dao.UitleenDao;
 import java.util.GregorianCalendar;
 
@@ -14,7 +16,7 @@ import java.util.GregorianCalendar;
  *
  * @author zenodotus
  */
-public class Terugbrengen implements Action {
+public class Terugbrengen extends ActionSupport {
 
     private int uitleen;
 
@@ -34,6 +36,10 @@ public class Terugbrengen implements Action {
         TblUitleen uitlening = uitleenDao.getUitleningen(uitleen);
         uitlening.setTeruggebracht(cal.getTime());
         uitleenDao.aanpassen(uitlening);
+        ProductDao productDao = new ProductDao();
+        uitlening.getSpel().setControle(0);
+        productDao.aanpassen(uitlening.getSpel());
+        addActionError("Controle is " + uitlening.getSpel().getControle());
         return SUCCESS;
     }
     

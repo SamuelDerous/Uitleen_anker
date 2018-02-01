@@ -4,7 +4,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-    <constant name="struts.devMode" value="false" />
+    <constant name="struts.devMode" value="true" />
     
     <package name="default" extends="struts-default">
         <interceptors>
@@ -202,6 +202,15 @@
             <result name="success">/WEB-INF/users/producten.jsp</result>
         </action>
         
+        <action name="gecontroleerd" class="com.action.ControleAction">
+            <result name="success">/WEB-INF/users/controle.jsp</result>
+            <result name="input">/WEB-INF/users/controle.jsp</result>
+        </action>
+        
+        <action name="productControle" class="com.action.Controle">
+            <result name="success">/WEB-INF/users/controle.jsp</result>
+        </action>
+        
         <action name="productToevoegenUsers" class="com.action.ProductToevoegen">
             <result name="success">/WEB-INF/users/productToevoegen.jsp</result>
         </action>
@@ -218,9 +227,6 @@
             <result name="success">/WEB-INF/ontleners/uitleningen.jsp</result>
         </action>
         
-        <action name="letsTest" class="com.action.Testing">
-            <result name="success">testJsp.jsp</result>
-        </action>
         
         <action name="resetWachtwoord" class="com.action.ResetPassAction">
             <result name="success">/WEB-INF/users/resetWachtwoord.jsp</result>

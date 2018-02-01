@@ -18,20 +18,23 @@
 <jsp:include page="../headers/header.jsp" />
 <jsp:include page="../headers/menu.jsp" />
 
-<script	  src="https://code.jquery.com/jquery-3.2.1.js"
-          integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<% int i = 0; %>
+
 
 <section id="hoofdinhoud">
     <article id="gebruikers">
         <div id="foutmelding">
                             <s:actionerror escape="false" />
                         </div>
-        <table border="1" width="100%">
-
-            
+        <table id="productenTable" border="1" width="100%">
+            <thead>
+                <tr>
+                    <td>Productnaam</td>
+                    <td>Aantal</td>
+                    <td>Soort</td>
+                    <td>Bewerkingen</td>
+                </tr>
+            </thead>
+            <tbody>
             <jsp:useBean id="producten" class="databank.dao.ProductDao" />
             <c:forEach var="product" items="${producten.alleProducten}">
 
@@ -107,9 +110,17 @@ crossorigin="anonymous"></script>
                 </td>               
             </tr>           
             </c:forEach>
+            </tbody>
         </table>
     </article>
-</section>    
+</section> 
+            <script language="JavaScript" type="text/javascript">
+<!--
+$(document).ready(function() {
+    $('#productenTable').DataTable();
+} );
+-->
+</script> 
 </body>
 </html>
 <% } else {

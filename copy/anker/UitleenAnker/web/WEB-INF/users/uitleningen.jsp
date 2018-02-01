@@ -19,13 +19,24 @@
 <%@taglib uri="/struts-tags" prefix="s"%>
 <section id="hoofdinhoud">
     <article id="gebruikers">
-        <table border="1" width="100%">
+        <table id="uitleningenTable" border="1" width="100%">
             <% 
                 if(request.getAttribute("email") != null && request.getAttribute("email").equals("verzonden")) {
             %><script> alert("Dit product is gereserveerd er is naar de gebruiker een bericht gezonden");</script><%
                     
             }
                     %>
+                    <thead>
+                        <tr>
+                            <td>gebruikersnaam</td>
+                            <td>Productnaam</td>
+                            <td>Aantal</td>
+                            <td>Uitleendatum</td>
+                            <td>Terugbrengdatum</td>
+                            <td>Bewerkingen</td>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <jsp:useBean id="uitleningen" class="databank.dao.UitleenDao" />
                     <c:forEach var="uitlening" items="${uitleningen.actieveUitleningen}">
                     <tr><td>${uitlening.naam.gebruikersnaam}</td>
@@ -39,9 +50,17 @@
                         <a href="uitleningProductAanpassen?uitleen=${uitlening.id}">Aanpassen</a><br />
                         <a href="verlengenUitleningen?uitleen=${uitlening.id}">Verlengen</a></td></tr>
                     </c:forEach>
+                    </tbody>
         </table>
     </article>
-</section>    
+</section>  
+                    <script language="JavaScript" type="text/javascript">
+<!--
+$(document).ready(function() {
+    $('#uitleningenTable').DataTable();
+} );
+-->
+</script> 
 </body>
 </html>
 <% } else {

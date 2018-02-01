@@ -19,7 +19,7 @@
 <jsp:include page="../headers/menu.jsp" />
 <section id="hoofdinhoud">
     <article id="formulier" align="center">
-				<h2 align="center">Toevoegen</h2>
+        <h2 align="center">Toevoegen</h2>
 				<s:form method="post" action="productToevoegen" name="Toevoegen" onSubmit="return leeg();">
 					<table border="0" align="center" width="25%">
 						<tr><td colspan="2"><div id="foutmelding" name="foutmelding">

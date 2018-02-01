@@ -37,6 +37,7 @@ public class ProductAanpassenAction extends ActionSupport {
     private String uitleentermijn;
     private String plaats;
     private String volledig;
+    private String controle;
     private String actie;
 
     public String getActie() {
@@ -150,6 +151,14 @@ public class ProductAanpassenAction extends ActionSupport {
     public String execute() {
         return SUCCESS;
     }
+
+    public String getControle() {
+        return controle;
+    }
+
+    public void setControle(String controle) {
+        this.controle = controle;
+    }
     
     
     
@@ -168,7 +177,15 @@ public class ProductAanpassenAction extends ActionSupport {
                 volledig = "0";
                 }
    
-        
+        if(controle != null) {
+            if(controle.equals("on")) {
+                controle = "1";
+            } else {
+                controle = "0";
+            }
+        } else {
+            controle = "0";
+        }
         if(!isNumeric(aankoopprijs)) {
             if(aankoopprijs.equals("")) {
                 aankoopprijs = "0";
@@ -226,6 +243,7 @@ public class ProductAanpassenAction extends ActionSupport {
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date dAankoopdatum = (Date) formatter.parse(aankoopdatum);
             TblProduct product = new TblProduct();
+            
             product.setNaam(naam);
             product.setAankoopprijs(dbAankoopprijs);
             product.setBreukprijs(dbBreukprijs);
@@ -243,8 +261,10 @@ public class ProductAanpassenAction extends ActionSupport {
             ProductDao productDao = new ProductDao();
             if(actie.equals("aanpassen")) {
                 product.setId(productId);
+                product.setControle(Integer.parseInt(controle));
                 productDao.aanpassen(product);
             } else if(actie.equals("toevoegen")) {
+                product.setControle(1);
                 productDao.toevoegen(product);
             } else {
                 addActionError("Er is een fout geslopen in het verwerken van de aanvraag.<br>");

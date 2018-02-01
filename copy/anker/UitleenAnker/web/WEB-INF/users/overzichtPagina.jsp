@@ -62,6 +62,13 @@
 </section>
 </div>
 <script type="text/javascript">
+
+<!--
+$(document).ready(function() {
+    $('#controleTable').DataTable();
+} );
+-->
+
     $('#slctKwartaal').change(function() {
         if(this.value == "maandelijks") {
             $("#rowMonth").show();

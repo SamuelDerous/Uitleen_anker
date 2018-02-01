@@ -53,6 +53,8 @@ public class TblProduct implements Serializable {
     private String plaats;
     @Column(name = "volledig")
     private Integer volledig;
+    @Column(name = "controle")
+    private Integer controle;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spel")
     private Collection<TblUitleen> tblUitleenCollection;
@@ -222,6 +224,14 @@ public class TblProduct implements Serializable {
 
     public void setVolledig(Integer volledig) {
         this.volledig = volledig;
+    }
+    
+    public Integer getControle() {
+        return controle;
+    }
+    
+    public void setControle(Integer controle) {
+        this.controle = controle;
     }
     
 }

@@ -109,6 +109,14 @@ public class UitlenenAction extends ActionSupport {
                 addActionError("Deze gebruiker bestaat niet in het systeem.");
             }
             
+            if(product.getVolledig() != 1) {
+                correct = false;
+                addActionError("Dit product is niet volledig en kan bijgevolg niet meer uitgeleend worden.");
+            } else if(product.getControle() != 1) {
+                correct = false;
+                addActionError("Dit product moet nog op hergebruik gecontroleerd worden.");
+            }
+            
             if(correct) {
                 TblUitleen uitleen = new TblUitleen();
                 

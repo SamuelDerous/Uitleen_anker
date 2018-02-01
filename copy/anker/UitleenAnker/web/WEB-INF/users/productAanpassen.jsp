@@ -39,6 +39,7 @@
                                                 <tr><td>Opmerkingen</td><td><textarea id="txtOpmerkingen" name="opmerking" class="invullen" rows="3" >${product.opmerking}</textarea></td></tr>
                                                 <tr><td>Website:</td><td><input type="text" class="invullen" value="${product.website}" name="website" id="txtWebsite" /></td></tr>
                                                 <tr><td>Plaatsbepaling<span id="vereist">*</span></td><td><input type="text" class="invullen" value="${product.plaats}" name="plaats" id="txtPlaats" /></td></tr>
+                                                <tr><td>Gecontroleerd</td><td><input type="checkbox" name="controle" value="on" <c:if test="${product.controle eq 1}">checked</c:if>></td></tr>
                                                 <tr><td>Volledig</td><td><input type="checkbox" name="volledig" value="on" <c:if test="${product.volledig eq 1}">checked</c:if>></td></tr>
                                                 <tr><td>Uitleentermijn: </td><td><input type="text" class="invullen" value="${product.uitleentermijn}" name="uitleentermijn" id="txtUitleentermijn" /></td></tr>
                                                 <tr><td>Soort materiaal: </td><td><select name="beschrijving" class="invullen">

@@ -22,7 +22,7 @@
 <%@taglib uri="/struts-tags" prefix="s"%>
 <section id="hoofdinhoud">
     <article id="gebruikers">
-        <table border="1" width="100%">
+        <table id="accountsTable" border="1" width="100%">
             <c:set var="actie" value="${param.action}"/>
                    
                 <c:if test="${actie eq 'uitlening'}">

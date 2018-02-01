@@ -14,9 +14,22 @@
 <%@ taglib uri="/struts-tags" prefix="s" %> 
 <section id="hoofdinhoud">
     <article id="gebruikers">
-        <table border="1" width="100%">
+        <div id="foutmelding"><s:actionerror /></div>
+        <table id="gebruikersTable" border="1" width="100%">
+            <thead>
+                <tr>
+                    <td>Gebruikersnaam</td>
+                    <td>Voornaam</td>
+                    <td>Naam</td>
+                    <td>Adres</td>
+                    <td>telefoon</td>
+                    <td>E-mail</td>
+                    <td>Bewerkingen</td>
+                </tr>
+            </thead>
+            <tbody>
             <jsp:useBean id="personen" class="databank.dao.PersoonDao" scope="request" />
-            <tr><td colspan="7" align="center"><div id="foutmelding"><s:actionerror /></div></td>
+            
             <c:forEach var="persoon" items="${personen.alleGebruikers}">
                  <c:set var="gebruiker" value="${persoon.gebruikersnaam}" scope="session" />
             <tr><td>${persoon.gebruikersnaam}</td>
@@ -29,7 +42,8 @@
                          <a href="verwijderenGebruiker?gebruikersnaam=${persoon.gebruikersnaam}">Verwijderen</a><br>
                          
                         <a href="aanpassenGebruiker?gebruikersnaam=${persoon.gebruikersnaam}">Aanpassen</a><br>
-                        <script>
+                       
+                         <script>
                     $(function () {
                             var dialog;
 
@@ -135,7 +149,8 @@
                         }
                         );
                 </script>
-                        <a id="reserveren${persoon.gebruikersnaam}" href=Reserveren.do?gebruiker=${persoon.gebruikersnaam}">Reserveren</a>
+                        
+                        <a id="reserveren${persoon.gebruikersnaam}" href="Reserveren.do?gebruiker=${persoon.gebruikersnaam}">Reserveren</a>
                     <div id="reserveer${persoon.gebruikersnaam}" title="Reserveren" align="center">
                             <div id="foutmelding">
                             <%if(request.getAttribute("uitlening") != null && request.getAttribute("uitlening").equals("uitgeleend")) {%>
@@ -164,9 +179,18 @@
                 </td>
             </tr>
             </c:forEach>
+            </tbody>
         </table>
     </article>
-</section>    
+</section>  
+            
+            <script language="JavaScript" type="text/javascript">
+<!--
+$(document).ready(function() {
+    $('#gebruikersTable').DataTable();
+} );
+-->
+</script> 
 </body>
 </html>
 <%} else {
