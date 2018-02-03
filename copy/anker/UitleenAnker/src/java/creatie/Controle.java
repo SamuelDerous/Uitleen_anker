@@ -23,6 +23,15 @@ public class Controle {
         }
         return true;
     }
+    
+    public static boolean isInteger(String str) {
+        try {
+           int i = Integer.parseInt(str);
+        } catch(NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
 
     public static boolean isDate(String str) {
         try {

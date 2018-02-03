@@ -64,10 +64,16 @@ public class PersoonDao {
     }
     
     
-    public void toevoegen(TblPersoon persoon) {
+    public boolean toevoegen(TblPersoon persoon) {
+       try {
         session.beginTransaction();
         session.save(persoon);
-        session.getTransaction().commit();    
+        session.getTransaction().commit();
+        return true;
+       } catch(Exception ex) {
+           ex.printStackTrace();
+           return false;
+       }
     }
     
     public boolean toevoegen(String gebruikersnaam, String voornaam, String naam, String wachtwoord, 
@@ -97,7 +103,10 @@ public class PersoonDao {
             
     }
     
-    public void aanpassen(TblPersoon gebruiker) {
+    public boolean aanpassen(TblPersoon gebruiker) {
+        try {
+            
+        
         Transaction tx = session.beginTransaction();
             TblPersoon persoon = (TblPersoon) session.load(TblPersoon.class, gebruiker.getGebruikersnaam());
             tx.commit();
@@ -112,6 +121,11 @@ public class PersoonDao {
             Transaction updatePersoon = session.beginTransaction();
             session.update(persoon);
             updatePersoon.commit();
+            return true;
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
             
             
     }

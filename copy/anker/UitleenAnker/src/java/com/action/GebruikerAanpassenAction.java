@@ -77,13 +77,19 @@ public class GebruikerAanpassenAction extends ActionSupport {
             addActionError("Er dient een correct e-mailadres opgegeven te worden.<br>");
         }
         
-        if(!isNumeric(persoon.getTelefoon())) {
+        if((persoon.getTelefoon() != null && !persoon.getTelefoon().isEmpty()) && !isNumeric(persoon.getTelefoon())) {
             correct = false;
             addActionError("Het telefoonnummer dient uitsluitend uit cijfers te bestaan.<br>");
         }    
         if(correct == true) {
             
-            persoonDao.aanpassen(persoon);
+            if(!persoonDao.aanpassen(persoon)) {
+                addActionError("Er is iets fout gegaan bij het verwerken van uw vraag");
+                ValueStack stack = ActionContext.getContext().getValueStack();
+            Map<String, TblPersoon> context = new HashMap<String, TblPersoon>();
+            context.put("gebruiker", persoon);
+            stack.push(context);
+            }
         } else {
             ValueStack stack = ActionContext.getContext().getValueStack();
             Map<String, TblPersoon> context = new HashMap<String, TblPersoon>();

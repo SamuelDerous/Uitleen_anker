@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.util.ValueStack;
 import static creatie.Controle.isDate;
+import static creatie.Controle.isInteger;
 import static creatie.Controle.isNumeric;
 import databank.TblBeschrijving;
 import databank.TblProduct;
@@ -203,7 +204,7 @@ public class ProductAanpassenAction extends ActionSupport {
                     addActionError("De breukprijs dient een correct valuta te zijn.<br>");
                 }
             }
-        if(!isNumeric(aantal)) {
+        if(!isInteger(aantal)) {
                 if(aantal.equals("")) {
                     aantal = "1";
                 } else {
@@ -222,7 +223,7 @@ public class ProductAanpassenAction extends ActionSupport {
                     addActionError("De aankoopdatum dient een correcte datum te zijn.<br>");
                 }
             }
-            if(!isNumeric(uitleentermijn))  {
+            if(!isInteger(uitleentermijn))  {
                 if(uitleentermijn.equals("")) {
                     uitleentermijn = "4";
                 } else {
@@ -268,10 +269,28 @@ public class ProductAanpassenAction extends ActionSupport {
                 productDao.toevoegen(product);
             } else {
                 addActionError("Er is een fout geslopen in het verwerken van de aanvraag.<br>");
+                
+            product = productDao.getProductById(productId);
+            ValueStack stack = ActionContext.getContext().getValueStack();
+            Map<String, TblProduct> context = new HashMap<String, TblProduct>();
+            context.put("product", product);
+            stack.push(context);
+            Map<String, String> action = new HashMap<String, String>();
+            action.put("actie", actie);
+            stack.push(action);
             }
             } catch(Exception ex) {
                 addActionError("Er is een fout opgetreden bij het verwerken van de aanvraag.<br>");
                 ex.printStackTrace();
+                ProductDao productDao = new ProductDao();
+            TblProduct product = productDao.getProductById(productId);
+            ValueStack stack = ActionContext.getContext().getValueStack();
+            Map<String, TblProduct> context = new HashMap<String, TblProduct>();
+            context.put("product", product);
+            stack.push(context);
+            Map<String, String> action = new HashMap<String, String>();
+            action.put("actie", actie);
+            stack.push(action);
             }
             } else {
             ProductDao productDao = new ProductDao();

@@ -7,7 +7,7 @@ package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import creatie.Aantal;
-import static creatie.Controle.isNumeric;
+import static creatie.Controle.isInteger;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.TblUitleen;
@@ -83,14 +83,14 @@ public class UitlenenAction extends ActionSupport {
             
             
                         
-            if(!isNumeric(aantal)) {
+            if(!isInteger(aantal)) {
                 if(aantal.equals("")) {
                     aantal = "1";
                 } else {
                     correct = false;
                 }
             }
-            if(isNumeric(aantal)) {
+            if(isInteger(aantal)) {
                 if((aantalUitlenen + Integer.parseInt(aantal)) > maxUitleningen) {
                     isUitgeleend = true;
                     correct = false;
