@@ -7,7 +7,7 @@ package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import creatie.Aantal;
-import static creatie.Controle.isNumeric;
+import static creatie.Controle.isInteger;
 import databank.TblPersoon;
 import databank.TblProduct;
 import databank.dao.PersoonDao;
@@ -62,7 +62,7 @@ public class ReserverenAction extends ActionSupport {
                
             boolean correct = true;
             
-            if(!isNumeric(aantal)) {
+            if(!isInteger(aantal)) {
                 if(aantal.equals("")) {
                     aantal = "1";
                 } else {

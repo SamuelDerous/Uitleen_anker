@@ -7,6 +7,7 @@ package com.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import static creatie.Controle.isDate;
+import static creatie.Controle.isInteger;
 import static creatie.Controle.isNumeric;
 import databank.TblUitleen;
 import databank.dao.UitleenDao;
@@ -138,7 +139,7 @@ public class UitleenAanpassenAction extends ActionSupport {
                     addActionError("De aankoopdatum dient een correcte datum te zijn.<br>");
                 }
             }
-        if(!isNumeric(aantal)) {
+        if(!isInteger(aantal)) {
             if(aantal.equals("")) {
                 aantal = "1";
             } else {
