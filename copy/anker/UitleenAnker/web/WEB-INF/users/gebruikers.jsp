@@ -23,7 +23,7 @@
                     <td>Naam</td>
                     <td>Adres</td>
                     <td>telefoon</td>
-                    <td>E-mail</td>
+                    <!--<td>E-mail</td>-->
                     <td>Bewerkingen</td>
                 </tr>
             </thead>
@@ -37,7 +37,7 @@
                 <td>${persoon.naam} </td>
                 <td>${persoon.adres}</td>
                 <td>${persoon.telefoon}</td> 
-                <td>${persoon.EMail}</td>
+                <!--<td>${persoon.EMail}</td>-->
                 <td>
                          <a href="verwijderenGebruiker?gebruikersnaam=${persoon.gebruikersnaam}">Verwijderen</a><br>
                          

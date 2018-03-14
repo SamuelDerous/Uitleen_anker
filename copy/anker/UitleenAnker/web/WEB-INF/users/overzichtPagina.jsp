@@ -20,10 +20,10 @@
     <article id="Overzicht" align="center">
 				<h2 align="center">Overzicht ${jaar}</h2>
 				
-					<table border="1" align="center" width="100%">
+					<table border="1" width="100%">
 						<jsp:useBean id="producten" class="databank.dao.ProductDao" scope="request" />
                                                 <jsp:useBean id="kwartaalOptelling" class="databank.dao.UitleenDao" />
-                                            <thead><th>Product</th><th>Jaarlijks</th><th>Januari</th><th>Februari</th><th>Maart</th><th>April</th><th>Mei</th><th>Juni</th><th>Juli</th><th>Augustus</th><th>September</th><th>Oktober</th><th>November</th><th>December</th></thead>
+                                            <thead><th>Product</th><th>Jaarlijks</th><th>Jan</th><th>Feb</th><th>Maart</th><th>April</th><th>Mei</th><th>Juni</th><th>Juli</th><th>Aug</th><th>Sep</th><th>Okt</th><th>Nov</th><th>Dec</th></thead>
                                                 
                                                 <s:if test="productId == 0">
                                                 <c:forEach var="producties" items="${producten.alleProducten}">
@@ -35,7 +35,7 @@
                                                    
                                                    <c:forEach var="teller" begin="1" end="12">
                                                       <c:set var="maandelijks" value="${kwartaalOptelling.getOverzicht(producties, jaar, teller)}" />
-                                                    <td>${maandelijks}</td>
+                                                    <td width="10px">${maandelijks}</td>
                                                    </c:forEach>
                                                 </tr>
                                                 </c:forEach>

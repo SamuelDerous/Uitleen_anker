@@ -31,6 +31,7 @@
                             <td>gebruikersnaam</td>
                             <td>Productnaam</td>
                             <td>Aantal</td>
+                            <td>Plaats</td>
                             <td>Uitleendatum</td>
                             <td>Terugbrengdatum</td>
                             <td>Bewerkingen</td>
@@ -39,9 +40,10 @@
                     <tbody>
                     <jsp:useBean id="uitleningen" class="databank.dao.UitleenDao" />
                     <c:forEach var="uitlening" items="${uitleningen.actieveUitleningen}">
-                    <tr><td>${uitlening.naam.gebruikersnaam}</td>
-                        <td>${uitlening.spel.naam}</td>
+                        <tr><td><a href="aanpassenGebruiker?gebruikersnaam=${uitlening.naam.gebruikersnaam}">${uitlening.naam.gebruikersnaam}</a></td>
+                        <td><a href="aanpassenProductForm?productId=${uitlening.spel.id}">${uitlening.spel.naam}</a></td>
                     <td>${uitlening.aantal}</td>
+                    <td>${uitlening.spel.plaats}</td>
                     <td>${uitlening.uitleendatum}</td>
                     <s:set value="%{uitlening.terugbrengdatum}" var="terugbrengdatum" />
                     <s:text name="%{terugbrengdatum}" />

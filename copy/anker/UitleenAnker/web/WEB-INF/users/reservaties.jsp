@@ -30,6 +30,7 @@
                     <td>Gebruikersnaam</td>
                     <td>Productnaam</td>
                     <td>Aantal</td>
+                    <td>Plaats</td>
                     <td>ReservatieDatum</td>
                     <td>Bewerkingen</td>
                 </tr>
@@ -39,10 +40,11 @@
                 
                     <jsp:useBean id="reservaties" class="databank.dao.ReservatieDao" />
                     <c:forEach var="reservatie" items="${reservaties.alleReservaties}">
-                    <tr><td>${reservatie.gebruiker.gebruikersnaam}</td>
-                    <td>${reservatie.product.naam}</td>
+                        <tr><td><a href="aanpassenGebruiker?gebruikersnaam=${reservatie.gebruiker.gebruikersnaam}">${reservatie.gebruiker.gebruikersnaam}</a></td>
+                            <td><a href="aanpassenProductForm?productId=${reservatie.product.id}">${reservatie.product.naam}</a></td>
                     <td>${reservatie.aantal}</td>
-                    <td>${reservatie.reservatieDatum}
+                    <td>${reservatie.product.plaats}</td>
+                    <td>${reservatie.reservatieDatum}</td>
                     <td><a href="reservatieVerwijderen?reservatie=${reservatie.id}">Verwijderen</a><br>
                         <a href="omzetten?reservatie=${reservatie.id}" onclick="bericht();">Uitlenen</a><br></td></tr>
                     </c:forEach>

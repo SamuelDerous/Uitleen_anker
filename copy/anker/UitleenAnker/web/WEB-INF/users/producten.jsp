@@ -31,6 +31,7 @@
                     <td>Productnaam</td>
                     <td>Aantal</td>
                     <td>Soort</td>
+                    <td>Plaats</td>
                     <td>Bewerkingen</td>
                 </tr>
             </thead>
@@ -42,6 +43,7 @@
                 <tr><td><c:if test="${product.website ne null && product.website ne ''}" var="testWebsite"><a href="${product.website}" target="_blank"></c:if>${product.naam}<c:if test="${testWebsite}"></a></c:if></td>
                 <td>${product.aantal}</td>
                 <td>${product.beschrijving.soort}</td>
+                <td>${product.plaats}</td>
                 <td class="test"><a href="verwijderenProduct?productId=${product.id}">Verwijderen</a><br>
                     
                     <a href="aanpassenProductForm?productId=${product.id}">Aanpassen</a><br>
