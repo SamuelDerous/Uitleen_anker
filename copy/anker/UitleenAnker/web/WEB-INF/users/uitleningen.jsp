@@ -33,7 +33,7 @@
                             <td>Aantal</td>
                             <td>Plaats</td>
                             <td>Uitleendatum</td>
-                            <td>Terugbrengdatum</td>
+                            <td>Terugbrengen</td>
                             <td>Bewerkingen</td>
                         </tr>
                     </thead>

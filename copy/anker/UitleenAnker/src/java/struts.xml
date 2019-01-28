@@ -4,7 +4,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
-    <constant name="struts.devMode" value="true" />
+    <constant name="struts.devMode" value="false" />
     
     <package name="default" extends="struts-default">
         <interceptors>
@@ -16,12 +16,19 @@
                 </interceptor-stack>
         </interceptors>
         
+        <default-interceptor-ref name="loginStack" />
+        <global-results>
+            <result name="login">inloggen.jsp</result>
+        </global-results>   
+        
         <action name="loginUser" class="com.action.LoginAction">
+            <interceptor-ref name="defaultStack" />
             <result name="success">ingelogd.jsp</result>
             <result name="input">inloggen.jsp</result>
             <result name="login">inloggen.jsp</result>
         </action>
         <action name="registreren" class="com.action.RegistreerAction">
+            <interceptor-ref name="defaultStack" />
             <result name="success">inloggen.jsp</result>
             <result name="input">registreren.jsp</result>
         </action>

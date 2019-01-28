@@ -5,8 +5,12 @@
  */
 package com.action;
 
+import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import static creatie.Controle.isNumeric;
+import creatie.MailSend;
+import creatie.Password;
+import crypto.EncryptionIni;
 import databank.TblPersoon;
 import databank.dao.PersoonDao;
 
@@ -110,12 +114,14 @@ public class RegistreerAction extends ActionSupport {
             addActionError("Er dient een unieke gebruikersnaam ingevuld te worden.<br>");
         }
         if(wachtwoord.isEmpty()) {
-            correct = false;
-            addActionError("Er dient een wachtwoord opgegeven te worden.<br>");
-        }
+            wachtwoord = Password.createRandomPassword();
+            correct = true;
+            //addActionError("Er dient een wachtwoord opgegeven te worden.<br> Randompassword: " + wachtwoord);
+        } else {
         if(!bevestig.equals(wachtwoord)) {
             correct = false;
             addActionError("Het wachtwoord is niet gelijk aan de bevestiging.<br>");
+        }
         }
         if(email.isEmpty()) {
             correct = false;
@@ -130,10 +136,24 @@ public class RegistreerAction extends ActionSupport {
             addActionError("Het telefoonnummer dient uitsluitend uit cijfers te bestaan.<br>");
         }
         if(correct == true) {
-            if(!dao.toevoegen(gebruikersnaam, voornaam, naam, wachtwoord, adres, telefoon, email, soort)) {
-                addActionError("Er is iets fout gegaan tijdens de verwerking van uw registratie.<br>");
+           
+                try {
+                    if(dao.toevoegen(gebruikersnaam, voornaam, naam, wachtwoord, adres, telefoon, email, soort)) {
+                String onderwerp = "Je wachtwoord voor de spelotheek Het Anker";
+                String bericht = "Uw inlog-gegevens zijn de volgende:<br><br><b>Gebruikersnaam: </b>" + gebruikersnaam;
+                bericht += "<br><b>Wachtwoord: </b>" + wachtwoord;
+                MailSend mail = new MailSend("smtp.scarlet.be", "noreply@anker.be", email, onderwerp, bericht);
+                mail.verzend();
+                    } else {
+                        addActionError("Er is iets fout gegaan met de registratie");
+                    }
+                //addActionMessage("Je wachtwoord is naar je opgegeven e-mail verzonden");
+                } catch(Exception ex) {
+                    addActionError("Er is iets fout gegaan bij de verwerking van uw registratie.<br>");
+                    
+                }
             }
-        }
+        
         
     }
 }

@@ -49,7 +49,7 @@
                                                 <tr><td>Soort gebruiker:</td><td><select name="soort" class="invullen">
                                                             <jsp:useBean id="soorten" class="databank.dao.SoortDao" />
                                                             <c:forEach var="soortItem" items="${soorten.soorten}">
-                                                                <option value="${soortItem.soort}">${soortItem.soort}</option>
+                                                                <option value="${soortItem.soort}" <c:if test="${soortItem.soort.equals('ontlener')}"> selected</c:if>>${soortItem.soort}</option>
                                                             </c:forEach>
                                                                                                                                </select></td>
 						<tr><td>&nbsp;</td><td>&nbsp;</td></tr>

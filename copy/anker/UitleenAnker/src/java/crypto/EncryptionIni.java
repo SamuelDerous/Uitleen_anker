@@ -13,8 +13,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import  java.util.Base64;
 
 /**
  *
@@ -47,7 +46,8 @@ public class EncryptionIni {
 
     private static String base64Encode(byte[] bytes) {
         // NB: This class is internal, and you probably should use another impl
-        return new BASE64Encoder().encode(bytes);
+        return Base64.getEncoder().encodeToString(bytes);
+        //return new Encode(bytes);
     }
 
     public static String decrypt(String property) throws GeneralSecurityException, IOException {
@@ -60,7 +60,7 @@ public class EncryptionIni {
 
     private static byte[] base64Decode(String property) throws IOException {
         // NB: This class is internal, and you probably should use another impl
-        return new BASE64Decoder().decodeBuffer(property);
+        return Base64.getDecoder().decode(property);
     }
 
 }

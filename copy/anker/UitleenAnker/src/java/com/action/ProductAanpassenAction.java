@@ -225,7 +225,7 @@ public class ProductAanpassenAction extends ActionSupport {
             }
             if(!isInteger(uitleentermijn))  {
                 if(uitleentermijn.equals("")) {
-                    uitleentermijn = "4";
+                    uitleentermijn = "2";
                 } else {
                     correct = false;
                     addActionError("De uitleentermijn moet een correct getal zijn.<br>");

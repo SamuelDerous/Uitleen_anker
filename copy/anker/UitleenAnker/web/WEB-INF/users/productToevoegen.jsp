@@ -40,7 +40,7 @@
                                                 <tr><td>Website:</td><td><input type="text" class="invullen" name="website" id="txtWebsite" /></td></tr>
                                                 <tr><td>Plaatsbepaling<span id="vereist">*</span></td><td><input type="text" class="invullen" name="plaats" id="txtPlaats" /></td></tr>
                                                 <tr><td>Volledig</td><td><input type="checkbox" name="volledig" checked></td></tr>
-                                                <tr><td>Uitleentermijn: </td><td><input type="text" class="invullen" name="uitleentermijn" id="txtUitleentermijn" /></td></tr>
+                                                <tr><td>Uitleentermijn: </td><td><input type="text" class="invullen" name="uitleentermijn" id="txtUitleentermijn" value="2" /></td></tr>
                                                 <tr><td>Soort materiaal: </td><td><select name="beschrijving" class="invullen">
                                                             
                                                         <jsp:useBean id="beschrijvingen" class="databank.dao.BeschrijvingDao" />
