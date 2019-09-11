@@ -5,6 +5,7 @@
  */
 package com.action;
 
+import static com.opensymphony.xwork2.Action.SUCCESS;
 import com.opensymphony.xwork2.ActionSupport;
 import creatie.Aantal;
 import static creatie.Controle.isInteger;
@@ -17,16 +18,17 @@ import databank.dao.UitleenDao;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 
 /**
  *
  * @author zenodotus
  */
-public class UitlenenAction extends ActionSupport {
-
+public class UitlenenAction2 extends ActionSupport {
+    
     private String gebruikersnaam;
-    private Collection<Integer> productId;
-    private Collection<String> aantal;
+    private int productId;
+    private String aantal;
     private String productions;
     private String website;
 
@@ -38,21 +40,23 @@ public class UitlenenAction extends ActionSupport {
         this.gebruikersnaam = gebruikersnaam;
     }
 
-    public Collection<Integer> getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Collection<Integer> productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public Collection<String> getAantal() {
+    public String getAantal() {
         return aantal;
     }
 
-    public void setAantal(Collection<String> aantal) {
+    public void setAantal(String aantal) {
         this.aantal = aantal;
     }
+
+    
 
     public String getProductions() {
         return productions;
@@ -88,35 +92,30 @@ public class UitlenenAction extends ActionSupport {
             correct = false;
             addActionError("Deze gebruiker bestaat niet in het systeem.");
         } else {
-            String[] prod = productions.split(";");
-            for (int i = 0; i < prod.length; i++) {
-                String[] productCollectie = prod[i].split(":");
-                String productNumber = productCollectie[0];
-                String aantalNumber = productCollectie[1];
-                if (!isInteger(productNumber)) {
-                    correct = false;
-                    addActionError("ProductId is geen correct getal");
-                } else {
-                    TblProduct product = productDao.getProductById(Integer.parseInt(productNumber));
+                //String[] productCollectie = prod[i].split(":");
+                //String productNumber = productCollectie[0];
+                //String aantalNumber = productCollectie[1];
+                
+                    TblProduct product = productDao.getProductById(productId);
                     if (product != null) {
                         Aantal aantallen = new Aantal();
                         int aantalUitlenen = aantallen.aantalUitgeleend(product);
                         int aantalReservaties = aantallen.aantalReservaties(product);
                         int maxUitleningen = aantallen.maxAantal(product);
-                        if (aantalNumber != null && !isInteger(aantalNumber)) {
-                            if (aantalNumber.equals("")) {
-                                aantalNumber = "1";
+                        if (aantal != null && !isInteger(aantal)) {
+                            if (aantal.equals("")) {
+                                aantal = "1";
                             } else {
                                 correct = false;
                                 addActionError("Aantal is geen correct getal");
                             }
                         }
-                        if (aantalNumber != null && isInteger(aantalNumber)) {
-                            if ((aantalUitlenen + Integer.parseInt(aantalNumber)) > maxUitleningen) {
+                        if (aantal != null && isInteger(aantal)) {
+                            if ((aantalUitlenen + Integer.parseInt(aantal)) > maxUitleningen) {
                                 isUitgeleend = true;
                                 correct = false;
                             }
-                            if (aantalReservaties + (Integer.parseInt(aantalNumber)) > maxUitleningen) {
+                            if (aantalReservaties + (Integer.parseInt(aantal)) > maxUitleningen) {
                                 isGereserveerd = true;
                                 correct = false;
                             }
@@ -142,7 +141,7 @@ public class UitlenenAction extends ActionSupport {
 
                         uitleen.setNaam(persoon);
                         uitleen.setUitleendatum(datum);
-                        uitleen.setAantal(Integer.parseInt(aantalNumber));
+                        uitleen.setAantal(Integer.parseInt(aantal));
                         GregorianCalendar calTermijn = new GregorianCalendar();
                         calTermijn.add(GregorianCalendar.DAY_OF_YEAR, 14);
                         Date termijn = new Date(calTermijn.getTimeInMillis());
@@ -161,6 +160,9 @@ public class UitlenenAction extends ActionSupport {
 
                 }
             }
-        }
-    }
+        
+    
 }
+
+    
+

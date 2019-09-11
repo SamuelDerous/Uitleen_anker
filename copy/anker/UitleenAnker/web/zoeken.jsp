@@ -11,11 +11,15 @@
 <jsp:include page="headers/menu.jsp" />
 
 <style>
+    #hoofdinhoud {
+        display: block;
+    }
     .displayListView {
         display: inline-block;
-        vertical-align: middle;
+        vertical-align: middle !important;
         margin-top:5px;
         margin-bottom:5px;
+        padding-left:10px;
         float: none;
     }
 
@@ -23,10 +27,13 @@
         -moz-border-radius:10px; 
         -webkit-border-radius: 10px; 
         -khtml-border-radius: 10px; 
-        border-radius: 10px; 
+        border-radius: 10px;
+        height: 50px;
+        
         color: gray;
+        vertical-align: middle !important;
     }
-    .displayRow:hover {
+    .displayRow:hover, lvLevel:hover {
         background-color:#ebd621;
 
     }
@@ -35,16 +42,20 @@
 <section id="hoofdinhoud"> 
     <h2>Vond <s:property value="lijst.size()" /> hits </h2>
     <s:iterator var="result" value="lijst">
-        <div class="lvLevel">
-            <a href="accountReserveren?id=${result.get('Nummer')}">
+        <a href="accountReserveren?id=${result.get('Nummer')}">
+        <div class="displayRow">
+        <!--<div class="lvLevel" width="100%" style="vertical-align:middle">-->
+            
 
-                <div class="row displayRow">
-                    <div class="col-xs-2 displayListView"><s:property value="#result.get('Naam')" /> <s:property value="#result.get('Beschrijving')" /></div>
-                </div></a>
+            <div class="displayListView"> <s:property value="#result.get('Naam')" /> <s:property value="#result.get('Beschrijving')" /></div>
+            
 
-            <div><hr></div>
+            
+        <!--</div>-->
         </div>
-    </a>
+                    </a>
+        <div><hr></div>
+    
 </s:iterator>
 
 </section>

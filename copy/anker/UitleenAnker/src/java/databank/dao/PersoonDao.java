@@ -146,12 +146,16 @@ public class PersoonDao {
     }
     
     public int verwijderGebruiker(String gebruikersnaam) {
+            try {
             Transaction tx = session.beginTransaction();
             Query zoeken = session.createQuery("delete from TblPersoon where gebruikersnaam = :gebruikersnaam");
             zoeken.setParameter("gebruikersnaam", gebruikersnaam);
             int resultaat = zoeken.executeUpdate();
             tx.commit();
             return resultaat;
+            } catch (Exception ex) {
+                return -1;
+            }
       
     }
 }

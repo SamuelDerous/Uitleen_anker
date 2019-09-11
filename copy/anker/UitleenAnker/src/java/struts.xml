@@ -37,7 +37,7 @@
             <result name="error">/WEB-INF/users/gebruikers.jsp</result>
             <result name="login">inloggen.jsp</result>
         </action>
-        <action name="uitlenenGebruiker" class="com.action.UitlenenAction">
+        <action name="uitlenenGebruiker" class="com.action.UitlenenAction2">
             <result name="success">/WEB-INF/users/gebruikers.jsp</result>
             <result name="input">/WEB-INF/users/gebruikers.jsp</result>
             <result name="login">inloggen.jsp</result>
@@ -163,7 +163,7 @@
             <result name="error">/WEB-INF/users/uitleningen.jsp</result>
             <result name="login">inloggen.jsp</result>
         </action>
-        <action name="uitlenenProduct" class="com.action.UitlenenAction">
+        <action name="uitlenenProduct" class="com.action.UitlenenAction2">
             <result name="success">/WEB-INF/users/producten.jsp</result>
             <result name="error">/WEB-INF/users/producten.jsp</result>
             <result name="input">/WEB-INF/users/producten.jsp</result>
@@ -172,10 +172,12 @@
         </action>
         
         <action name="zoeken" class="com.action.SearchAction">
+            <interceptor-ref name="defaultStack" />
             <result name="success">/zoeken.jsp</result>
             <result name="error">/index.jsp</result>
         </action>
         <action name="accountReserveren" class="com.action.AccountAction">
+            <interceptor-ref name="defaultStack" />
             <result name="success">/reservatie.jsp</result>
             <result name="error">/zoeken.jsp</result>
         </action>

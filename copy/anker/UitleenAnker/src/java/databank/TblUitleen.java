@@ -76,6 +76,8 @@ public class TblUitleen implements Serializable {
     @JoinColumn(name = "naam", referencedColumnName = "gebruikersnaam")
     @ManyToOne(optional = false)
     private TblPersoon naam;
+    @Column(name = "mails")
+    private int mails;
 
     public TblUitleen() {
     }
@@ -152,6 +154,16 @@ public class TblUitleen implements Serializable {
     public void setNaam(TblPersoon naam) {
         this.naam = naam;
     }
+
+    public int getMails() {
+        return mails;
+    }
+
+    public void setMails(int mails) {
+        this.mails = mails;
+    }
+    
+    
 
     @Override
     public int hashCode() {

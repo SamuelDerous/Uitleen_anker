@@ -63,13 +63,13 @@ public class UitleenDao {
     }
     
     public List<TblUitleen> getActieveUitleningen(TblProduct product) {
-        Query qryUitleningen = session.createQuery("from TblUitleen where spel = :product and (teruggebracht = null or teruggebracht = '')");
+        Query qryUitleningen = session.createQuery("from TblUitleen where spel = :product and (teruggebracht = null)"); // or teruggebracht = '')");
         qryUitleningen.setParameter("product", product);
         return qryUitleningen.list();
     }
     
     public List<TblUitleen> getActieveUitleningen() {
-        Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = null or teruggebracht = '')");
+        Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = null)");
         
         return qryUitleningen.list();
     }

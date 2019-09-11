@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblProduct.findByAantal", query = "SELECT t FROM TblProduct t WHERE t.aantal = :aantal"),
     @NamedQuery(name = "TblProduct.findByWebsite", query = "SELECT t FROM TblProduct t WHERE t.website = :website"),
     @NamedQuery(name = "TblProduct.findByAankoopdatum", query = "SELECT t FROM TblProduct t WHERE t.aankoopdatum = :aankoopdatum")})
+
 public class TblProduct implements Serializable {
 
     @Column(name = "uitleentermijn")
@@ -225,13 +226,15 @@ public class TblProduct implements Serializable {
     public void setVolledig(Integer volledig) {
         this.volledig = volledig;
     }
-    
+
     public Integer getControle() {
         return controle;
     }
-    
+
     public void setControle(Integer controle) {
         this.controle = controle;
     }
+    
+    
     
 }

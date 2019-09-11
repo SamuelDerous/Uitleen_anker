@@ -52,11 +52,11 @@ public class NotificationAppListener implements ServletContextListener {
 
         @Override
         public void run() {
-            GregorianCalendar nu = new GregorianCalendar();
+           GregorianCalendar nu = new GregorianCalendar();
             nu.add(GregorianCalendar.DAY_OF_MONTH, 4);
             SessionFactory factory = HibernateFactory.getSessionFactory();
             Session session = factory.openSession();
-            Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = '' or teruggebracht = null) and terugbrengdatum = :datum");
+            Query qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = null) and terugbrengdatum < :datum");
             qryUitleningen.setDate("datum", new Date(nu.getTimeInMillis()));
             List<TblUitleen> uitleningen = qryUitleningen.list();
             MailSend mail;
@@ -70,23 +70,23 @@ public class NotificationAppListener implements ServletContextListener {
             System.out.println(uitleningen.size());
             
             GregorianCalendar now = new GregorianCalendar();
-            //nu.add(GregorianCalendar.DAY_OF_MONTH, 4);
-            qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = '' or teruggebracht = null) and terugbrengdatum < :datum");
+            //now.add(GregorianCalendar.DAY_OF_MONTH, 4);
+            qryUitleningen = session.createQuery("from TblUitleen where (teruggebracht = null) and terugbrengdatum < :datum");
             qryUitleningen.setDate("datum", new Date(now.getTimeInMillis()));
             uitleningen = qryUitleningen.list();
             for(int i = 0; i < uitleningen.size(); i++) {
                 mail = new MailSend("smtp.scarlet.be", "noreply@anker.be", uitleningen.get(i).getNaam().getEMail(), "Vervaldatum bereikt", 
                 "volgende werk moest binnen zijn op " + uitleningen.get(i).getTerugbrengdatum() + ": <b>" + uitleningen.get(i).getSpel().getNaam() + "</b><br>Met vriendelijke groeten<br>De Spelotheek Het anker");
                 mail.verzend();
-                System.out.println(uitleningen.get(i).getNaam().getGebruikersnaam());
+                //System.out.println(uitleningen.get(i).getNaam().getGebruikersnaam());
                 Transaction tx = session.beginTransaction();
-            /*TblUitleen uitleenTabel = (TblUitleen) session.load(TblUitleen.class, uitleningen.get(i).getId());
+            TblUitleen uitleenTabel = (TblUitleen) session.load(TblUitleen.class, uitleningen.get(i).getId());
             tx.commit();
             Transaction updateProduct = session.beginTransaction();
-            uitleenTabel.setMails(uitleenTabel.getMails()++); 
+            uitleenTabel.setMails(uitleenTabel.getMails() + 1); 
             session.update(uitleenTabel);
             updateProduct.commit();
-            */
+            
             }
             System.out.println("Mails verzonden");
             System.out.println(uitleningen.size());

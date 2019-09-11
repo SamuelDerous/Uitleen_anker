@@ -3,10 +3,10 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/uitleen_anker</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Petra007</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <mapping class="databank.TblPersoon"/>
     <mapping class="databank.TblSoort"/>
     <mapping class="databank.TblBeschrijving"/>
